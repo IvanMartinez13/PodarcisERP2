@@ -28,7 +28,7 @@ $(document).ready(function(){
             }
         ],
         "language": {
-            "url": "/js/plugins/dataTables/es.json"
+            "url": "/js/plugins/datatables/es.json"
         },
 
         stateSave: true,

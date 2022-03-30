@@ -17,7 +17,7 @@
     <link href="{{ url('/') }}/fontawesome/css/all.min.css" rel="stylesheet">
 
     <link href="{{ url('/') }}/css/plugins/toastr/toastr.min.css" rel="stylesheet">
-    <link href="{{ url('/') }}/css/plugins/dataTables/dataTables.min.css" rel="stylesheet">
+    <link href="{{ url('/') }}/css/plugins/datatables/datatables.min.css" rel="stylesheet">
     <link href="{{ url('/') }}/css/plugins/switchery/switchery.css" rel="stylesheet">
     <link href="{{ url('/') }}/css/plugins/leaflet/leaflet.css" rel="stylesheet">
     <link src="{{ url('/') }}/js/plugins/leaflet/groupLayerControl/dist/leaflet.groupedlayercontrol.min.css"
@@ -83,9 +83,9 @@
     <script src="{{ url('/') }}/js/plugins/pace/pace.min.js"></script>
 
     <!-- Scripts -->
-    <script src="{{ url('/') }}/js/plugins/dataTables/dataTables.min.js"></script>
-    <script src="{{ url('/') }}/js/plugins/dataTables/fixedHeader.min.js"></script>
-    <script src="{{ url('/') }}/js/plugins/dataTables/colreorder.min.js"></script>
+    <script src="{{ url('/') }}/js/plugins/datatables/datatables.min.js"></script>
+    <script src="{{ url('/') }}/js/plugins/datatables/fixedHeader.min.js"></script>
+    <script src="{{ url('/') }}/js/plugins/datatables/colreorder.min.js"></script>
     <script src="{{ url('/') }}/js/plugins/switchery/switchery.js"></script>
     <script src="{{ url('/') }}/js/plugins/bs-custom-file/bs-custom-file-input.min.js"></script>
     <script src="{{ url('/') }}/js/plugins/leaflet/leaflet.js"></script>
@@ -129,7 +129,7 @@
     </script>
 
 
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ url('/') }}/js/app.js" defer></script>
     @stack('scripts')
 
     <script>
