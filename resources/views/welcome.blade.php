@@ -48,11 +48,11 @@
                             </li>
 
 
-                            @if (Route::has('register'))
+                            {{-- @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a href="{{ route('register') }}" class="nav-link">Register</a>
                                 </li>
-                            @endif
+                            @endif --}}
                         @endauth
                     @endif
                 </ul>
@@ -103,18 +103,108 @@
         <div class="container-fluid text-center py-5 caracteristics">
 
             <div class="caracteristics-content">
-                <h1 class="wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.5s">Características</h1>
+                <h1 class="wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.5s">
+                    Características
+                </h1>
 
-                <div class="row">
+                <div class="row mx-lg-5 mt-5">
                     <div class="col-lg-4 mb-5 ">
 
                         <div class="glassCard text-dark">
-                            <h4>
-                                Titulo 1
-                            </h4>
+
+
+                            <div class="marco">
+                                <img src="{{ url('/') }}/img/landing/charts.jpg" />
+                            </div>
+                            <hr class="border-dark" />
+
+                            <h3>
+                                <dt>Proyectos</dt>
+                            </h3>
+                            <p class="text-left">
+                                Una solución <b>sencilla</b> a los <b>proyectos</b> más complejos.
+                                Con
+                                <b>Podarcis ERP</b> podrás observar el avance de tus proyectos en tiempo real.
+
+                            </p>
+
+                            <ul class="text-left">
+                                <li>Registros de comunicaciones.</li>
+                                <li>Repositorios de documentos.</li>
+                                <li>Indicadores.</li>
+                            </ul>
+
+                            <p class="text-left">
+                                Podrás tener un control total en el avance de tus proyectos.
+                            </p>
+
                         </div>
 
                     </div>
+
+                    <div class="col-lg-4 mb-5 ">
+
+                        <div class="glassCard text-dark">
+                            <div class="marco">
+                                <img src="{{ url('/') }}/img/landing/ods.png" />
+                            </div>
+                            <hr class="border-dark" />
+
+                            <h3>
+                                <dt>Objetivos de desarrollo sostenible</dt>
+                            </h3>
+
+                            <p class="text-left">
+                                Los Objetivos de Desarrollo Sostenible son 17 objetivos y 169 metas propuestos como
+                                continuación de los ODM (Objetivos de Desarrollo del Milenio) incluyendo nuevas esferas
+                                como el cambio climático, la
+                                desigualdad económica, la innovación, el consumo sostenible, la paz y la justicia, entre
+                                otras prioridades.
+                            </p>
+
+                            <p class="text-left">
+                                Con <b>Podarcis ERP</b> podrás definir cada uno de tus objetivos y asociarlos a un ODS.
+                                Controla el grado de cumplimiento de cada uno de tus objetivos y estrategias.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-4 mb-5 ">
+
+                        <div class="glassCard text-dark">
+                            <div class="marco">
+                                <img src="{{ url('/') }}/img/landing/equipo.jpg" />
+                            </div>
+                            <hr class="border-dark" />
+
+                            <h3>
+                                <dt>Equipos de trabajo</dt>
+                            </h3>
+
+                            <p class="text-left">
+                                Controla quien puede acceder a tus proyectos. <b>Podarcis ERP</b> te permite
+                                personalizar
+                                al máximo tu equipo de
+                                trabajo.
+                            </p>
+                            <p class="text-left">
+                                Define los permisos y los roles de cada uno de tus colaboradores. Coordina <b>quién,
+                                    cuándo
+                                    y cómo</b> gestionar cada una de las tareas.
+                            </p>
+
+
+
+                            <p class="text-left">
+                                En la unión está la fuerza.
+                            </p>
+
+
+                        </div>
+
+                    </div>
+
 
                 </div>
 

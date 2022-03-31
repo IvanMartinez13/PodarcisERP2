@@ -7966,7 +7966,7 @@ var IndicatorVariation = /*#__PURE__*/function (_React$Component) {
 
                   if (line.text) {
                     ctx.fillStyle = style;
-                    ctx.fillText(line.text, 0, yValue + 5 + ctx.lineWidth);
+                    ctx.fillText(line.text, 25, yValue + 5 + ctx.lineWidth);
                   }
                 }
 
