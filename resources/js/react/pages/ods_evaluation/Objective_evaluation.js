@@ -74,8 +74,17 @@ class Objective_evaluation extends React.Component{
                             </div>
 
                             <div className="col-lg-6">
-                                <h5>Reducción Objetivo(%)</h5>
-                                {this.objective.target} %
+                                {
+                                    (this.objective.increase == 0)?
+                                        
+                                        <h5>Reducción Objetivo(%)</h5>
+                                       
+                                    :
+                                        <h5>Incremento Objetivo(%)</h5>
+
+                                }
+
+                                { this.objective.target } %
 
                                 <h5>Valor objetivo</h5>
                                 <span id="target_value"></span>

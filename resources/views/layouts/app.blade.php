@@ -106,6 +106,7 @@
     <script src="{{ url('/') }}/js/plugins/leaflet/shapes/leaflet.shpfile.js"></script>
     <script src='{{ url('/') }}/js/plugins/leaflet/fullscreen/dist/Leaflet.fullscreen.min.js'></script>
     <script src="{{ url('/') }}/js/plugins/leaflet/wms/dist/leaflet.wms.js"></script>
+    <script src="{{ url('/') }}/js/plugins/chartJs/Chart.min.js"></script>
 
 
     <script>

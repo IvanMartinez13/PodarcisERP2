@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import Chart from 'chart.js/auto';
+
 
 class StrategyEvolution extends React.Component{
 
@@ -30,13 +30,14 @@ class StrategyEvolution extends React.Component{
             )
         }
         return(
-            <canvas id="strategy_evolution" className="animated fadeIn" height={200}></canvas>
+            <canvas id={"strategy_evolution"+this.strategy.token} className="animated fadeIn" height={200}></canvas>
         )
     }
 
     componentDidMount()
     {
         axios.post('/ods/strategy/evolution_chart', {token: this.strategy.token}).then( (response) => {
+
             let evaluations = response.data.evaluations;
             let years = response.data.years;
 
@@ -57,48 +58,54 @@ class StrategyEvolution extends React.Component{
             this.dataSets = data;
             this.years = years;
 
-            this.setState({loading: false});
+            this.setState({loading: false})
+
         } ).then( () => {
 
-            let ctx = document.getElementById('strategy_evolution').getContext('2d');
-    
-                const config = {
-                    type: 'line',
-                    
-                    data:{
-                        labels: this.years,
-                        datasets: [{
-                            label: this.strategy.indicator,
-                            data: this.dataSets,
-                            fill: false,
-                            borderColor: '#1AB394',
-                            backgroundColor: '#1AB394',
-                            tension: 0.2,
-                            yAxisID: 'A',
-                        }],
-                    },
-    
-                    options: {
-                        responsive: true,
-                        interaction: {
-                            mode: 'index',
-                            intersect: false,
-                        },
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            },
-                        },
+            
+            let ctx = document.getElementById('strategy_evolution'+this.strategy.token).getContext('2d');
+        
+            const config = {
+                type: 'line',
                 
-                        hover: {
-                            mode: 'nearest',
-                            intersect: true
-                        },
+                data:{
+                    labels: this.years,
+                    
+                    datasets: [{
+                        label: this.strategy.indicator,
+                        data: this.dataSets,
+                        fill: false,
+                        borderColor: '#1AB394',
+                        backgroundColor: '#1AB394',
+                        tension: 0.2,
+                        
+                    }],
+                },
 
-                    }
+                options: {
+                    responsive: true,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    },
+            
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+
                 }
-    
-                this.chart = new Chart(ctx, config);
+            }
+
+            this.chart = new Chart(ctx, config);
+
+            
+            
 
 
         } );
