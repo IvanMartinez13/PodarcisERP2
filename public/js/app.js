@@ -7919,7 +7919,9 @@ var IndicatorVariation = /*#__PURE__*/function (_React$Component) {
                 yAxes: [{
                   display: true,
                   ticks: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    suggestedMin: 0,
+                    suggestedMax: _this2.target
                   }
                 }]
               }
