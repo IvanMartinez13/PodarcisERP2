@@ -10,7 +10,7 @@ class Objective_evaluation_file extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = "Objective_evaluation_files";
+    protected $table = "objective_evaluation_files";
 
     protected $fillable = [
         "name",
