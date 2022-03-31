@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import Chart from 'chart.js/auto';
+
 
 class EvolutionObjective extends React.Component{
 

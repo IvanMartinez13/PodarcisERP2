@@ -113,8 +113,8 @@ class Evaluation extends React.Component{
                                     <p dangerouslySetInnerHTML={{ __html: this.strategy.performances }}></p>
                                 </div>
 
-                                <div className="col-lg-4">
-                                    <h5>Evolución {this.strategy.title}</h5>
+                                <div className="col-lg-4 text-center">
+                                    <h5>Variación {this.strategy.indicator}</h5>
                                     <StrategyEvolution strategy={this.strategy}></StrategyEvolution>
                                 </div>
                             </div>
