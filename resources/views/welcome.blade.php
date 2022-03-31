@@ -98,8 +98,35 @@
 
 
     <main>
-        {{-- DASHBOARD --}}
-        <div class="container-fluid py-5">
+
+        {{-- CARACTERISTICAS --}}
+        <div class="container-fluid text-center py-5 caracteristics">
+
+            <div class="caracteristics-content">
+                <h1 class="wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.5s">Características</h1>
+
+                <div class="row">
+                    <div class="col-lg-4 mb-5 ">
+
+                        <div class="glassCard text-dark">
+                            <h4>
+                                Titulo 1
+                            </h4>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="cube-1"></div>
+            <div class="cube-2"></div>
+            <div class="cube-3"></div>
+        </div>
+
+
+        {{-- <div class="container-fluid py-5">
             <div class="container py-5">
                 <div class="row">
                     <div class="col-md-7 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="0.5s">
@@ -119,8 +146,7 @@
 
         </div>
 
-        {{-- CHARTS --}}
-
+        
         <div class=" bg-charts">
             <div class="bg-transparentDark">
                 <div class="to-right">
@@ -143,137 +169,7 @@
         </div>
 
 
-        {{-- CARACTERISTICAS --}}
-        <div class="container-fluid text-center bg-gray">
-            <div class="py-5">
-                <h1 class="wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.5s">Características</h1>
-                <div class="m-xl">
-                    <div class="row">
-
-                        <div class="col-lg-4 col-md-6 my-3 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="0.5s">
-
-                            <div class="card-caracteristicas">
-
-                                <h5>CRM</h5>
-
-                                <i class="fa-solid fa-bullseye icon"></i>
-
-                                <hr class="separador" />
-
-                                <div class="text-caracteristicas">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda iure deleniti
-                                    commodi. Omnis voluptate magnam explicabo totam dolores labore consequuntur ab rerum
-                                    nulla, eum cum aspernatur aperiam, corporis obcaecati cupiditate.
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 my-3 wow fadeInDown" data-wow-duration="2s" data-wow-delay="0.5s">
-
-
-                            <div class="card-caracteristicas">
-
-                                <h5>Proyectos</h5>
-
-                                <i class="fa-solid fa-folder icon"></i>
-
-                                <hr class="separador" />
-
-                                <div class="text-caracteristicas">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda iure deleniti
-                                    commodi. Omnis voluptate magnam explicabo totam dolores labore consequuntur ab rerum
-                                    nulla, eum cum aspernatur aperiam, corporis obcaecati cupiditate.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 my-3 wow fadeInRight" data-wow-duration="2s"
-                            data-wow-delay="0.5s">
-
-                            <div class="card-caracteristicas">
-
-                                <h5>Incidencias</h5>
-
-                                <i class="fa-solid fa-triangle-exclamation icon"></i>
-
-                                <hr class="separador" />
-
-                                <div class="text-caracteristicas">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda iure deleniti
-                                    commodi. Omnis voluptate magnam explicabo totam dolores labore consequuntur ab rerum
-                                    nulla, eum cum aspernatur aperiam, corporis obcaecati cupiditate.
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 my-3 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="0.5s">
-
-                            <div class="card-caracteristicas">
-
-                                <h5>Equipos de trabajo</h5>
-
-
-                                <i class="fa-solid fa-user-group icon"></i>
-
-                                <hr class="separador" />
-
-                                <div class="text-caracteristicas">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda iure deleniti
-                                    commodi. Omnis voluptate magnam explicabo totam dolores labore consequuntur ab rerum
-                                    nulla, eum cum aspernatur aperiam, corporis obcaecati cupiditate.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 my-3 wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.5s">
-
-
-                            <div class="card-caracteristicas">
-
-                                <h5>ODS</h5>
-
-                                <i class="fa-solid fa-list-check icon"></i>
-
-                                <hr class="separador" />
-
-                                <div class="text-caracteristicas">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda iure deleniti
-                                    commodi. Omnis voluptate magnam explicabo totam dolores labore consequuntur ab rerum
-                                    nulla, eum cum aspernatur aperiam, corporis obcaecati cupiditate.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 my-3 wow fadeInRight" data-wow-duration="2s"
-                            data-wow-delay="0.5s">
-
-
-                            <div class="card-caracteristicas">
-
-                                <h5>Roles y permisos</h5>
-
-                                <i class="fa-solid fa-user-tag icon"></i>
-
-                                <hr class="separador" />
-
-                                <div class="text-caracteristicas">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda iure deleniti
-                                    commodi. Omnis voluptate magnam explicabo totam dolores labore consequuntur ab rerum
-                                    nulla, eum cum aspernatur aperiam, corporis obcaecati cupiditate.
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-        {{-- UN PROBLEMA UNA APLICACION --}}
+        
         <div class="container-fluid bg-primary">
 
             <div class="mx-lg-5 py-5 bg-light text-dark">
@@ -282,7 +178,7 @@
                 <p class="text-center">AQUI MOSTRARIAMOS LOS MÓDULOS DE LA APP</p>
             </div>
 
-        </div>
+        </div> --}}
 
     </main>
 

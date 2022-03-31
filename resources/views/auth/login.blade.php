@@ -1,12 +1,10 @@
 @extends('layouts.guest')
 
 @section('content')
-    <div class="auth_wrapper ibox">
-        <div class="ibox-title bg-primary">
-            <h5>LOGIN</h5>
-        </div>
-
-        <div class="ibox-content">
+    <div class="auth_wrapper glassCard">
+        <h5>LOGIN</h5>
+        <hr class="border-white">
+        <div>
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
@@ -56,11 +54,11 @@
 
 
         </div>
+        <hr class="border-white">
+        <div class="px-2">
 
-        <div class="ibox-footer">
             Podarcis SL. &copy;
         </div>
-
 
     </div>
 @endsection
