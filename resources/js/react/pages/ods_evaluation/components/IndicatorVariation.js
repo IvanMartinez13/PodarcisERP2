@@ -156,7 +156,11 @@ class IndicatorVariation extends React.Component{
                                 display: true,
 
     
-                                ticks: { beginAtZero:true }
+                                ticks: {
+                                    beginAtZero:true,
+                                    suggestedMin: 0,
+                                    suggestedMax: this.target,
+                                }
                                
                             }],
 
