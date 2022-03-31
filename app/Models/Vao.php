@@ -10,7 +10,7 @@ class Vao extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = "Vao";
+    protected $table = "vao";
 
     protected $fillable = [
         "title",
@@ -25,7 +25,8 @@ class Vao extends Model
         "token"
     ];
 
-    public function customer(){
+    public function customer()
+    {
         return $this->belongsTo(Customer::class);
     }
 }
