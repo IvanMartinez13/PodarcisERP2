@@ -95,7 +95,7 @@
                                                     <td class="align-middle">{{ $strategy->indicator }}</td>
                                                     <td class="align-middle">{!! $strategy->performances !!}</td>
                                                     <td class="align-middle text-center">
-                                                        <div class="btn-group-vertical">
+                                                        <div class="btn-group">
                                                             @can('update Ods')
                                                                 <a href="{{ route('ods.strategy.edit', [$objective->token, $strategy->token]) }}"
                                                                     class="btn btn-link">

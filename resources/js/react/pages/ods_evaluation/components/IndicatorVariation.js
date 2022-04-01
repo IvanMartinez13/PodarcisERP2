@@ -200,13 +200,14 @@ class IndicatorVariation extends React.Component{
                           if (yValue) {
                             ctx.beginPath();
                             ctx.moveTo(0, yValue);
-                            ctx.lineTo(xAxis.right, yValue);
+                            ctx.moveTo(chartInstance.chartArea.left, yValue);
+                            ctx.lineTo(chartInstance.chartArea.right, yValue);
                             ctx.strokeStyle = style;
                             ctx.stroke();
                           }
                           if (line.text) {
                             ctx.fillStyle = style;
-                            ctx.fillText(line.text, 30, yValue+5 + ctx.lineWidth);
+                            ctx.fillText(line.text, 50, yValue+5 + ctx.lineWidth);
                           }
                         }
                         return;
@@ -296,7 +297,7 @@ class IndicatorVariation extends React.Component{
                                 },
 
                                 ticks: {
-                                    fontColor: 'white',
+                                   
                                     beginAtZero: true
                                 },
                                

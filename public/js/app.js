@@ -5414,17 +5414,23 @@ var DashboardOds = /*#__PURE__*/function (_React$Component) {
 
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
         className: " mb-5",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-          htmlFor: "objective_selector",
-          children: "Selecciona un objetivo:"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("select", {
-          id: "objective_selector",
-          defaultValue: this.objective.token,
-          children: this.objectives.map(function (objective, index) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("option", {
-              value: objective.token,
-              children: objective.title
-            }, objective.token + index);
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          className: "row animated fadeInRight",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+            className: "col-lg-5",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
+              htmlFor: "objective_selector",
+              children: "Selecciona un objetivo:"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("select", {
+              id: "objective_selector",
+              defaultValue: this.objective.token,
+              children: this.objectives.map(function (objective, index) {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("option", {
+                  value: objective.token,
+                  children: objective.title
+                }, objective.token + index);
+              })
+            })]
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
           className: "row animated fadeInRight mt-4",
@@ -5521,7 +5527,7 @@ var DashboardOds = /*#__PURE__*/function (_React$Component) {
         $('#objective_selector').select2({
           placeholder: "Selecciona un objetivo",
           theme: "bootstrap4",
-          width: "250px"
+          width: "100%"
         });
 
         var handleChangeObjective = function handleChangeObjective(value) {
@@ -5556,7 +5562,7 @@ var DashboardOds = /*#__PURE__*/function (_React$Component) {
           $('#objective_selector').select2({
             placeholder: "Selecciona un objetivo",
             theme: "bootstrap4",
-            width: "250px"
+            width: "100%"
           });
 
           var handleChangeObjective = function handleChangeObjective(value) {
@@ -7959,14 +7965,15 @@ var IndicatorVariation = /*#__PURE__*/function (_React$Component) {
                   if (yValue) {
                     ctx.beginPath();
                     ctx.moveTo(0, yValue);
-                    ctx.lineTo(xAxis.right, yValue);
+                    ctx.moveTo(chartInstance.chartArea.left, yValue);
+                    ctx.lineTo(chartInstance.chartArea.right, yValue);
                     ctx.strokeStyle = style;
                     ctx.stroke();
                   }
 
                   if (line.text) {
                     ctx.fillStyle = style;
-                    ctx.fillText(line.text, 30, yValue + 5 + ctx.lineWidth);
+                    ctx.fillText(line.text, 50, yValue + 5 + ctx.lineWidth);
                   }
                 }
 
@@ -8045,7 +8052,6 @@ var IndicatorVariation = /*#__PURE__*/function (_React$Component) {
                     }
                   },
                   ticks: {
-                    fontColor: 'white',
                     beginAtZero: true
                   }
                 }]
@@ -8744,6 +8750,13 @@ var StrategyEvolution = /*#__PURE__*/function (_React$Component) {
             hover: {
               mode: 'nearest',
               intersect: true
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
             }
           }
         };

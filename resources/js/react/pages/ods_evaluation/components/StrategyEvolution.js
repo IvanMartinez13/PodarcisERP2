@@ -99,6 +99,17 @@ class StrategyEvolution extends React.Component{
                         intersect: true
                     },
 
+                    scales: {
+                        yAxes:[{
+
+
+                            ticks: {
+                                beginAtZero: true
+                            },
+                           
+                        }]
+                    }
+
                 }
             }
 
