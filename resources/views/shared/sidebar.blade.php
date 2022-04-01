@@ -6,9 +6,9 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         @if (auth()->user()->profile_photo)
                             <img src="{{ url('/storage') . auth()->user()->profile_photo }}" alt=""
-                                style="width: 80px" class="rounded-circle">
+                                style="width: 80px" class="rounded-circle bg-white">
                         @else
-                            <img class="rounded-circle" src="{{ url('/img/user_placeholder.png') }}" alt=""
+                            <img class="rounded-circle bg-white" src="{{ url('/img/user_placeholder.png') }}" alt=""
                                 width="80px">
                         @endif
 
@@ -46,9 +46,9 @@
 
                     @if (auth()->user()->profile_photo)
                         <img src="{{ url('/storage') . auth()->user()->profile_photo }}" alt="" style="width: 80%"
-                            class="rounded-circle">
+                            class="rounded-circle bg-white">
                     @else
-                        <img class="rounded-circle" src="{{ url('/img/user_placeholder.png') }}" alt=""
+                        <img class="rounded-circle bg-white" src="{{ url('/img/user_placeholder.png') }}" alt=""
                             style="width: 80%">
                     @endif
 
