@@ -92,7 +92,7 @@
                                                     <td class="align-middle">{{ $objective->base_year }}</td>
                                                     <td class="align-middle">{{ $objective->target_year }}</td>
                                                     <td class="align-middle text-center">
-                                                        <div class="btn-group-vertical">
+                                                        <div class="btn-group">
 
                                                             @can('update Ods')
                                                                 <a href="{{ route('ods.objective.edit', $objective->token) }}"

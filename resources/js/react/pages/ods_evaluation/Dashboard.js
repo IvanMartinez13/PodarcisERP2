@@ -43,20 +43,26 @@ class DashboardOds extends React.Component{
         return(
 
             <div className=" mb-5">
+                <div className="row animated fadeInRight">
 
-                <label htmlFor="objective_selector">
-                    Selecciona un objetivo:
-                </label>
+                    <div className="col-lg-5">
+                        <label htmlFor="objective_selector">
+                            Selecciona un objetivo:
+                        </label>
 
-                <select id="objective_selector" defaultValue={this.objective.token}>
-                    {
-                        this.objectives.map( (objective, index) => {
-                            return(
-                                <option key={objective.token+index} value={objective.token}>{objective.title}</option>
-                            );
-                        } )
-                    }
-                </select>
+                        <select id="objective_selector" defaultValue={this.objective.token}>
+                            {
+                                this.objectives.map( (objective, index) => {
+                                    return(
+                                        <option key={objective.token+index} value={objective.token}>{objective.title}</option>
+                                    );
+                                } )
+                            }
+                        </select>
+                    </div>
+
+                </div>
+
 
                 <div className="row animated fadeInRight mt-4">
 
@@ -199,7 +205,7 @@ class DashboardOds extends React.Component{
                 {
                     placeholder: "Selecciona un objetivo",
                     theme: "bootstrap4",
-                    width: "250px"
+                    width: "100%"
                 }
             );
 
@@ -244,7 +250,7 @@ class DashboardOds extends React.Component{
                     {
                         placeholder: "Selecciona un objetivo",
                         theme: "bootstrap4",
-                        width: "250px"
+                        width: "100%"
                     }
                 );
     
