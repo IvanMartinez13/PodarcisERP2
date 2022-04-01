@@ -354,7 +354,9 @@ class OdsController extends Controller
         $customer_id = $user->customer_id;
         $objectives = Objective::where('customer_id', $customer_id)->get();
 
-        if ($request->token == 0) {
+
+
+        if (!$request->token) {
 
             $objective = $objectives[0];
         } else {
@@ -735,7 +737,7 @@ class OdsController extends Controller
                         $data = [
                             'year' => $row['year'],
                             'value' => $row['value'],
-                            'token' => md5($row['year'] . '+' . date('d/m/Y')),
+                            'token' => md5($row['year'] . '+' . date('d/m/Y H:i:s')),
                             'objective_id' => $objective->id
                         ];
 
@@ -928,7 +930,7 @@ class OdsController extends Controller
                 'description' => $description,
                 'color' => '#1AB394',
                 'image' => null,
-                'token' => md5($name . '+' . date('d/m/Y')),
+                'token' => md5($name . '+' . date('d/m/Y H:i:s')),
                 'customer_id' => $customer_id,
                 'is_ods' => 1,
             ];
@@ -989,7 +991,7 @@ class OdsController extends Controller
                 'description' => $description,
                 'color' => '#1AB394',
                 'image' => null,
-                'token' => md5($name . '+' . date('d/m/Y')),
+                'token' => md5($name . '+' . date('d/m/Y H:i:s')),
                 'customer_id' => $customer_id,
                 'is_ods' => 1,
             ];

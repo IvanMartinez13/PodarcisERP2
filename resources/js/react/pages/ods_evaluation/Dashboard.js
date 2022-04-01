@@ -181,7 +181,7 @@ class DashboardOds extends React.Component{
     }
 
     componentDidMount(){
-        axios.post('/ods/dashboard', {token: 0}).then( (response) => {
+        axios.post('/ods/dashboard').then( (response) => {
 
             this.objectives = response.data.objectives;
 
@@ -213,6 +213,7 @@ class DashboardOds extends React.Component{
                 
                 let value = e.target.value;
                
+                console.log(value)
                 handleChangeObjective(
                     value
                 );
@@ -254,9 +255,10 @@ class DashboardOds extends React.Component{
                 //ON CHANGE
                 
                 $('#objective_selector').on('change', function(e){
-                    
+                
                     let value = e.target.value;
                    
+                    console.log(value)
                     handleChangeObjective(
                         value
                     );
@@ -279,7 +281,9 @@ class DashboardOds extends React.Component{
             }
 
         } );
- 
+
+
+        
 
         this.setState({
             loading: true,
