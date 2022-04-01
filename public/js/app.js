@@ -7845,7 +7845,7 @@ var IndicatorVariation = /*#__PURE__*/function (_React$Component) {
         _this2.target = response.data.targetValue;
 
         if (typeof _this2.target == 'number') {
-          $('#target_value').text(_this2.target.toFixed(6) + " " + _this2.objective.indicator);
+          $('#target_value').text(_this2.target.toFixed(3) + " " + _this2.objective.indicator);
         } else {
           $('#target_value').text(_this2.target);
         }

@@ -54,7 +54,7 @@ class IndicatorVariation extends React.Component{
             this.target = response.data.targetValue;
 
             if ( typeof this.target == 'number') {
-                $('#target_value').text( this.target.toFixed(6)+" "+this.objective.indicator );
+                $('#target_value').text( this.target.toFixed(3)+" "+this.objective.indicator );
             }else{
                 $('#target_value').text( this.target );
             }
