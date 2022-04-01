@@ -36,6 +36,11 @@ class Task extends Model
         return $this->belongsToMany(Departament::class, "departament_task");
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class, "tasks_users");
+    }
+
     public function strategy()
     {
         return $this->belongsToMany(Strategy::class, 'task_strategy');

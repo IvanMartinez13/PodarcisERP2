@@ -9676,8 +9676,10 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
       loading: true
     };
     _this.departaments = [];
+    _this.users = [];
     _this.project = _this.props.project;
     _this.selectedDepartaments = [];
+    _this.selectedUsers = [];
     _this.description = '';
     _this.name = '';
     return _this;
@@ -9807,7 +9809,6 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
                     },
                     name: "departaments",
                     id: "departaments",
-                    placeholder: "Nombre...",
                     multiple: "multiple",
                     children: this.departaments.map(function (departament, index) {
                       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
@@ -9815,6 +9816,20 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
                         children: departament.name
                       }, departament.token + index);
                     })
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: "col-lg-12 mb-3",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+                    htmlFor: "users",
+                    children: "Usuarios:"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("select", {
+                    className: "form-control",
+                    style: {
+                      width: "100%"
+                    },
+                    name: "users",
+                    id: "users",
+                    multiple: "multiple"
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "col-lg-12 mb-3",
@@ -9858,6 +9873,7 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().post('/tasks/project/get_departaments').then(function (response) {
         _this3.departaments = response.data.departaments;
+        _this3.users = response.data.users;
 
         _this3.setState({
           loading: false
@@ -9872,9 +9888,22 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
           // need to override the changed default
           allowClear: true
         });
+        $("#users").select2({
+          dropdownParent: $('#addTask'),
+          //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
+          theme: 'bootstrap4',
+          placeholder: "Selecciona un usuario...",
+          width: '100%',
+          // need to override the changed default
+          allowClear: true
+        });
 
         var handlePrepareValue = function handlePrepareValue(key, value) {
           _this3.prepareValue(key, value);
+        };
+
+        var handleSetUsers = function handleSetUsers(token) {
+          _this3.setUsers(token);
         };
 
         $('#departaments').on('change', function (e) {
@@ -9885,6 +9914,16 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
           }
 
           handlePrepareValue("departaments", value);
+          handleSetUsers(value);
+        });
+        $('#users').on('change', function (e) {
+          var value = e.target.value;
+
+          if (!Array.isArray(value)) {
+            value = [value];
+          }
+
+          handlePrepareValue("users", value);
         });
         $('#name').on('input', function (e) {
           var value = e.target.value;
@@ -9915,6 +9954,24 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
       if (key == "description") {
         this.description = value;
       }
+
+      if (key == "users") {
+        this.selectedUsers = value;
+      }
+    }
+  }, {
+    key: "setUsers",
+    value: function setUsers(token) {
+      $('#users').text('').trigger('change'); //CLEAR SELECT 
+
+      this.users.map(function (user, index) {
+        user.departaments.map(function (departament) {
+          if (departament.token == token) {
+            var op = "<option value=\"".concat(user.token, "\">").concat(user.name, "</option>");
+            $('#users').append(op).trigger('change');
+          }
+        });
+      });
     }
   }, {
     key: "save",
@@ -9925,6 +9982,7 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
         name: this.name,
         description: this.description,
         departaments: this.selectedDepartaments,
+        users: this.selectedUsers,
         project: this.project.id
       }; //VALIDATE DATA
 
@@ -10281,13 +10339,11 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
     _this.project = _this.props.project;
     _this.task = _this.props.task;
     _this.selectedDepartaments = [];
+    _this.selectedUsers = [];
     _this.description = _this.task.description;
     _this.name = _this.task.name;
-
-    _this.task.departaments.map(function (departament) {
-      _this.selectedDepartaments.push(departament.token);
-    });
-
+    _this.departaments = [];
+    _this.users = [];
     return _this;
   }
 
@@ -10428,6 +10484,27 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
                   className: "col-lg-12 mb-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+                    htmlFor: "users",
+                    children: "Usuarios:"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("select", {
+                    defaultValue: this.selectedUsers,
+                    className: "form-control",
+                    style: {
+                      width: "100%"
+                    },
+                    name: "users",
+                    id: "users" + this.task.token,
+                    multiple: "multiple",
+                    children: this.users.map(function (user, index) {
+                      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
+                        value: user.token,
+                        children: user.name
+                      }, user.token + index);
+                    })
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+                  className: "col-lg-12 mb-3",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
                     htmlFor: "description" + this.task.token,
                     children: "Descripci\xF3n:"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("textarea", {
@@ -10468,11 +10545,24 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
 
       axios.post('/tasks/project/get_departaments').then(function (response) {
         _this3.departaments = response.data.departaments;
+        _this3.users = response.data.users;
+
+        _this3.task.departaments.map(function (departament) {
+          _this3.selectedDepartaments.push(departament.token);
+        });
+
+        _this3.task.users.map(function (user) {
+          _this3.selectedUsers.push(user.token);
+        });
 
         _this3.setState({
           loading: false
         });
       }).then(function () {
+        _this3.setUsers(_this3.selectedDepartaments);
+
+        $('#users' + _this3.task.token).val(_this3.selectedUsers);
+        $('#users' + _this3.task.token).trigger('change');
         $("#departaments" + _this3.task.token).select2({
           dropdownParent: $('#updateTask' + _this3.task.token),
           //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
@@ -10482,9 +10572,22 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
           // need to override the changed default
           allowClear: true
         });
+        $("#users" + _this3.task.token).select2({
+          dropdownParent: $('#updateTask' + _this3.task.token),
+          //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
+          theme: 'bootstrap4',
+          placeholder: "Selecciona un usuario...",
+          width: '100%',
+          // need to override the changed default
+          allowClear: true
+        });
 
         var handlePrepareValue = function handlePrepareValue(key, value) {
           _this3.prepareValue(key, value);
+        };
+
+        var handleSetUsers = function handleSetUsers(token) {
+          _this3.setUsers(token);
         };
 
         $('#departaments' + _this3.task.token).on('change', function (e) {
@@ -10495,6 +10598,28 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
           }
 
           handlePrepareValue("departaments", value);
+          handleSetUsers(value);
+        });
+
+        var handleSelectUser = function handleSelectUser() {
+          return _this3.selectedUsers;
+        };
+
+        $('#users' + _this3.task.token).on('select2:select', function (e) {
+          var value = e.params.data.id;
+          var array = handleSelectUser();
+          array.push(value);
+          handlePrepareValue("users", array);
+        });
+        $('#users' + _this3.task.token).on('select2:unselect', function (e) {
+          var value = e.params.data.id;
+          var array = handleSelectUser();
+          array.map(function (user, index) {
+            if (user == value) {
+              array.splice(index, 1); // 2nd parameter means remove one item only
+            }
+          });
+          handlePrepareValue("users", array);
         });
         $('#name' + _this3.task.token).on('input', function (e) {
           var value = e.target.value;
@@ -10525,16 +10650,38 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
       if (key == "description") {
         this.description = value;
       }
+
+      if (key == "users") {
+        this.selectedUsers = value;
+        console.log(this.selectedUsers);
+      }
+    }
+  }, {
+    key: "setUsers",
+    value: function setUsers(token) {
+      var _this4 = this;
+
+      $('#users' + this.task.token).text('').trigger('change'); //CLEAR SELECT 
+
+      this.users.map(function (user, index) {
+        user.departaments.map(function (departament) {
+          if (departament.token == token) {
+            var op = "<option value=\"".concat(user.token, "\">").concat(user.name, "</option>");
+            $('#users' + _this4.task.token).append(op).trigger('change');
+          }
+        });
+      });
     }
   }, {
     key: "save",
     value: function save() {
-      var _this4 = this;
+      var _this5 = this;
 
       var data = {
         name: this.name,
         description: this.description,
         departaments: this.selectedDepartaments,
+        users: this.selectedUsers,
         project: this.project.id,
         token: this.task.token
       }; //VALIDATE DATA
@@ -10563,13 +10710,13 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
             toastr.success(response.data.message); //CLOSE MODAL
 
             $('#addTask').modal('hide');
-            _this4.selectedDepartaments = [];
-            _this4.description = '';
-            _this4.name = '';
-            $('#departaments' + _this4.task.token).empty();
-            $('#name' + _this4.task.token).val(null);
-            $('#description' + _this4.task.token).val(null);
-            $('#description' + _this4.task.token).summernote('reset');
+            _this5.selectedDepartaments = [];
+            _this5.description = '';
+            _this5.name = '';
+            $('#departaments' + _this5.task.token).empty();
+            $('#name' + _this5.task.token).val(null);
+            $('#description' + _this5.task.token).val(null);
+            $('#description' + _this5.task.token).summernote('reset');
             location.reload();
           }
 

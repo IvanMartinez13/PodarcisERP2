@@ -126,6 +126,8 @@ class Edit_subtask extends React.Component{
             this.description = value;
         }
 
+        
+
     }
 
     save(){

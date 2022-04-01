@@ -7,9 +7,11 @@ class Create_task extends React.Component{
 
         this.state = {loading: true}
         this.departaments = [];
+        this.users = [];
         this.project = this.props.project;
 
         this.selectedDepartaments = [];
+        this.selectedUsers = [];
         this.description = '';
         this.name = '';
     }
@@ -78,7 +80,7 @@ class Create_task extends React.Component{
                                 </div>
                                 <div className="col-lg-6 mb-3">
                                     <label htmlFor="departaments">Departamentos:</label>
-                                    <select className="form-control" style={{width: "100%"}} name="departaments" id="departaments" placeholder="Nombre..." multiple="multiple">
+                                    <select className="form-control" style={{width: "100%"}} name="departaments" id="departaments" multiple="multiple">
                                         
                                         {
                                             this.departaments.map( (departament, index) => {
@@ -91,6 +93,12 @@ class Create_task extends React.Component{
                                         }
                                     </select>
                                 </div>
+
+                                <div className="col-lg-12 mb-3">
+                                    <label htmlFor="users">Usuarios:</label>
+                                    <select className="form-control" style={{width: "100%"}} name="users" id="users" multiple="multiple"></select>
+                                </div>
+
 
                                 <div className="col-lg-12 mb-3">
                                     <label htmlFor="description">Descripción:</label>
@@ -122,6 +130,7 @@ class Create_task extends React.Component{
         axios.post('/tasks/project/get_departaments').then( (response) => {
 
             this.departaments = response.data.departaments;
+            this.users = response.data.users;
             this.setState({loading: false})
         } ).then( () => {
             
@@ -134,7 +143,17 @@ class Create_task extends React.Component{
                 
             });
 
+            $("#users").select2({
+                dropdownParent: $('#addTask'), //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
+                theme: 'bootstrap4',
+                placeholder: "Selecciona un usuario...",
+                width: '100%', // need to override the changed default
+                allowClear: true
+                
+            });
+
             const handlePrepareValue = (key, value) => { this.prepareValue(key, value) };
+            const handleSetUsers = (token) => { this.setUsers(token) };
 
             $('#departaments').on('change', (e) => {
 
@@ -145,7 +164,21 @@ class Create_task extends React.Component{
                 }
 
                 handlePrepareValue("departaments", value);
-            })
+
+                handleSetUsers(value);
+            });
+
+            $('#users').on('change', (e) => {
+
+                let value = e.target.value;
+
+                if(!Array.isArray(value)){
+                    value = [value];
+                }
+
+                handlePrepareValue("users", value);
+
+            });
 
             
             $('#name').on('input', (e) => {
@@ -181,8 +214,29 @@ class Create_task extends React.Component{
         if(key == "description"){
             this.description = value;
         }
-        
 
+        if(key == "users"){
+            this.selectedUsers = value;
+        }
+
+    }
+
+    setUsers(token){
+
+        $('#users').text('').trigger('change'); //CLEAR SELECT 
+
+        this.users.map( (user, index) => { 
+
+            user.departaments.map( (departament) => {
+                if (departament.token == token) {
+                    
+                    let op = `<option value="${user.token}">${user.name}</option>`;
+                    $('#users').append(op).trigger('change');
+                    
+                }
+            } );
+
+        } )
     }
 
     save(){
@@ -191,6 +245,7 @@ class Create_task extends React.Component{
             name: this.name,
             description: this.description,
             departaments: this.selectedDepartaments,
+            users: this.selectedUsers,
             project: this.project.id,
         }
 
