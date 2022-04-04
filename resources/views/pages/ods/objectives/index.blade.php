@@ -68,15 +68,21 @@
                                     <table class="table table-hover table-striped table-bordered js_datatable w-100">
                                         <thead>
                                             <tr>
-                                                <th style="10%">{{ __('columns.title') }}</th>
-                                                <th style="width: 20%">{{ __('columns.description') }}</th>
-                                                <th style="width: 15%">{{ __('columns.indicator') }}</th>
-                                                <th style="width: 15%">
+                                                <th class="align-middle" style="15%">{{ __('columns.title') }}</th>
+                                                <th class="align-middle" style="width: 20%">
+                                                    {{ __('columns.description') }}</th>
+                                                <th class="align-middle" style="width: 15%">
+                                                    {{ __('columns.indicator') }}</th>
+                                                <th class="align-middle" style="width: 10%">
                                                     {{ __('columns.increase') . ' | ' . __('columns.decrease') }} </th>
-                                                <th style="width: 10%">{{ __('columns.target') }}</th>
-                                                <th style="width: 12.5%">{{ __('columns.base_year') }}</th>
-                                                <th style="width: 12.5%">{{ __('columns.target_year') }}</th>
-                                                <th style="width: 5%">{{ __('columns.actions') }}</th>
+                                                <th class="align-middle" style="width: 10%">{{ __('columns.target') }}
+                                                </th>
+                                                <th class="align-middle" style="width: 12.5%">
+                                                    {{ __('columns.base_year') }}</th>
+                                                <th class="align-middle" style="width: 12.5%">
+                                                    {{ __('columns.target_year') }}</th>
+                                                <th class="align-middle" style="width: 5%">{{ __('columns.actions') }}
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
