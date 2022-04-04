@@ -118,7 +118,9 @@ class StrategyEvolution extends React.Component{
     
     
                                 ticks: {
-                                    beginAtZero: true
+                                    beginAtZero: true,
+                                    suggestedMin: 0,
+                                    suggestedMax: this.targetValue,
                                 },
                                
                             }]

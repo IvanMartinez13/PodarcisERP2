@@ -180,8 +180,7 @@
             <li>
                 <a href="https://vigilanciaambiental.com" target="_blank">
 
-                    <img width="30px" src="{{ url('/') }}/img/branding/vao.png" alt="">
-
+                    <i class="fa-solid fa-helmet-safety"></i>
                     <span class="nav-label">{{ __('modules.vao') }}</span>
 
                 </a>
@@ -190,10 +189,8 @@
             <li>
                 <a href="https://account.calculatuhuelladecarbono.com" target="_blank">
 
-                    <img width="30px" src="{{ url('/') }}/img/branding/chc.png" alt="">
-                    <small>
-                        <span class="nav-label">Calcula tu huella de carbono</span>
-                    </small>
+                    <i class="fa-solid fa-shoe-prints"></i>
+                    <span class="nav-label">Huella de carbono</span>
                 </a>
             </li>
         </ul>

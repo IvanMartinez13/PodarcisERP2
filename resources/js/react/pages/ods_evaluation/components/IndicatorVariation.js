@@ -76,8 +76,6 @@ class IndicatorVariation extends React.Component{
         } ).then( () => {
 
             let ctx = document.getElementById('indicator_variation').getContext('2d');
-    
-
 
             if ( typeof this.target == 'number') {
 
@@ -110,6 +108,7 @@ class IndicatorVariation extends React.Component{
                             y: this.target,
                             style: "#ed5565",
                             text: 'Valor objetivo ' + this.formatValue( this.target.toFixed(3) ),
+                            
                             
                         }],
     
@@ -171,8 +170,6 @@ class IndicatorVariation extends React.Component{
     
                     }
                 }
-    
-                this.chart = new Chart(ctx, config);
 
                 var horizonalLinePlugin = {
                     afterDraw: function(chartInstance) {
@@ -192,8 +189,10 @@ class IndicatorVariation extends React.Component{
                             style = line.style;
                           }
                           if (line.y) {
+
                             var yValue = yScale.getPixelForValue(line.y);
                           } else {
+                              
                             var yValue = 0;
                           }
                           ctx.lineWidth = 3;
@@ -205,17 +204,24 @@ class IndicatorVariation extends React.Component{
                             ctx.strokeStyle = style;
                             ctx.stroke();
                           }
+
                           if (line.text) {
                             ctx.fillStyle = style;
+                            // le texte
+                            
                             ctx.fillText(line.text, 50, yValue+5 + ctx.lineWidth);
                           }
                         }
                         return;
                       };
                     }
-                  };
+                };
     
                 Chart.pluginService.register(horizonalLinePlugin);
+    
+    
+                this.chart = new Chart(ctx, config);
+
             }else{
 
                 const config = {
