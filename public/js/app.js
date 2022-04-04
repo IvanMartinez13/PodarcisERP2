@@ -10461,6 +10461,7 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
     _this.selectedUsers = [];
     _this.description = _this.task.description;
     _this.name = _this.task.name;
+    _this.options = [];
     _this.departaments = [];
     _this.users = [];
     return _this;
@@ -10678,7 +10679,9 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
           loading: false
         });
       }).then(function () {
-        _this3.setUsers(_this3.selectedDepartaments);
+        _this3.selectedDepartaments.map(function (token) {
+          _this3.setUsers(token);
+        });
 
         $('#users' + _this3.task.token).val(_this3.selectedUsers);
         $('#users' + _this3.task.token).trigger('change');
@@ -10779,15 +10782,24 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
     value: function setUsers(token) {
       var _this4 = this;
 
-      $('#users' + this.task.token).text('').trigger('change'); //CLEAR SELECT 
-
+      var options = this.options;
+      $('#users' + this.task.token).text('').trigger('change');
       this.users.map(function (user, index) {
         user.departaments.map(function (departament) {
           if (departament.token == token) {
-            var op = "<option value=\"".concat(user.token, "\">").concat(user.name, "</option>");
-            $('#users' + _this4.task.token).append(op).trigger('change');
+            if (options.includes(user)) {
+              var idx = options.indexOf(user);
+              options.splice(idx, 0);
+            } else {
+              options.push(user);
+            }
           }
         });
+      });
+      this.options = options;
+      this.options.map(function (val) {
+        var op = "<option value=\"".concat(val.token, "\">").concat(val.name, "</option>");
+        $('#users' + _this4.task.token).append(op).trigger('change');
       });
     }
   }, {

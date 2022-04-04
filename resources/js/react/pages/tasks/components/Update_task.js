@@ -16,6 +16,8 @@ class Update_task extends React.Component{
         this.description = this.task.description;
         this.name = this.task.name;
 
+        this.options = [];
+
         this.departaments = [];
         this.users = [];
 
@@ -160,13 +162,15 @@ class Update_task extends React.Component{
                 
             } )
 
-
+            
             this.setState({loading: false})
         } ).then( () => {
             
-            this.setUsers(this.selectedDepartaments);
+            this.selectedDepartaments.map( (token) => {
+                this.setUsers(token);
+            })
 
-
+            
             $('#users'+this.task.token).val(this.selectedUsers);
             $('#users'+this.task.token).trigger('change');
 
@@ -272,20 +276,33 @@ class Update_task extends React.Component{
 
     setUsers(token){
 
-        $('#users'+this.task.token).text('').trigger('change'); //CLEAR SELECT 
-
+        let options  =  this.options;
+        $('#users'+this.task.token).text('').trigger('change');
+        
         this.users.map( (user, index) => { 
             
             user.departaments.map( (departament) => {
-                
+
                 if (departament.token == token) {
-                    let op = `<option value="${user.token}">${user.name}</option>`;
-                    $('#users'+this.task.token).append(op).trigger('change');
+
+                    if (options.includes(user)) {
+                        let idx = options.indexOf(user);
+                        options.splice(idx, 0);
+                    }else{
+                        options.push(user);
+                    }
                     
                     
                 }
             } );
 
+        } );
+
+        this.options = options;
+
+        this.options.map( (val) => {
+            let op = `<option value="${val.token}">${val.name}</option>`;
+            $('#users'+this.task.token).append(op).trigger('change');
         } )
     }
 
