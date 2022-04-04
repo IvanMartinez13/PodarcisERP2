@@ -74,7 +74,7 @@ class DashboardOds extends React.Component{
                             </h3>
                     
                             <div className="row">
-                                <div className="col-lg-6">
+                                <div className="col-lg-12">
                                     <h5>
                                         Descripción
                                     </h5>
@@ -84,6 +84,9 @@ class DashboardOds extends React.Component{
                                     </p>
 
 
+                                </div>
+
+                                <div className="col-lg-4">
                                     <h5>
                                         Indicador
                                     </h5>
@@ -94,19 +97,22 @@ class DashboardOds extends React.Component{
                                 </div>
 
 
-                                <div className="col-lg-3">
+                                <div className="col-lg-4">
 
                                     <h5>Año de referencia</h5>
 
                                     { this.objective.base_year }
 
-                                    <h5>Año objetivo</h5>
-
-                                    { this.objective.target_year } 
 
                                 </div>
 
-                                <div className="col-lg-3">
+                                <div className="col-lg-4">
+                                    <h5>Año objetivo</h5>
+
+                                    { this.objective.target_year } 
+                                </div>
+
+                                <div className="col-lg-4">
 
 
                                     {
@@ -123,9 +129,30 @@ class DashboardOds extends React.Component{
                                     { this.objective.target } %
 
 
+                                    
+                                </div>
+
+                                <div className="col-lg-4">
                                     <h5>Valor objetivo</h5>
                                     <span id="target_value"></span>
-                                    
+                                </div>
+
+                                <div className="col-lg-4">
+                                    <h5>
+                                        Encargado
+                                    </h5>
+
+                                    {this.objective.manager}
+                                </div>
+
+                                <div className="col-lg-12">
+                                    <h5>
+                                        Recursos
+                                    </h5>
+
+                                    <p dangerouslySetInnerHTML={ { __html: this.objective.resources } }>
+
+                                    </p>
                                 </div>
                             </div>
                         

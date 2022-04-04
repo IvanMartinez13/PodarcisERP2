@@ -32,7 +32,9 @@ class UpdateStrategyRequest extends FormRequest
             "target" => ['required', 'numeric'],
             "base_year" => ['required', 'numeric'],
             "target_year" => ['required', 'numeric'],
-            "token" => ['required', 'string']
+            "token" => ['required', 'string'],
+            "resources" => ['required', 'string'],
+            "manager" => ['required', 'string', 'max:255'],
         ];
     }
 
@@ -47,7 +49,9 @@ class UpdateStrategyRequest extends FormRequest
             'target' => 'Objetivo',
             'base_year' => 'Año de referencia',
             'target_year' => 'Año del objetivo',
-            'token' => 'Token'
+            'token' => 'Token',
+            "resources" => 'Recursos',
+            "manager" => 'Encargado',
         ];
     }
 }

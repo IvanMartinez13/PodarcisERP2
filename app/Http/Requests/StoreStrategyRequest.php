@@ -33,6 +33,8 @@ class StoreStrategyRequest extends FormRequest
             "target" => ['required', 'numeric'],
             "base_year" => ['required', 'numeric'],
             "target_year" => ['required', 'numeric'],
+            "resources" => ['required', 'string'],
+            "manager" => ['required', 'string', 'max:255'],
         ];
     }
 
@@ -47,6 +49,8 @@ class StoreStrategyRequest extends FormRequest
             'target' => 'Objetivo',
             'base_year' => 'Año de referencia',
             'target_year' => 'Año del objetivo',
+            "resources" => 'Recursos',
+            "manager" => 'Encargado',
 
         ];
     }

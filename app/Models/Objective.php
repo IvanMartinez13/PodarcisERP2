@@ -21,6 +21,8 @@ class Objective extends Model
         "base_year",
         "target_year",
         "token",
+        "resources",
+        "manager",
         "customer_id"
     ];
 
