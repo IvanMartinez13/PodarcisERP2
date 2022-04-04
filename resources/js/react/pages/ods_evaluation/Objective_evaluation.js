@@ -103,7 +103,7 @@ class Objective_evaluation extends React.Component{
 
                                 }
 
-                                { this.objective.target } %
+                                { this.formatValue( this.objective.target ) } %
                             </div>
 
                             <div className="col-lg-4">
@@ -374,6 +374,13 @@ class Objective_evaluation extends React.Component{
                 this.setState({saved: true});
             }
         })
+    }
+
+    formatValue(number){
+        let value = number
+        value = value.replace('.', ',');
+        return value;
+        
     }
 
 

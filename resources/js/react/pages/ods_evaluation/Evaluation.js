@@ -164,7 +164,7 @@ class Evaluation extends React.Component{
 
                                             </h5>
                                             
-                                            <p>{Number(this.strategy.target).toFixed(3)} %</p>
+                                            <p>{ this.formatValue( Number(this.strategy.target).toFixed(3) )} %</p>
                                         </div>
 
                                         <div className="col-lg-4">
@@ -472,6 +472,13 @@ class Evaluation extends React.Component{
             }
 
         } );
+    }
+
+    formatValue(number){
+        let value = number
+        value = value.replace('.', ',');
+        return value;
+        
     }
 }
 

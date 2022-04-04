@@ -5886,7 +5886,7 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
                       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h5", {
                         children: this.strategy.increase == 1 ? 'Incremento Objetivo(%)' : 'Reducción Objetivo(%)'
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
-                        children: [Number(this.strategy.target).toFixed(3), " %"]
+                        children: [this.formatValue(Number(this.strategy.target).toFixed(3)), " %"]
                       })]
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                       className: "col-lg-4",
@@ -6198,6 +6198,13 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
         }
       });
     }
+  }, {
+    key: "formatValue",
+    value: function formatValue(number) {
+      var value = number;
+      value = value.replace('.', ',');
+      return value;
+    }
   }]);
 
   return Evaluation;
@@ -6381,7 +6388,7 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
                   children: "Reducci\xF3n Objetivo(%)"
                 }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h5", {
                   children: "Incremento Objetivo(%)"
-                }), this.objective.target, " %"]
+                }), this.formatValue(this.objective.target), " %"]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                 className: "col-lg-4",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h5", {
@@ -6630,6 +6637,13 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
           });
         }
       });
+    }
+  }, {
+    key: "formatValue",
+    value: function formatValue(number) {
+      var value = number;
+      value = value.replace('.', ',');
+      return value;
     }
   }]);
 
@@ -7977,7 +7991,7 @@ var IndicatorVariation = /*#__PURE__*/function (_React$Component) {
         _this2.target = response.data.targetValue;
 
         if (typeof _this2.target == 'number') {
-          $('#target_value').text(_this2.target.toFixed(3) + " " + _this2.objective.indicator);
+          $('#target_value').text(_this2.formatValue(_this2.target.toFixed(3)) + " " + _this2.objective.indicator);
         } else {
           $('#target_value').text(_this2.target);
         }
@@ -8018,7 +8032,7 @@ var IndicatorVariation = /*#__PURE__*/function (_React$Component) {
               "horizontalLine": [{
                 y: _this2.target,
                 style: "#ed5565",
-                text: 'Valor objetivo ' + _this2.target.toFixed(3)
+                text: 'Valor objetivo ' + _this2.formatValue(_this2.target.toFixed(3))
               }],
               plugins: {
                 legend: {
@@ -8193,6 +8207,13 @@ var IndicatorVariation = /*#__PURE__*/function (_React$Component) {
           _this2.chart = new Chart(ctx, _config);
         }
       });
+    }
+  }, {
+    key: "formatValue",
+    value: function formatValue(number) {
+      var value = number;
+      value = value.replace('.', ',');
+      return value;
     }
   }]);
 
@@ -8852,7 +8873,7 @@ var StrategyEvolution = /*#__PURE__*/function (_React$Component) {
         _this2.dataSets = data;
         _this2.years = years;
         _this2.targetValue = targetValue;
-        $("#strategy_target_value" + _this2.strategy.token).text(targetValue.toFixed(3) + ' ' + _this2.strategy.indicator);
+        $("#strategy_target_value" + _this2.strategy.token).text(_this2.formatValue(targetValue.toFixed(3)) + ' ' + _this2.strategy.indicator);
 
         _this2.setState({
           loading: false
@@ -8887,7 +8908,7 @@ var StrategyEvolution = /*#__PURE__*/function (_React$Component) {
               "horizontalLine": [{
                 y: _this2.targetValue,
                 style: "#ed5565",
-                text: 'Valor objetivo ' + _this2.targetValue.toFixed(3)
+                text: 'Valor objetivo ' + _this2.formatValue(_this2.targetValue.toFixed(3))
               }],
               hover: {
                 mode: 'nearest',
@@ -8996,6 +9017,13 @@ var StrategyEvolution = /*#__PURE__*/function (_React$Component) {
           _this2.chart = new Chart(_ctx, _config);
         }
       });
+    }
+  }, {
+    key: "formatValue",
+    value: function formatValue(number) {
+      var value = number;
+      value = value.replace('.', ',');
+      return value;
     }
   }]);
 

@@ -176,6 +176,22 @@
                     </a>
                 </li>
             @endcan
+
+            <li>
+                <a href="https://vigilanciaambiental.com" target="_blank">
+
+                    <img width="30px" src="{{ url('/') }}/img/branding/vao.png" alt="">
+                    <span class="nav-label">{{ __('modules.vao') }}</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="https://account.calculatuhuelladecarbono.com" target="_blank">
+
+                    <img width="30px" src="{{ url('/') }}/img/branding/chc.png" alt="">
+                    <span class="nav-label">Calcula tu huella de carbono</span>
+                </a>
+            </li>
         </ul>
 
     </div>
