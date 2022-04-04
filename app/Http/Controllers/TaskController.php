@@ -445,8 +445,16 @@ class TaskController extends Controller
     public function get_subtask(Request $request)
     {
         $task = Task::where('token', $request->task)->with('users')->first();
-        $subtasks = Task::where('task_id', $task->id)->with('users')->get();
         $users = $task->users;
+        $user = Auth::user();
+        if ($user->hasRole('customer-manager')) {
+            $subtasks = Task::where('task_id', $task->id)->with('users')->get();
+        } else {
+            $subtasks = Task::where('task_id', $task->id)->whereHas('users', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->with('users')->get();
+        }
+
 
         $response = [
             "subtasks" => $subtasks,

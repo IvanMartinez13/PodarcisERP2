@@ -13,7 +13,7 @@ class Edit_subtask extends React.Component{
         this.subtask = this.props.subtask;
         this.selectedUsers = [];
         this.users = this.props.users;
-
+        
         this.subtask.users.map( (value, index) => {
             this.selectedUsers.push(value.token)
         });
