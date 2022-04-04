@@ -5502,8 +5502,11 @@ var DashboardOds = /*#__PURE__*/function (_React$Component) {
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("h5", {
                 children: ["VARIACI\xD3N de ", this.objective.indicator]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_IndicatorVariation__WEBPACK_IMPORTED_MODULE_4__["default"], {
-                objective: this.objective
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                className: "mx-lg-5",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_IndicatorVariation__WEBPACK_IMPORTED_MODULE_4__["default"], {
+                  objective: this.objective
+                })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("hr", {
                 className: "d-lg-none d-block"
               })]
