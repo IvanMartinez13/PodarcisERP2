@@ -132,6 +132,9 @@ Route::prefix('ods')->middleware(['auth'])->group(function () {
     Route::post('/objective/evolutionChart', [OdsController::class, 'evolutionChart'])->name('ods.objective.evolutionChart');
     Route::get('/strategy/toTask/{token}', [OdsController::class, 'strategy_to_task'])->name('ods.strategy.toTask');
     Route::get('/objective/toTask/{token}', [OdsController::class, 'objective_to_task'])->name('ods.objective.toTask');
+
+    Route::post('/observation', [OdsController::class, 'observation'])->name('ods.objective.observation');
+    Route::post('/strategy/observation', [OdsController::class, 'strategy_observation'])->name('ods.objective.strategy.observation');
 });
 
 

@@ -108,7 +108,7 @@
                 </h1>
 
                 <div class="row mx-lg-5 mt-5">
-                    <div class="col-lg-4 mb-5 ">
+                    <div class="col-lg-4 mb-5 px-5 ">
 
                         <div class="glassCard text-dark">
 
@@ -142,7 +142,7 @@
 
                     </div>
 
-                    <div class="col-lg-4 mb-5 ">
+                    <div class="col-lg-4 mb-5 px-5">
 
                         <div class="glassCard text-dark">
                             <div class="marco">
@@ -170,7 +170,7 @@
 
                     </div>
 
-                    <div class="col-lg-4 mb-5 ">
+                    <div class="col-lg-4 mb-5 px-5">
 
                         <div class="glassCard text-dark">
                             <div class="marco">

@@ -65,6 +65,7 @@ return [
     'direction' => 'Dirección',
     'type' => 'Tipo',
     'group' => 'Grupo',
+    'resources' => 'Recursos',
 
     //PERMISSIONS
     'store' => 'Crear',

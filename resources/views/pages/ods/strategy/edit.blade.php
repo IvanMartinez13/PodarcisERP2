@@ -50,16 +50,28 @@
                 @method('put')
                 <input type="hidden" value="{{ $strategy->token }}" name="token">
                 <div class="row">
-                    <div class="col-lg-12 mt-3 @error('title') has-error @enderror">
+                    <div class="col-lg-6 mt-3 @error('title') has-error @enderror">
                         <label for="title">{{ __('forms.title') }}:</label>
                         <input type="text" name="title" id="title" placeholder="{{ __('forms.title') }}..."
                             class="form-control" value="{{ $strategy->title }}">
                     </div>
 
-                    <div class="col-lg-6 mt-3  @error('description') has-error @enderror">
+                    <div class="col-lg-6 mt-3 @error('manager') has-error @enderror">
+                        <label for="manager">{{ __('forms.manager') }}:</label>
+                        <input type="text" name="manager" id="manager" placeholder="{{ __('forms.manager') }}..."
+                            class="form-control" value="{{ $strategy->manager }}">
+                    </div>
+
+                    <div class="col-lg-12 mt-3  @error('description') has-error @enderror">
                         <label for="description">{{ __('forms.description') }}:</label>
                         <textarea type="text" name="description" id="description" class="form-conteol"
                             placeholder="{{ __('forms.description') }}...">{{ $strategy->description }}</textarea>
+                    </div>
+
+                    <div class="col-lg-6 mt-3  @error('resources') has-error @enderror">
+                        <label for="resources">{{ __('forms.resources') }}:</label>
+                        <textarea type="text" name="resources" id="resources" class="form-conteol"
+                            placeholder="{{ __('forms.resources') }}...">{{ $strategy->resources }}</textarea>
                     </div>
 
                     <div class="col-lg-6 mt-3  @error('performances') has-error @enderror">
@@ -126,6 +138,11 @@
     <script>
         $('#description').summernote({
             placeholder: 'Descripción...',
+            height: 200,
+        });
+
+        $('#resources').summernote({
+            placeholder: 'Recursos...',
             height: 200,
         });
 

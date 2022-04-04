@@ -17,6 +17,7 @@ use App\Models\Objective_evaluation_file;
 use App\Models\Project;
 use App\Models\Strategy;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -54,6 +55,8 @@ class OdsController extends Controller
             "target" => $request->target,
             "base_year" => $request->base_year,
             "target_year" => $request->target_year,
+            "resources" => $request->resources,
+            "manager" => $request->manager,
             "token" => md5($request->title . '+' . date('d/m/Y H:i:s')),
             "customer_id" => $customer_id,
         ];
@@ -86,6 +89,8 @@ class OdsController extends Controller
             "target" => $request->target,
             "base_year" => $request->base_year,
             "target_year" => $request->target_year,
+            "resources" => $request->resources,
+            "manager" => $request->manager,
         ];
         //2) UPDATE DATA
         $objective = Objective::where('token', $request->token)->update($data);
@@ -96,6 +101,50 @@ class OdsController extends Controller
         }
 
         return redirect(route('ods.index'))->with('message', 'Objetivo editado.')->with('status', 'success');
+    }
+
+    public function observation(Request $request)
+    {
+
+        try {
+            $objective = Objective::where('token', $request->token)->update(['observations' => $request->observations]);
+
+            $response = [
+                'status' => 'success',
+                'message' => 'Observaciones guardadas.'
+            ];
+        } catch (\Throwable $th) {
+
+            $response = [
+                'status' => 'error',
+                'message' => 'Las observaciones no pueden estar vacias.'
+            ];
+        }
+
+
+
+        return response()->json($response);
+    }
+
+
+    public function strategy_observation(Request $request)
+    {
+        try {
+            $strategy = Strategy::where('token', $request->token)->update(['observations' => $request->observations]);
+
+            $response = [
+                'status' => 'success',
+                'message' => 'Observaciones guardadas.'
+            ];
+        } catch (\Throwable $th) {
+
+            $response = [
+                'status' => 'error',
+                'message' => 'Las observaciones no pueden estar vacias.'
+            ];
+        }
+
+        return response()->json($response);
     }
 
     //PAGE EVALUATE
@@ -298,6 +347,8 @@ class OdsController extends Controller
             "target" => $request->target,
             "base_year" => $request->base_year,
             "target_year" => $request->target_year,
+            "resources" => $request->resources,
+            "manager" => $request->manager,
             "token" => md5($request->title . '+' . date('d/m/Y H:i:s')),
             "objective_id" => $objective->id
         ];
@@ -314,7 +365,6 @@ class OdsController extends Controller
         //1) GET DATA
         $objective = Objective::where('token', $token_objective)->first();
         $strategy = Strategy::where('token', $token_strategy)->first();
-
         return view('pages.ods.strategy.edit', compact('objective', 'strategy'));
     }
 
@@ -334,6 +384,8 @@ class OdsController extends Controller
             "target" => $request->target,
             "base_year" => $request->base_year,
             "target_year" => $request->target_year,
+            "resources" => $request->resources,
+            "manager" => $request->manager,
 
         ];
 
@@ -427,6 +479,7 @@ class OdsController extends Controller
         $years = $evaluations->unique('year')->pluck('year');
 
         $evaluations_array = [];
+        $variation = [];
 
         //año
         foreach ($years as $year) {
@@ -437,16 +490,35 @@ class OdsController extends Controller
                     if (!isset($evaluations_array[$year][0])) {
 
                         $evaluations_array[$year] = [];
+                        $variation[$year] = 0;
                     }
 
                     array_push($evaluations_array[$year], $evaluation);
+                    $variation[$year] += $evaluation->value;
                 }
             }
         }
 
+        if ($strategy->increase == 1) {
+            $targetPercent = 100 + $strategy->target;
+        } else {
+            $targetPercent = 100 - $strategy->target;
+        }
+
+
+        if (isset($variation[$strategy->base_year])) {
+            $targetValue = ($variation[$strategy->base_year] * $targetPercent) / 100;
+        } else {
+
+            $targetValue = 'No tiene';
+        }
+
+
+
         $response = [
             "evaluations" => $evaluations_array,
-            "years" => $years
+            "years" => $years,
+            "targetValue" =>  $targetValue,
         ];
 
         return response()->json($response);
@@ -960,6 +1032,12 @@ class OdsController extends Controller
 
             $task->strategy()->sync([$strategy->id]);
             $task->departaments()->sync($departaments);
+
+            $users = User::whereHas('departaments', function ($q) use ($departaments) {
+                $q->whereIn('departament_id', $departaments);
+            })->get('id');
+
+            $task->users()->sync($users);
         }
 
         return redirect(route('tasks.project.task_details', ['project' => $project->token, 'task' => $task->token]));
@@ -1021,6 +1099,12 @@ class OdsController extends Controller
 
             $task->objective()->sync([$objective->id]);
             $task->departaments()->sync($departaments);
+
+            $users = User::whereHas('departaments', function ($q) use ($departaments) {
+                $q->whereIn('departament_id', $departaments);
+            })->get('id');
+
+            $task->users()->sync($users);
         }
 
         return redirect(route('tasks.project.task_details', ['project' => $project->token, 'task' => $task->token]));

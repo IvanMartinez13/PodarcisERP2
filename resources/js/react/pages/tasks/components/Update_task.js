@@ -12,12 +12,14 @@ class Update_task extends React.Component{
         this.task = this.props.task;
 
         this.selectedDepartaments = [];
+        this.selectedUsers = [];
         this.description = this.task.description;
         this.name = this.task.name;
 
-        this.task.departaments.map( (departament) => {
-            this.selectedDepartaments.push(departament.token)
-        } )
+        this.options = [];
+
+        this.departaments = [];
+        this.users = [];
 
         
     }
@@ -103,6 +105,21 @@ class Update_task extends React.Component{
                                 </div>
 
                                 <div className="col-lg-12 mb-3">
+                                    <label htmlFor="users">Usuarios:</label>
+                                    <select defaultValue={this.selectedUsers} className="form-control" style={{width: "100%"}} name="users" id={"users"+this.task.token} multiple="multiple">
+                                        {
+                                            this.users.map( (user, index) => {
+                                                return(
+                                                    <option key={user.token+index} value={user.token}>
+                                                        {user.name}
+                                                    </option>
+                                                );
+                                            } )
+                                        }
+                                    </select>
+                                </div>
+
+                                <div className="col-lg-12 mb-3">
                                     <label htmlFor={"description"+this.task.token}>Descripción:</label>
                                     <textarea defaultValue={this.task.description} className="form-control" name="description" id={"description"+this.task.token} placeholder="Descripción..."></textarea>
                                 </div>
@@ -134,9 +151,29 @@ class Update_task extends React.Component{
         axios.post('/tasks/project/get_departaments').then( (response) => {
 
             this.departaments = response.data.departaments;
+            this.users = response.data.users;
+
+            this.task.departaments.map( (departament) => {
+                this.selectedDepartaments.push(departament.token)
+            } )
+
+            this.task.users.map( (user) => {
+                this.selectedUsers.push(user.token);
+                
+            } )
+
+            
             this.setState({loading: false})
         } ).then( () => {
             
+            this.selectedDepartaments.map( (token) => {
+                this.setUsers(token);
+            })
+
+            
+            $('#users'+this.task.token).val(this.selectedUsers);
+            $('#users'+this.task.token).trigger('change');
+
             $("#departaments"+this.task.token).select2({
                 dropdownParent: $('#updateTask'+this.task.token), //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
                 theme: 'bootstrap4',
@@ -146,7 +183,17 @@ class Update_task extends React.Component{
                 
             });
 
+            $("#users"+this.task.token).select2({
+                dropdownParent: $('#updateTask'+this.task.token), //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
+                theme: 'bootstrap4',
+                placeholder: "Selecciona un usuario...",
+                width: '100%', // need to override the changed default
+                allowClear: true
+                
+            })
+
             const handlePrepareValue = (key, value) => { this.prepareValue(key, value) };
+            const handleSetUsers = (token) => { this.setUsers(token) };
 
             $('#departaments'+this.task.token).on('change', (e) => {
 
@@ -157,8 +204,33 @@ class Update_task extends React.Component{
                 }
 
                 handlePrepareValue("departaments", value);
+                handleSetUsers(value);
             })
 
+            const handleSelectUser = () => { return this.selectedUsers }
+
+            $('#users'+this.task.token).on('select2:select', (e) => {
+
+                let value = e.params.data.id;
+                let array = handleSelectUser();
+                array.push(value);
+
+                handlePrepareValue("users", array);
+
+            });
+
+            $('#users'+this.task.token).on('select2:unselect', function (e) {
+                var value = e.params.data.id;
+                let array = handleSelectUser();
+                
+                array.map( (user, index) => {
+                    if(user == value){
+                        array.splice(index, 1); // 2nd parameter means remove one item only
+                    }
+                } )
+            
+                handlePrepareValue("users", array);
+            });
             
             $('#name'+this.task.token).on('input', (e) => {
 
@@ -193,8 +265,45 @@ class Update_task extends React.Component{
         if(key == "description"){
             this.description = value;
         }
+
+        if(key == "users"){
+            this.selectedUsers = value;
+            
+        }
         
 
+    }
+
+    setUsers(token){
+
+        let options  =  this.options;
+        $('#users'+this.task.token).text('').trigger('change');
+        
+        this.users.map( (user, index) => { 
+            
+            user.departaments.map( (departament) => {
+
+                if (departament.token == token) {
+
+                    if (options.includes(user)) {
+                        let idx = options.indexOf(user);
+                        options.splice(idx, 0);
+                    }else{
+                        options.push(user);
+                    }
+                    
+                    
+                }
+            } );
+
+        } );
+
+        this.options = options;
+
+        this.options.map( (val) => {
+            let op = `<option value="${val.token}">${val.name}</option>`;
+            $('#users'+this.task.token).append(op).trigger('change');
+        } )
     }
 
     save(){
@@ -203,6 +312,7 @@ class Update_task extends React.Component{
             name: this.name,
             description: this.description,
             departaments: this.selectedDepartaments,
+            users: this.selectedUsers,
             project: this.project.id,
             token: this.task.token
         }

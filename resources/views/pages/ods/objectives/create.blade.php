@@ -41,16 +41,28 @@
                 @method('put')
 
                 <div class="row">
-                    <div class="col-lg-12 mt-3 @error('title') has-error @enderror">
+                    <div class="col-lg-6 mt-3 @error('title') has-error @enderror">
                         <label for="title">{{ __('forms.title') }}:</label>
                         <input type="text" name="title" id="title" class="form-control"
                             placeholder="{{ __('forms.title') }}..." value="{{ old('title') }}">
                     </div>
 
-                    <div class="col-lg-12 mt-3  @error('description') has-error @enderror">
+                    <div class="col-lg-6 mt-3 @error('manager') has-error @enderror">
+                        <label for="manager">{{ __('forms.manager') }}:</label>
+                        <input type="text" name="manager" id="manager" class="form-control"
+                            placeholder="{{ __('forms.manager') }}..." value="{{ old('manager') }}">
+                    </div>
+
+                    <div class="col-lg-6 mt-3  @error('description') has-error @enderror">
                         <label for="description">{{ __('forms.description') }}:</label>
                         <textarea type="text" name="description" id="description" class="form-conteol"
                             placeholder="{{ __('forms.description') }}...">{{ old('description') }}</textarea>
+                    </div>
+
+                    <div class="col-lg-6 mt-3  @error('resources') has-error @enderror">
+                        <label for="resources">{{ __('forms.resources') }}:</label>
+                        <textarea type="text" name="resources" id="resources" class="form-conteol"
+                            placeholder="{{ __('forms.resources') }}...">{{ old('resources') }}</textarea>
                     </div>
 
                     <div class="col-lg-4 mt-3 @error('indicator') has-error @enderror">
@@ -119,6 +131,12 @@
         $('#description').summernote({
 
             placeholder: 'Descripción...',
+            height: 100,
+        });
+
+        $('#resources').summernote({
+
+            placeholder: "{{ __('forms.resources') }}...",
             height: 100,
         });
 

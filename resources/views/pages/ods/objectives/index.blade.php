@@ -22,8 +22,10 @@
 
     <div class="tabs-container">
         <ul class="nav nav-tabs" role="tablist">
-            <li><a class="nav-link bg-transparent active" data-toggle="tab" href="#dashboard">Dashboard</a></li>
-            <li><a class="nav-link bg-transparent" data-toggle="tab" href="#objective-tab">Creación de objetivos</a></li>
+            <li><a id="nav-dashboard" class="nav-link bg-transparent active" data-toggle="tab"
+                    href="#dashboard">Dashboard</a></li>
+            <li><a id="nav-objectives" class="nav-link bg-transparent" data-toggle="tab" href="#objective-tab">Creación de
+                    objetivos</a></li>
         </ul>
         <div class="tab-content">
 
@@ -68,15 +70,21 @@
                                     <table class="table table-hover table-striped table-bordered js_datatable w-100">
                                         <thead>
                                             <tr>
-                                                <th style="10%">{{ __('columns.title') }}</th>
-                                                <th style="width: 20%">{{ __('columns.description') }}</th>
-                                                <th style="width: 15%">{{ __('columns.indicator') }}</th>
-                                                <th style="width: 15%">
+                                                <th class="align-middle" style="15%">{{ __('columns.title') }}</th>
+                                                <th class="align-middle" style="width: 20%">
+                                                    {{ __('columns.description') }}</th>
+                                                <th class="align-middle" style="width: 15%">
+                                                    {{ __('columns.indicator') }}</th>
+                                                <th class="align-middle" style="width: 10%">
                                                     {{ __('columns.increase') . ' | ' . __('columns.decrease') }} </th>
-                                                <th style="width: 10%">{{ __('columns.target') }}</th>
-                                                <th style="width: 12.5%">{{ __('columns.base_year') }}</th>
-                                                <th style="width: 12.5%">{{ __('columns.target_year') }}</th>
-                                                <th style="width: 5%">{{ __('columns.actions') }}</th>
+                                                <th class="align-middle" style="width: 10%">{{ __('columns.target') }}
+                                                </th>
+                                                <th class="align-middle" style="width: 12.5%">
+                                                    {{ __('columns.base_year') }}</th>
+                                                <th class="align-middle" style="width: 12.5%">
+                                                    {{ __('columns.target_year') }}</th>
+                                                <th class="align-middle" style="width: 5%">{{ __('columns.actions') }}
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -199,6 +207,24 @@
                 $('#delete_' + token).submit();
 
             });
+        }
+
+        //SAVE SELECTED TAB
+
+        $('#nav-dashboard').on('click', () => {
+            localStorage.setItem('objectivesTab', 'nav-dashboard');
+        });
+
+        $('#nav-objectives').on('click', () => {
+            localStorage.setItem('objectivesTab', 'nav-objectives');
+        });
+
+        if (localStorage.getItem('objectivesTab') == "nav-dashboard") {
+
+            $('#nav-dashboard').tab('show') // Select tab
+        } else if (localStorage.getItem('objectivesTab') == "nav-objectives") {
+
+            $('#nav-objectives').tab('show') // Select tab
         }
     </script>
 @endpush

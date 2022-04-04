@@ -12,6 +12,7 @@ use App\Models\Departament;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\Task_file;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -130,7 +131,24 @@ class TaskController extends Controller
     {
         $project = Project::where('token', $token)->first();
 
-        $tasks = Task::where('project_id', $project->id)->where('task_id', null)->with('departaments')->get();
+        $user = Auth::user();
+
+        if ($user->hasRole('customer-manager')) {
+            $tasks = Task::where('project_id', $project->id)
+                ->where('task_id', null)
+                ->with('users')
+                ->with('departaments')
+                ->get();
+        } else {
+            $tasks = Task::where('project_id', $project->id)
+                ->where('task_id', null)
+                ->with('departaments')
+                ->whereHas('users', function ($q) use ($user) {
+                    $q->where('user_id', $user->id);
+                })
+                ->get();
+        }
+
 
         foreach ($tasks as $key => $task) {
 
@@ -167,7 +185,13 @@ class TaskController extends Controller
             $q->whereIn('id', $branches_id);
         })->get();
 
-        return response()->json(["departaments" => $departaments]);
+        $customer_id = Auth::user()->customer_id;
+        $users = User::where('customer_id', $customer_id)->with('departaments')->get();
+
+        return response()->json([
+            "departaments" => $departaments,
+            "users" => $users
+        ]);
     }
 
     public function add_task(Request $request)
@@ -186,6 +210,9 @@ class TaskController extends Controller
         $departaments = $request->departaments;
         $departaments = Departament::whereIn('token', $departaments)->get('id');
 
+        $users = $request->users;
+        $users = User::whereIn('token', $users)->get('id');
+
         //2) VALIDATE DATA
 
         $rules = [
@@ -193,6 +220,7 @@ class TaskController extends Controller
             "description" => ["string", "required"],
             "project" => ["numeric", "required"],
             "departaments" => ["array", "required"],
+            "users" => ["array", "required"],
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -205,9 +233,8 @@ class TaskController extends Controller
         $task = new Task($data);
         $task->save();
 
-
-
         $task->departaments()->sync($departaments);
+        $task->users()->sync($users);
 
         //4) RETURN RESPONSE
         return response()->json(["status" => "success", "message" => "Tarea Creada."]);
@@ -227,10 +254,14 @@ class TaskController extends Controller
         $departaments = $request->departaments;
         $departaments = Departament::whereIn('token', $departaments)->get('id');
 
+        $users = $request->users;
+        $users = User::whereIn('token', $users)->get('id');
+
         $task = Task::where('token', $request->token)->update($data);
         $task = Task::where('token', $request->token)->first();
 
         $task->departaments()->sync($departaments);
+        $task->users()->sync($users);
 
         return response()->json(["status" => "success", "message" => "Tarea Editada."]);
     }
@@ -367,6 +398,9 @@ class TaskController extends Controller
         ];
 
         $departaments = $task->departaments->pluck('id');
+        $users = $request->users;
+
+        $users = User::where('token', $users)->get('id');
 
         //2) VALIDATE DATA
         $rules = [
@@ -386,6 +420,7 @@ class TaskController extends Controller
         $subtask->save();
 
         $subtask->departaments()->sync($departaments);
+        $subtask->users()->sync($users);
 
 
         $subtasks = Task::where('task_id', $task->id)->get();
@@ -409,11 +444,21 @@ class TaskController extends Controller
 
     public function get_subtask(Request $request)
     {
-        $task = Task::where('token', $request->task)->first();
-        $subtasks = Task::where('task_id', $task->id)->get();
+        $task = Task::where('token', $request->task)->with('users')->first();
+        $users = $task->users;
+        $user = Auth::user();
+        if ($user->hasRole('customer-manager')) {
+            $subtasks = Task::where('task_id', $task->id)->with('users')->get();
+        } else {
+            $subtasks = Task::where('task_id', $task->id)->whereHas('users', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->with('users')->get();
+        }
+
 
         $response = [
             "subtasks" => $subtasks,
+            "users" => $users
         ];
 
         return response()->json($response);
@@ -542,6 +587,10 @@ class TaskController extends Controller
             "task" => ["string", "required"],
         ];
 
+        $users = $request->users;
+
+        $users = User::whereIn('token', $users)->get('id');
+
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
@@ -549,6 +598,8 @@ class TaskController extends Controller
         }
 
         $task = Task::where('token', $request->task)->update($data);
+        $task = Task::where('token', $request->task)->first();
+        $task->users()->sync($users);
 
         return response()->json(["status" => "success", "message" => "Subtarea Editada."]);
     }

@@ -13,6 +13,7 @@ class Subtasks extends React.Component{
 
         this.task = this.props.task;
         this.subtasks = [];
+        this.users = [];
 
         this.setLoading = this.setLoading.bind(this);
         this.setSaving = this.setSaving.bind(this);
@@ -47,7 +48,11 @@ class Subtasks extends React.Component{
                         <button
                             className="btn btn-link"
                             onClick={() => {
-                            $('#modalSubtask').modal('show');
+                                $('#modalSubtask').modal('show');
+                                $('#description').summernote({
+                                    placeholder: "Descripción...",
+                                    height: 200
+                                });
                             }}>
                             <i className="fa fa-plus-circle" aria-hidden="true"></i> Añadir subtarea
                         </button>
@@ -93,7 +98,7 @@ class Subtasks extends React.Component{
                                             }}></td>
                                             <td className="align-middle text-center">
 
-                                                <div className="btn-group-vertical">
+                                                <div className="btn-group">
 
                                                 {
                                                     (this.update == 1) ?
@@ -101,6 +106,10 @@ class Subtasks extends React.Component{
                                                     <button className="btn btn-link"
                                                             onClick={() => {
                                                                 $('#editModalSubtask'+subtask.token).modal('show');
+                                                                $('#description'+subtask.token).summernote({
+                                                                    placeholder: "Descripción...",
+                                                                    height: 200
+                                                                });
                                                             }}
                                                     >
                                                         <i className="fa fa-pencil" aria-hidden="true"></i>
@@ -145,12 +154,20 @@ class Subtasks extends React.Component{
                     </table>
                 </div>
 
-                <Create_subtask task={this.task} setLoading={this.setLoading} setSaving={this.setSaving}></Create_subtask>
+                <Create_subtask task={this.task} users={this.users} setLoading={this.setLoading} setSaving={this.setSaving}></Create_subtask>
 
                 {
                     this.subtasks.map( (subtask, index) => {
                         return(
-                            <Edit_subtask key={"updateSubtask_"+subtask.token} task={this.task} setLoading={this.setLoading} setSaving={this.setSaving} id={subtask.token} subtask={subtask}></Edit_subtask>
+                            <Edit_subtask
+                                key={"updateSubtask_"+subtask.token}
+                                task={this.task}
+                                setLoading={this.setLoading}
+                                setSaving={this.setSaving}
+                                id={subtask.token}
+                                subtask={subtask}
+                                users={this.users}
+                            ></Edit_subtask>
                         );
                     })
                 }
@@ -164,7 +181,9 @@ class Subtasks extends React.Component{
 
         axios.post('/tasks/project/task/get_subtask', {task: this.task}).then( (response) => {
             let subtasks = response.data.subtasks;
+            let users = response.data.users;
             this.subtasks = subtasks;
+            this.users = users;
 
             this.setState({loading: false});
 
@@ -258,7 +277,6 @@ class Subtasks extends React.Component{
     finishTask(data){
         axios.post('/tasks/project/task/subtask/changeState', data).then( (response) => {
 
-            console.log(response)
             toastr.success(response.data.message);
 
             $('#progress').css({'width': response.data.progress+"%"})

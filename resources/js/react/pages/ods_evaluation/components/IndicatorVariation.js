@@ -54,7 +54,7 @@ class IndicatorVariation extends React.Component{
             this.target = response.data.targetValue;
 
             if ( typeof this.target == 'number') {
-                $('#target_value').text( this.target.toFixed(3)+" "+this.objective.indicator );
+                $('#target_value').text( this.formatValue( this.target.toFixed(3) )+" "+this.objective.indicator );
             }else{
                 $('#target_value').text( this.target );
             }
@@ -109,7 +109,7 @@ class IndicatorVariation extends React.Component{
                         "horizontalLine": [{
                             y: this.target,
                             style: "#ed5565",
-                            text: 'Valor objetivo ' + this.target.toFixed(3),
+                            text: 'Valor objetivo ' + this.formatValue( this.target.toFixed(3) ),
                             
                         }],
     
@@ -315,6 +315,13 @@ class IndicatorVariation extends React.Component{
             
 
         } ); 
+    }
+
+    formatValue(number){
+        let value = number
+        value = value.replace('.', ',');
+        return value;
+        
     }
 
 }

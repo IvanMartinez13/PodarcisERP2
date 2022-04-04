@@ -16,6 +16,8 @@ class Objective_evaluation extends React.Component{
         this.objective = this.props.objective;
         this.years = [];
 
+        this.observations = this.objective.observations;
+
         this.state = {
             loading: true,
             save: false,
@@ -51,29 +53,48 @@ class Objective_evaluation extends React.Component{
 
                 <div className="row mx-1 mb-3">
 
-                    <div className="col-lg-4">
-                        <h5>Descripción</h5>
-                        <p dangerouslySetInnerHTML={{ __html: this.objective.description }}>
-                        </p>
-
-                        <h5>Indicador</h5>
-                        <p>
-                            {this.objective.indicator}
-                        </p>
-                    </div>
-
-                    <div className="col-lg-4">
-
+                    <div className="col-lg-8">
                         <div className="row">
+
                             <div className="col-lg-6">
+                                <h5>Descripción</h5>
+                                <p dangerouslySetInnerHTML={{ __html: this.objective.description }}>
+                                </p>
+                            </div>
+
+                            <div className="col-lg-6">
+                                <h5>Recursos</h5>
+                                <p dangerouslySetInnerHTML={{ __html: this.objective.resources }}>
+                                </p>
+                            </div>
+
+                            <div className="col-lg-4">
+                                <h5>Indicador</h5>
+                                <p>
+                                    {this.objective.indicator}
+                                </p>
+                            </div>
+
+                            <div className="col-lg-4">
+                                <h5>Encargado</h5>
+                                <p>
+                                    {this.objective.manager}
+                                </p>
+                            </div>
+
+
+                            <div className="col-lg-4">
                                 <h5>Año de referencia</h5>
                                 {this.objective.base_year}
+                            </div>
 
+
+                            <div className="col-lg-4">
                                 <h5>Año del objetivo</h5>
                                 {this.objective.target_year}
                             </div>
 
-                            <div className="col-lg-6">
+                            <div className="col-lg-4">
                                 {
                                     (this.objective.increase == 0)?
                                         
@@ -84,19 +105,49 @@ class Objective_evaluation extends React.Component{
 
                                 }
 
-                                { this.objective.target } %
+                                { this.formatValue( this.objective.target ) } %
+                            </div>
 
+                            <div className="col-lg-4">
                                 <h5>Valor objetivo</h5>
                                 <span id="target_value"></span>
                             </div>
+
+                            
                         </div>
+                        <h5 className="mt-3">
+                            <label htmlFor="observations">Observaciones:</label>
+                        </h5>
+                        <textarea
+                            id="observations" 
+                            className="form-control"
+                            placeholder="Observaciones..."
+                            defaultValue={this.observations}
+                        ></textarea>
+
+                        {
+                            (this.update == 1)?
+                                <div className="text-right">
+                                    <button className="btn btn-primary mt-2 " onClick={() => {
+                                        this.oservations();
+                                    }}>Guardar observaciones</button>
+                                </div>
+                            :
+                                <div className="alert alert-warning">
+                                    No tienes permisos para cambiar las observaciones.
+                                </div>
+                        }
                         
                     </div>
 
+
                     <div className="col-lg-4">
+
                         <h5 className="text-center">VARIACIÓN de {this.objective.indicator}</h5>
                         <IndicatorVariation objective={this.objective} />
                     </div>
+
+
                 </div>
 
                 {
@@ -254,6 +305,18 @@ class Objective_evaluation extends React.Component{
                 loading: false,
                 rows: rows,
             });
+        } ).then( () => {
+
+            $('#observations').summernote({
+                placeholder: "Observaciones...",
+                height: '200px'
+            })
+            const handleObservations = (val) => { this.observations = val }
+                    
+            $('#observations').on('summernote.change', function(e){
+                handleObservations(e.target.value)
+            })
+
         } )
 
 
@@ -302,6 +365,21 @@ class Objective_evaluation extends React.Component{
                     saved: false,
                     rows: rows,
                 });
+
+            } ).then( () => {
+
+                    $('#observations').summernote({
+                        placeholder: "Observaciones...",
+                        height: '200px'
+                    })
+
+                    const handleObservations = (val) => {  this.observations = val; }
+                    
+                    $('#observations').on('summernote.change', function(e){
+                        handleObservations(e.target.value)
+                    })
+
+                
             } )
     
         }
@@ -336,6 +414,32 @@ class Objective_evaluation extends React.Component{
         this.setState({loading: true, save: true});
 
         axios.post('/ods/objective/evaluate/save', {data: rows, token: token}).then( (response) => {
+            if (response.data.status == 'success') {
+                
+                toastr.success( response.data.message )
+
+                this.setState({saved: true});
+            }else{
+                
+                toastr.error( response.data.message )
+
+                this.setState({saved: true});
+            }
+        })
+    }
+
+    formatValue(number){
+        let value = number
+        value = value.replace('.', ',');
+        return value;
+        
+    }
+
+    oservations(){
+        let value = $("#observations").val();
+        $('#observations').summernote('destroy');
+        this.setState({loading: true, save: true});
+        axios.post('/ods/observation', {observations: value, token: this.objective.token}).then( (response) => {
             if (response.data.status == 'success') {
                 
                 toastr.success( response.data.message )
