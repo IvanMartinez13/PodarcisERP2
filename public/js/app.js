@@ -8837,6 +8837,7 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
     };
     _this.task = _this.props.task;
     _this.subtasks = [];
+    _this.users = [];
     _this.setLoading = _this.setLoading.bind(_assertThisInitialized(_this));
     _this.setSaving = _this.setSaving.bind(_assertThisInitialized(_this));
     _this.store = _this.props.store;
@@ -8876,6 +8877,10 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
           className: "btn btn-link",
           onClick: function onClick() {
             $('#modalSubtask').modal('show');
+            $('#description').summernote({
+              placeholder: "Descripción...",
+              height: 200
+            });
           },
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
             className: "fa fa-plus-circle",
@@ -8922,11 +8927,15 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
                     className: "align-middle text-center",
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                      className: "btn-group-vertical",
+                      className: "btn-group",
                       children: [_this2.update == 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
                         className: "btn btn-link",
                         onClick: function onClick() {
                           $('#editModalSubtask' + subtask.token).modal('show');
+                          $('#description' + subtask.token).summernote({
+                            placeholder: "Descripción...",
+                            height: 200
+                          });
                         },
                         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
                           className: "fa fa-pencil",
@@ -8950,6 +8959,7 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_Create_subtask__WEBPACK_IMPORTED_MODULE_3__["default"], {
           task: this.task,
+          users: this.users,
           setLoading: this.setLoading,
           setSaving: this.setSaving
         }), this.subtasks.map(function (subtask, index) {
@@ -8958,7 +8968,8 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
             setLoading: _this2.setLoading,
             setSaving: _this2.setSaving,
             id: subtask.token,
-            subtask: subtask
+            subtask: subtask,
+            users: _this2.users
           }, "updateSubtask_" + subtask.token);
         })]
       });
@@ -8972,7 +8983,9 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
         task: this.task
       }).then(function (response) {
         var subtasks = response.data.subtasks;
+        var users = response.data.users;
         _this3.subtasks = subtasks;
+        _this3.users = users;
 
         _this3.setState({
           loading: false
@@ -9068,7 +9081,6 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
     key: "finishTask",
     value: function finishTask(data) {
       axios__WEBPACK_IMPORTED_MODULE_0___default().post('/tasks/project/task/subtask/changeState', data).then(function (response) {
-        console.log(response);
         toastr.success(response.data.message);
         $('#progress').css({
           'width': response.data.progress + "%"
@@ -9427,6 +9439,8 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
     _this.name = '';
     _this.description = '';
     _this.task = _this.props.task;
+    _this.users = _this.props.users;
+    _this.selectedUsers = [];
 
     _this.setLoading = function (data) {
       _this.props.setLoading(data);
@@ -9492,6 +9506,23 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "col-lg-12 my-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+                    htmlFor: "users",
+                    children: "Usuarios:"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("select", {
+                    id: "users",
+                    name: "users",
+                    className: "form-control",
+                    multiple: true,
+                    children: this.users.map(function (user, index) {
+                      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+                        value: user.token,
+                        children: user.name
+                      }, user.token + index);
+                    })
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: "col-lg-12 my-3",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     htmlFor: "description",
                     children: "Descripci\xF3n:"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("textarea", {
@@ -9530,11 +9561,6 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      $('#description').summernote({
-        placeholder: "Descripción...",
-        height: 200
-      });
-
       var handlePrepareValue = function handlePrepareValue(key, value) {
         _this3.prepareData(key, value);
       };
@@ -9548,6 +9574,36 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
         var value = e.target.value;
         handlePrepareValue("description", value);
       });
+      $("#users").select2({
+        dropdownParent: $('#modalSubtask'),
+        //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
+        theme: 'bootstrap4',
+        placeholder: "Selecciona un usuario...",
+        width: '100%',
+        // need to override the changed default
+        allowClear: true
+      });
+
+      var handleSelectUser = function handleSelectUser() {
+        return _this3.selectedUsers;
+      };
+
+      $('#users').on('select2:select', function (e) {
+        var value = e.params.data.id;
+        var array = handleSelectUser();
+        array.push(value);
+        handlePrepareValue("users", array);
+      });
+      $('#users').on('select2:unselect', function (e) {
+        var value = e.params.data.id;
+        var array = handleSelectUser();
+        array.map(function (user, index) {
+          if (user == value) {
+            array.splice(index, 1); // 2nd parameter means remove one item only
+          }
+        });
+        handlePrepareValue("users", array);
+      });
     }
   }, {
     key: "prepareData",
@@ -9559,6 +9615,10 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
       if (key == "description") {
         this.description = value;
       }
+
+      if (key == "users") {
+        this.selectedUsers = value;
+      }
     }
   }, {
     key: "save",
@@ -9568,7 +9628,8 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
       var data = {
         name: this.name,
         description: this.description,
-        task: this.task
+        task: this.task,
+        users: this.selectedUsers
       }; //VALIDATE DATA
 
       var has_errors = false;
@@ -9591,9 +9652,11 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
             $('#modalSubtask').modal('hide');
             _this4.description = '';
             _this4.name = '';
+            _this4.selectedUsers = [];
             $('#name').val(null);
             $('#description').val(null);
             $('#description').summernote('reset');
+            $('#users').val(null);
             $('#progress').css({
               'width': response.data.progress + "%"
             });
@@ -10093,6 +10156,12 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
     _this.description = _this.props.subtask.description;
     _this.task = _this.props.task;
     _this.subtask = _this.props.subtask;
+    _this.selectedUsers = [];
+    _this.users = _this.props.users;
+
+    _this.subtask.users.map(function (value, index) {
+      _this.selectedUsers.push(value.token);
+    });
 
     _this.setLoading = function (data) {
       _this.props.setLoading(data);
@@ -10159,6 +10228,24 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "col-lg-12 my-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+                    htmlFor: "users" + this.id,
+                    children: "Usuarios:"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("select", {
+                    id: "users" + this.id,
+                    name: "users",
+                    className: "form-control",
+                    defaultValue: this.selectedUsers,
+                    multiple: true,
+                    children: this.users.map(function (user, index) {
+                      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+                        value: user.token,
+                        children: user.name
+                      }, user.token + index + _this2.id);
+                    })
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: "col-lg-12 my-3",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     htmlFor: "description" + this.id,
                     children: "Descripci\xF3n:"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("textarea", {
@@ -10198,11 +10285,6 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      $('#description' + this.id).summernote({
-        placeholder: "Descripción...",
-        height: 200
-      });
-
       var handlePrepareValue = function handlePrepareValue(key, value) {
         _this3.prepareData(key, value);
       };
@@ -10216,6 +10298,36 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
         var value = e.target.value;
         handlePrepareValue("description", value);
       });
+      $("#users" + this.id).select2({
+        dropdownParent: $('#editModalSubtask' + this.id),
+        //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
+        theme: 'bootstrap4',
+        placeholder: "Selecciona un usuario...",
+        width: '100%',
+        // need to override the changed default
+        allowClear: true
+      });
+
+      var handleSelectUser = function handleSelectUser() {
+        return _this3.selectedUsers;
+      };
+
+      $('#users' + this.id).on('select2:select', function (e) {
+        var value = e.params.data.id;
+        var array = handleSelectUser();
+        array.push(value);
+        handlePrepareValue("users", array);
+      });
+      $('#users' + this.id).on('select2:unselect', function (e) {
+        var value = e.params.data.id;
+        var array = handleSelectUser();
+        array.map(function (user, index) {
+          if (user == value) {
+            array.splice(index, 1); // 2nd parameter means remove one item only
+          }
+        });
+        handlePrepareValue("users", array);
+      });
     }
   }, {
     key: "prepareData",
@@ -10227,6 +10339,10 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
       if (key == "description") {
         this.description = value;
       }
+
+      if (key == "users") {
+        this.selectedUsers = value;
+      }
     }
   }, {
     key: "save",
@@ -10236,7 +10352,8 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
       var data = {
         name: this.name,
         description: this.description,
-        task: this.subtask.token
+        task: this.subtask.token,
+        users: this.selectedUsers
       }; //VALIDATE DATA
 
       var has_errors = false;
@@ -10259,9 +10376,11 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
             $('#editModalSubtask' + _this4.id).modal('hide');
             _this4.description = '';
             _this4.name = '';
+            _this4.selectedUsers = [];
             $('#name' + _this4.id).val(null);
             $('#description' + _this4.id).val(null);
-            $('#description' + _this4.id).summernote('reset'); //UPLOAD PARENT
+            $('#description' + _this4.id).summernote('reset');
+            $('#users' + _this4.id).val(null); //UPLOAD PARENT
 
             _this4.setLoading(true);
 
@@ -10653,7 +10772,6 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
 
       if (key == "users") {
         this.selectedUsers = value;
-        console.log(this.selectedUsers);
       }
     }
   }, {

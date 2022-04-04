@@ -9,6 +9,8 @@ class Create_subtask extends React.Component{
         this.name = '';
         this.description = '';
         this.task = this.props.task;
+        this.users = this.props.users;
+        this.selectedUsers = [];
 
         this.setLoading = (data) => {
             this.props.setLoading(data);
@@ -52,6 +54,23 @@ class Create_subtask extends React.Component{
                                 </div>
 
                                 <div className="col-lg-12 my-3">
+                                    <label htmlFor="users">Usuarios:</label>
+                                    <select id="users" name="users" className="form-control" multiple>
+                                        {
+                                            this.users.map( (user, index) => {
+                                                
+                                                return(
+                                                    <option
+                                                        key={user.token+index}
+                                                        value={user.token}
+                                                    >{user.name}</option>
+                                                );
+                                            } )
+                                        }
+                                    </select>
+                                </div>
+
+                                <div className="col-lg-12 my-3">
                                     <label htmlFor="description">Descripción:</label>
                                     <textarea
                                         id="description"
@@ -87,11 +106,7 @@ class Create_subtask extends React.Component{
     }
 
     componentDidMount(){
-        
-        $('#description').summernote({
-            placeholder: "Descripción...",
-            height: 200
-        });
+    
 
         const handlePrepareValue = (key, value) => {
             this.prepareData(key, value);
@@ -109,6 +124,39 @@ class Create_subtask extends React.Component{
             handlePrepareValue("description", value);
         });
 
+        $("#users").select2({
+            dropdownParent: $('#modalSubtask'), //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
+            theme: 'bootstrap4',
+            placeholder: "Selecciona un usuario...",
+            width: '100%', // need to override the changed default
+            allowClear: true
+            
+        })
+        const handleSelectUser = () => { return this.selectedUsers }
+
+        $('#users').on('select2:select', (e) => {
+
+            let value = e.params.data.id;
+            let array = handleSelectUser();
+            array.push(value);
+
+            handlePrepareValue("users", array);
+
+        });
+
+        $('#users').on('select2:unselect', (e) => {
+            var value = e.params.data.id;
+            let array = handleSelectUser();
+            
+            array.map( (user, index) => {
+                if(user == value){
+                    array.splice(index, 1); // 2nd parameter means remove one item only
+                }
+            } )
+        
+            handlePrepareValue("users", array);
+
+        });
         
     }
 
@@ -122,6 +170,11 @@ class Create_subtask extends React.Component{
             this.description = value;
         }
 
+
+        if (key == "users") {
+            this.selectedUsers = value;
+        }
+
     }
 
     save(){
@@ -130,6 +183,7 @@ class Create_subtask extends React.Component{
             name: this.name,
             description: this.description,
             task: this.task,
+            users: this.selectedUsers,
         }
 
         //VALIDATE DATA
@@ -156,10 +210,12 @@ class Create_subtask extends React.Component{
                     
                     this.description = '';
                     this.name = '';
+                    this.selectedUsers = [];
 
                     $('#name').val(null);
                     $('#description').val(null);
                     $('#description').summernote('reset');
+                    $('#users').val(null);
 
                     $('#progress').css({'width': response.data.progress+"%"})
                     $('#progress_text').text(response.data.progress+"%")

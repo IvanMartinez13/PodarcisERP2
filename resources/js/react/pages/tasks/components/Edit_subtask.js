@@ -11,6 +11,13 @@ class Edit_subtask extends React.Component{
         this.description = this.props.subtask.description;
         this.task = this.props.task;
         this.subtask = this.props.subtask;
+        this.selectedUsers = [];
+        this.users = this.props.users;
+
+        this.subtask.users.map( (value, index) => {
+            this.selectedUsers.push(value.token)
+        });
+        
 
         this.setLoading = (data) => {
             this.props.setLoading(data);
@@ -54,6 +61,24 @@ class Edit_subtask extends React.Component{
                                     ></input>
                                 </div>
 
+
+                                <div className="col-lg-12 my-3">
+                                    <label htmlFor={"users"+this.id}>Usuarios:</label>
+                                    <select id={"users"+this.id} name="users" className="form-control" defaultValue={this.selectedUsers} multiple>
+                                        {
+                                            this.users.map( (user, index) => {
+                                                
+                                                return(
+                                                    <option
+                                                        key={user.token+index+this.id}
+                                                        value={user.token}
+                                                    >{user.name}</option>
+                                                );
+                                            } )
+                                        }
+                                    </select>
+                                </div>
+
                                 <div className="col-lg-12 my-3">
                                     <label htmlFor={"description"+this.id}>Descripción:</label>
                                     <textarea
@@ -92,10 +117,6 @@ class Edit_subtask extends React.Component{
 
     componentDidMount(){
         
-        $('#description'+this.id).summernote({
-            placeholder: "Descripción...",
-            height: 200
-        });
 
         const handlePrepareValue = (key, value) => {
             this.prepareData(key, value);
@@ -113,6 +134,41 @@ class Edit_subtask extends React.Component{
             handlePrepareValue("description", value);
         });
 
+
+        $("#users"+this.id).select2({
+            dropdownParent: $('#editModalSubtask'+this.id), //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
+            theme: 'bootstrap4',
+            placeholder: "Selecciona un usuario...",
+            width: '100%', // need to override the changed default
+            allowClear: true
+            
+        })
+        const handleSelectUser = () => { return this.selectedUsers }
+        
+        $('#users'+this.id).on('select2:select', (e) => {
+
+            let value = e.params.data.id;
+            let array = handleSelectUser();
+            array.push(value);
+
+            handlePrepareValue("users", array);
+
+        });
+
+        $('#users'+this.id).on('select2:unselect', (e) => {
+            var value = e.params.data.id;
+            let array = handleSelectUser();
+            
+            array.map( (user, index) => {
+                if(user == value){
+                    array.splice(index, 1); // 2nd parameter means remove one item only
+                }
+            } )
+        
+            handlePrepareValue("users", array);
+
+        });
+
         
     }
 
@@ -126,7 +182,9 @@ class Edit_subtask extends React.Component{
             this.description = value;
         }
 
-        
+        if (key == "users") {
+            this.selectedUsers = value;
+        }
 
     }
 
@@ -136,6 +194,7 @@ class Edit_subtask extends React.Component{
             name: this.name,
             description: this.description,
             task: this.subtask.token,
+            users: this.selectedUsers,
         }
 
         //VALIDATE DATA
@@ -162,10 +221,12 @@ class Edit_subtask extends React.Component{
                     
                     this.description = '';
                     this.name = '';
+                    this.selectedUsers = [];
 
                     $('#name'+this.id).val(null);
                     $('#description'+this.id).val(null);
                     $('#description'+this.id).summernote('reset');
+                    $('#users'+this.id).val(null);
 
                     //UPLOAD PARENT
                     this.setLoading(true);

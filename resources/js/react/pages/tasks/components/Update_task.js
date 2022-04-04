@@ -264,7 +264,7 @@ class Update_task extends React.Component{
 
         if(key == "users"){
             this.selectedUsers = value;
-            console.log(this.selectedUsers)
+            
         }
         
 
