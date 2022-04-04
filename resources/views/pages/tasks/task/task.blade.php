@@ -106,12 +106,13 @@
                     {{-- TAB-CONTAINER --}}
                     <div class="tabs-container">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li><a class="nav-link active" data-toggle="tab"
+                            <li><a id="nav-comments" class="nav-link active" data-toggle="tab"
                                     href="#comments">{{ __('modules.comments') }}</a></li>
-                            <li><a class="nav-link" data-toggle="tab"
+                            <li><a id="nav-subtasks" class="nav-link" data-toggle="tab"
                                     href="#sub_tasks">{{ __('modules.sub_tasks') }}</a></li>
                             <li>
-                                <a class="nav-link" data-toggle="tab" href="#files">{{ __('modules.files') }}
+                                <a id="nav-documents" class="nav-link" data-toggle="tab"
+                                    href="#files">{{ __('modules.files') }}
                                 </a>
                             </li>
                         </ul>
@@ -538,6 +539,31 @@
 
             });
 
+        }
+
+        //SAVE SELECTED TAB
+
+        $('#nav-comments').on('click', () => {
+            localStorage.setItem('taskTab', 'nav-comments');
+        });
+
+        $('#nav-subtasks').on('click', () => {
+            localStorage.setItem('taskTab', 'nav-subtasks');
+        });
+
+        $('#nav-documents').on('click', () => {
+            localStorage.setItem('taskTab', 'nav-documents');
+        });
+
+        if (localStorage.getItem('taskTab') == "nav-comments") {
+
+            $('#nav-comments').tab('show') // Select tab
+        } else if (localStorage.getItem('taskTab') == "nav-documents") {
+
+            $('#nav-documents').tab('show') // Select tab
+        } else if (localStorage.getItem('taskTab') == "nav-subtasks") {
+
+            $('#nav-subtasks').tab('show') // Select tab
         }
     </script>
 
