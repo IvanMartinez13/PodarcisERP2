@@ -23,6 +23,7 @@ class Strategy extends Model
         "target_year",
         "resources",
         "manager",
+        "observations",
         "token",
         "objective_id"
     ];

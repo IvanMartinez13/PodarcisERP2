@@ -16,6 +16,8 @@ class Objective_evaluation extends React.Component{
         this.objective = this.props.objective;
         this.years = [];
 
+        this.observations = this.objective.observations;
+
         this.state = {
             loading: true,
             save: false,
@@ -113,6 +115,29 @@ class Objective_evaluation extends React.Component{
 
                             
                         </div>
+                        <h5 className="mt-3">
+                            <label htmlFor="observations">Observaciones:</label>
+                        </h5>
+                        <textarea
+                            id="observations" 
+                            className="form-control"
+                            placeholder="Observaciones..."
+                            defaultValue={this.observations}
+                        ></textarea>
+
+                        {
+                            (this.update == 1)?
+                                <div className="text-right">
+                                    <button className="btn btn-primary mt-2 " onClick={() => {
+                                        this.oservations();
+                                    }}>Guardar observaciones</button>
+                                </div>
+                            :
+                                <div className="alert alert-warning">
+                                    No tienes permisos para cambiar las observaciones.
+                                </div>
+                        }
+                        
                     </div>
 
 
@@ -280,6 +305,18 @@ class Objective_evaluation extends React.Component{
                 loading: false,
                 rows: rows,
             });
+        } ).then( () => {
+
+            $('#observations').summernote({
+                placeholder: "Observaciones...",
+                height: '200px'
+            })
+            const handleObservations = (val) => { this.observations = val }
+                    
+            $('#observations').on('summernote.change', function(e){
+                handleObservations(e.target.value)
+            })
+
         } )
 
 
@@ -328,6 +365,21 @@ class Objective_evaluation extends React.Component{
                     saved: false,
                     rows: rows,
                 });
+
+            } ).then( () => {
+
+                    $('#observations').summernote({
+                        placeholder: "Observaciones...",
+                        height: '200px'
+                    })
+
+                    const handleObservations = (val) => {  this.observations = val; }
+                    
+                    $('#observations').on('summernote.change', function(e){
+                        handleObservations(e.target.value)
+                    })
+
+                
             } )
     
         }
@@ -381,6 +433,25 @@ class Objective_evaluation extends React.Component{
         value = value.replace('.', ',');
         return value;
         
+    }
+
+    oservations(){
+        let value = $("#observations").val();
+        $('#observations').summernote('destroy');
+        this.setState({loading: true, save: true});
+        axios.post('/ods/observation', {observations: value, token: this.objective.token}).then( (response) => {
+            if (response.data.status == 'success') {
+                
+                toastr.success( response.data.message )
+
+                this.setState({saved: true});
+            }else{
+                
+                toastr.error( response.data.message )
+
+                this.setState({saved: true});
+            }
+        })
     }
 
 

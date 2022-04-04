@@ -23,6 +23,8 @@ class Evaluation extends React.Component{
         this.strategy = this.props.strategy;
         this.objective = this.props.objective;
 
+        this.observations = this.strategy.observations;
+
         this.update = this.props.update;
         this.del = this.props.del;
 
@@ -172,6 +174,27 @@ class Evaluation extends React.Component{
                                             <span id={"strategy_target_value"+this.strategy.token}></span>
                                         </div>
 
+                                        <div className="col-lg-12">
+                                            <h5>
+                                                <label htmlFor="observations">Observaciones:</label>                      
+                                            </h5>
+
+                                            <textarea defaultValue={this.observations} id="observations" className="form-control"></textarea>
+
+                                            {
+                                                (this.update == 1)?
+                                                    <div className="text-right">
+                                                        <button className="btn btn-primary mt-2 " onClick={() => {
+                                                            this.oservations();
+                                                        }}>Guardar observaciones</button>
+                                                    </div>
+                                                :
+                                                    <div className="alert alert-warning">
+                                                        No tienes permisos para cambiar las observaciones
+                                                    </div>
+                                            }
+                                        </div>
+
 
 
 
@@ -188,6 +211,8 @@ class Evaluation extends React.Component{
                                     <StrategyEvolution strategy={this.strategy}></StrategyEvolution>
                                 </div>
                             </div>
+
+                           
 
                             {/* BOTONES */}
 
@@ -350,7 +375,17 @@ class Evaluation extends React.Component{
             }
             
             this.setState({loading:false, rows: rows, save: false});
-        });
+        }).then( () => {
+            $('#observations').summernote({
+                placeholder: "Observaciones...",
+                height: '200px'
+            })
+            const handleObservations = (val) => { this.observations = val }
+                    
+            $('#observations').on('summernote.change', function(e){
+                handleObservations(e.target.value)
+            })
+        } );
     }
 
     componentDidUpdate()
@@ -403,7 +438,20 @@ class Evaluation extends React.Component{
                 
                 
                 this.setState({loading:false, rows: rows, save: false, saved: false});
-            });
+
+            }).then( () => {
+
+                $('#observations').summernote({
+                    placeholder: "Observaciones...",
+                    height: '200px'
+                })
+                const handleObservations = (val) => { this.observations = val }
+                        
+                $('#observations').on('summernote.change', function(e){
+                    handleObservations(e.target.value)
+                })
+
+            } );;
         }
 
     }
@@ -472,6 +520,25 @@ class Evaluation extends React.Component{
             }
 
         } );
+    }
+
+    oservations(){
+        let value = $("#observations").val();
+        $('#observations').summernote('destroy');
+        this.setState({loading: true, save: true});
+        axios.post('/ods/strategy/observation', {observations: value, token: this.strategy.token}).then( (response) => {
+            if (response.data.status == 'success') {
+                
+                toastr.success( response.data.message )
+            
+                this.setState({saved: true});
+            }else{
+                
+                toastr.error( response.data.message )
+
+                this.setState({saved: true});
+            }
+        })
     }
 
     formatValue(number){

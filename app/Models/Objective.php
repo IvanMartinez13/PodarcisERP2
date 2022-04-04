@@ -23,6 +23,7 @@ class Objective extends Model
         "token",
         "resources",
         "manager",
+        "observations",
         "customer_id"
     ];
 

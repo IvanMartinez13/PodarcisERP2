@@ -5702,6 +5702,7 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
     _this.years = [];
     _this.strategy = _this.props.strategy;
     _this.objective = _this.props.objective;
+    _this.observations = _this.strategy.observations;
     _this.update = _this.props.update;
     _this.del = _this.props.del;
     _this.updateRows = _this.updateRows.bind(_assertThisInitialized(_this));
@@ -5895,6 +5896,30 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
                         id: "strategy_target_value" + this.strategy.token
                       })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                      className: "col-lg-12",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h5", {
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
+                          htmlFor: "observations",
+                          children: "Observaciones:"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("textarea", {
+                        defaultValue: this.observations,
+                        id: "observations",
+                        className: "form-control"
+                      }), this.update == 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                        className: "text-right",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                          className: "btn btn-primary mt-2 ",
+                          onClick: function onClick() {
+                            _this2.oservations();
+                          },
+                          children: "Guardar observaciones"
+                        })
+                      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                        className: "alert alert-warning",
+                        children: "No tienes permisos para cambiar las observaciones"
+                      })]
                     })]
                   })
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
@@ -6073,6 +6098,19 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
           rows: rows,
           save: false
         });
+      }).then(function () {
+        $('#observations').summernote({
+          placeholder: "Observaciones...",
+          height: '200px'
+        });
+
+        var handleObservations = function handleObservations(val) {
+          _this3.observations = val;
+        };
+
+        $('#observations').on('summernote.change', function (e) {
+          handleObservations(e.target.value);
+        });
       });
     }
   }, {
@@ -6126,7 +6164,21 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
             save: false,
             saved: false
           });
+        }).then(function () {
+          $('#observations').summernote({
+            placeholder: "Observaciones...",
+            height: '200px'
+          });
+
+          var handleObservations = function handleObservations(val) {
+            _this4.observations = val;
+          };
+
+          $('#observations').on('summernote.change', function (e) {
+            handleObservations(e.target.value);
+          });
         });
+        ;
       }
     } //METHODS
 
@@ -6195,6 +6247,36 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
             saved: true
           }); //NOW CAN UPDATE ALL
 
+        }
+      });
+    }
+  }, {
+    key: "oservations",
+    value: function oservations() {
+      var _this6 = this;
+
+      var value = $("#observations").val();
+      $('#observations').summernote('destroy');
+      this.setState({
+        loading: true,
+        save: true
+      });
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post('/ods/strategy/observation', {
+        observations: value,
+        token: this.strategy.token
+      }).then(function (response) {
+        if (response.data.status == 'success') {
+          toastr.success(response.data.message);
+
+          _this6.setState({
+            saved: true
+          });
+        } else {
+          toastr.error(response.data.message);
+
+          _this6.setState({
+            saved: true
+          });
         }
       });
     }
@@ -6293,6 +6375,7 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
     _this.del = _this.props["delete"];
     _this.objective = _this.props.objective;
     _this.years = [];
+    _this.observations = _this.objective.observations;
     _this.state = {
       loading: true,
       save: false,
@@ -6336,9 +6419,9 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
         className: "animated fadeInRight",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
           className: "row mx-1 mb-3",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
             className: "col-lg-8",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
               className: "row",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                 className: "col-lg-6",
@@ -6397,7 +6480,30 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
                   id: "target_value"
                 })]
               })]
-            })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h5", {
+              className: "mt-3",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
+                htmlFor: "observations",
+                children: "Observaciones:"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("textarea", {
+              id: "observations",
+              className: "form-control",
+              placeholder: "Observaciones...",
+              defaultValue: this.observations
+            }), this.update == 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+              className: "text-right",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                className: "btn btn-primary mt-2 ",
+                onClick: function onClick() {
+                  _this2.oservations();
+                },
+                children: "Guardar observaciones"
+              })
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+              className: "alert alert-warning",
+              children: "No tienes permisos para cambiar las observaciones."
+            })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
             className: "col-lg-4",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("h5", {
@@ -6547,6 +6653,19 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
           loading: false,
           rows: rows
         });
+      }).then(function () {
+        $('#observations').summernote({
+          placeholder: "Observaciones...",
+          height: '200px'
+        });
+
+        var handleObservations = function handleObservations(val) {
+          _this3.observations = val;
+        };
+
+        $('#observations').on('summernote.change', function (e) {
+          handleObservations(e.target.value);
+        });
       });
     }
   }, {
@@ -6589,6 +6708,19 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
             save: false,
             saved: false,
             rows: rows
+          });
+        }).then(function () {
+          $('#observations').summernote({
+            placeholder: "Observaciones...",
+            height: '200px'
+          });
+
+          var handleObservations = function handleObservations(val) {
+            _this4.observations = val;
+          };
+
+          $('#observations').on('summernote.change', function (e) {
+            handleObservations(e.target.value);
           });
         });
       }
@@ -6644,6 +6776,36 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
       var value = number;
       value = value.replace('.', ',');
       return value;
+    }
+  }, {
+    key: "oservations",
+    value: function oservations() {
+      var _this6 = this;
+
+      var value = $("#observations").val();
+      $('#observations').summernote('destroy');
+      this.setState({
+        loading: true,
+        save: true
+      });
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/ods/observation', {
+        observations: value,
+        token: this.objective.token
+      }).then(function (response) {
+        if (response.data.status == 'success') {
+          toastr.success(response.data.message);
+
+          _this6.setState({
+            saved: true
+          });
+        } else {
+          toastr.error(response.data.message);
+
+          _this6.setState({
+            saved: true
+          });
+        }
+      });
     }
   }]);
 
