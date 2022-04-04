@@ -239,7 +239,7 @@
                                                         {{ $file->name }}
                                                     </td>
                                                     <td class="align-middle text-center">
-                                                        <div class="btn-group-vertical">
+                                                        <div class="btn-group">
 
                                                             @can('update Tareas')
                                                                 <button class="btn btn-link" data-toggle="modal"
@@ -411,7 +411,7 @@
                                 ${task_file.name}
                             </td>
                             <td class="align-middle text-center">
-                                <div class="btn-group-vertical">
+                                <div class="btn-group">
 
                                     
                                     <button class="btn btn-link" data-toggle="modal" data-target="#updateFile_${task_file.token}">

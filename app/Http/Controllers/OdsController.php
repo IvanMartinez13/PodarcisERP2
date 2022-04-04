@@ -17,6 +17,7 @@ use App\Models\Objective_evaluation_file;
 use App\Models\Project;
 use App\Models\Strategy;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -960,6 +961,12 @@ class OdsController extends Controller
 
             $task->strategy()->sync([$strategy->id]);
             $task->departaments()->sync($departaments);
+
+            $users = User::whereHas('departaments', function ($q) use ($departaments) {
+                $q->whereIn('departament_id', $departaments);
+            })->get('id');
+
+            $task->users()->sync($users);
         }
 
         return redirect(route('tasks.project.task_details', ['project' => $project->token, 'task' => $task->token]));
@@ -1021,6 +1028,12 @@ class OdsController extends Controller
 
             $task->objective()->sync([$objective->id]);
             $task->departaments()->sync($departaments);
+
+            $users = User::whereHas('departaments', function ($q) use ($departaments) {
+                $q->whereIn('departament_id', $departaments);
+            })->get('id');
+
+            $task->users()->sync($users);
         }
 
         return redirect(route('tasks.project.task_details', ['project' => $project->token, 'task' => $task->token]));
