@@ -159,7 +159,10 @@ class DashboardOds extends React.Component{
                             <hr></hr>
                             
                             <h5>VARIACIÓN de {this.objective.indicator}</h5>
-                            <IndicatorVariation objective={this.objective}></IndicatorVariation>
+                            <div className="mx-lg-5">
+                                <IndicatorVariation objective={this.objective}></IndicatorVariation>
+                            </div>
+                            
                             <hr className="d-lg-none d-block"></hr>
                         </div>
 

@@ -62,7 +62,7 @@ class StrategyEvolution extends React.Component{
             this.years = years;
             this.targetValue = targetValue ;
 
-            $("#strategy_target_value"+this.strategy.token).text(targetValue.toFixed(3)+' '+this.strategy.indicator)
+            $("#strategy_target_value"+this.strategy.token).text(this.formatValue(targetValue.toFixed(3))+' '+this.strategy.indicator)
 
             this.setState({loading: false})
 
@@ -104,7 +104,7 @@ class StrategyEvolution extends React.Component{
                         "horizontalLine": [{
                             y: this.targetValue,
                             style: "#ed5565",
-                            text: 'Valor objetivo ' + this.targetValue.toFixed(3),
+                            text: 'Valor objetivo ' + this.formatValue(this.targetValue.toFixed(3)),
                             
                         }],
                 
@@ -237,6 +237,13 @@ class StrategyEvolution extends React.Component{
 
 
         } );
+    }
+
+    formatValue(number){
+        let value = number
+        value = value.replace('.', ',');
+        return value;
+        
     }
 }
 

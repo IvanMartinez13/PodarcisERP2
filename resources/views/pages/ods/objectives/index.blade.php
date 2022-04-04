@@ -22,8 +22,10 @@
 
     <div class="tabs-container">
         <ul class="nav nav-tabs" role="tablist">
-            <li><a class="nav-link bg-transparent active" data-toggle="tab" href="#dashboard">Dashboard</a></li>
-            <li><a class="nav-link bg-transparent" data-toggle="tab" href="#objective-tab">Creación de objetivos</a></li>
+            <li><a id="nav-dashboard" class="nav-link bg-transparent active" data-toggle="tab"
+                    href="#dashboard">Dashboard</a></li>
+            <li><a id="nav-objectives" class="nav-link bg-transparent" data-toggle="tab" href="#objective-tab">Creación de
+                    objetivos</a></li>
         </ul>
         <div class="tab-content">
 
@@ -205,6 +207,24 @@
                 $('#delete_' + token).submit();
 
             });
+        }
+
+        //SAVE SELECTED TAB
+
+        $('#nav-dashboard').on('click', () => {
+            localStorage.setItem('objectivesTab', 'nav-dashboard');
+        });
+
+        $('#nav-objectives').on('click', () => {
+            localStorage.setItem('objectivesTab', 'nav-objectives');
+        });
+
+        if (localStorage.getItem('objectivesTab') == "nav-dashboard") {
+
+            $('#nav-dashboard').tab('show') // Select tab
+        } else if (localStorage.getItem('objectivesTab') == "nav-objectives") {
+
+            $('#nav-objectives').tab('show') // Select tab
         }
     </script>
 @endpush

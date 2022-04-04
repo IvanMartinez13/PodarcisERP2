@@ -103,6 +103,50 @@ class OdsController extends Controller
         return redirect(route('ods.index'))->with('message', 'Objetivo editado.')->with('status', 'success');
     }
 
+    public function observation(Request $request)
+    {
+
+        try {
+            $objective = Objective::where('token', $request->token)->update(['observations' => $request->observations]);
+
+            $response = [
+                'status' => 'success',
+                'message' => 'Observaciones guardadas.'
+            ];
+        } catch (\Throwable $th) {
+
+            $response = [
+                'status' => 'error',
+                'message' => 'Las observaciones no pueden estar vacias.'
+            ];
+        }
+
+
+
+        return response()->json($response);
+    }
+
+
+    public function strategy_observation(Request $request)
+    {
+        try {
+            $strategy = Strategy::where('token', $request->token)->update(['observations' => $request->observations]);
+
+            $response = [
+                'status' => 'success',
+                'message' => 'Observaciones guardadas.'
+            ];
+        } catch (\Throwable $th) {
+
+            $response = [
+                'status' => 'error',
+                'message' => 'Las observaciones no pueden estar vacias.'
+            ];
+        }
+
+        return response()->json($response);
+    }
+
     //PAGE EVALUATE
     public function evaluate($token)
     {

@@ -43,9 +43,10 @@
 
             <div class="tabs-container">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li><a class="nav-link active" data-toggle="tab" href="#evaluation-tab">
+                    <li><a id="nav-evaluation" class="nav-link active" data-toggle="tab" href="#evaluation-tab">
                             {{ __('Evaluation') }}</a></li>
-                    <li><a class="nav-link" data-toggle="tab" href="#strategy-tab">{{ __('modules.strategy') }}</a>
+                    <li><a id="nav-strategy" class="nav-link" data-toggle="tab"
+                            href="#strategy-tab">{{ __('modules.strategy') }}</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -205,6 +206,24 @@
                 $('#delete_' + token).submit();
 
             });
+        }
+
+        //SAVE SELECTED TAB
+
+        $('#nav-strategy').on('click', () => {
+            localStorage.setItem('strategyTab', 'nav-strategy');
+        });
+
+        $('#nav-evaluation').on('click', () => {
+            localStorage.setItem('strategyTab', 'nav-evaluation');
+        });
+
+        if (localStorage.getItem('strategyTab') == "nav-strategy") {
+
+            $('#nav-strategy').tab('show') // Select tab
+        } else if (localStorage.getItem('strategyTab') == "nav-evaluation") {
+
+            $('#nav-evaluation').tab('show') // Select tab
         }
     </script>
 @endpush
