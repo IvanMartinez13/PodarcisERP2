@@ -205,6 +205,20 @@
 
             </div>
 
+            <div class="col-lg-6">
+                <div id="branches_map" style="height: 100%" class="glassCard text-dark">
+                    <h5>MAPA</h5>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+
+                <div class="glassCard text-dark">
+                    <h5 class="text-center">Evolución de las tareas</h5>
+                </div>
+
+            </div>
+
 
         </div>
     @endif

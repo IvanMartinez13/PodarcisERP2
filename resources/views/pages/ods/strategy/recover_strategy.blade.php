@@ -65,7 +65,7 @@
                                 <td class="align-middle">{{ date('d/m/Y', strtotime($strategy->deleted_at)) }}</td>
                                 <td class="align-middle">{{ date('H:i:s', strtotime($strategy->deleted_at)) }}</td>
                                 <td class="align-middle text-center">
-                                    <div class="btn-group-vertical">
+                                    <div class="btn-group">
                                         <button onclick="recover('{{ $strategy->token }}')" class="btn btn-link">
                                             <i class="fa fa-recycle" aria-hidden="true"></i>
                                         </button>

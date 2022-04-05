@@ -90,7 +90,7 @@ class Tasks extends React.Component{
                                                         <small>Completado en un <strong>{task.progress}%</strong>.</small>
                                                     </td>
                                                     <td className="align-middle text-center">
-                                                        <div className="btn-group-vertical">
+                                                        <div className="btn-group">
 
                                                             {
                                                                 (this.update == 1) ?
