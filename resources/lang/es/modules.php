@@ -18,7 +18,7 @@ return [
     'modules' => 'Módulos',
     'branches' => 'Centros',
     'departaments' => 'Departamentos',
-    'ods' => 'Ods',
+    'ods' => 'ODS',
     'targets' => 'Objetivos',
     'strategy' => 'Estrategias',
     'tasks' => 'Tareas',

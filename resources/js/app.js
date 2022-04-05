@@ -12,4 +12,5 @@ require('./react/pages/vao/Vao');
 
 
 //COMPONENTS
-
+require('./react/pages/dashboard/Evolution_tasks');
+require('./react/pages/dashboard/Map_branches');

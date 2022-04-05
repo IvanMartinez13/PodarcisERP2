@@ -36,4 +36,9 @@ class Objective extends Model
     {
         return $this->belongsToMany(Task::class, 'task_objective');
     }
+
+    public function evaluations()
+    {
+        return $this->hasMany(Objective_evaluation::class);
+    }
 }

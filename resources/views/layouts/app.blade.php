@@ -47,6 +47,18 @@
         @include('shared.sidebar')
 
         <div id="page-wrapper" class="gray-bg">
+            <ul class="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
             {{-- TOPNAV --}}
             @include('shared.topnav')
 

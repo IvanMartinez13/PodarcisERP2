@@ -210,9 +210,18 @@
 
             </div>
 
-            <div class="cube-1"></div>
-            <div class="cube-2"></div>
-            <div class="cube-3"></div>
+            <ul class="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
         </div>
 
 

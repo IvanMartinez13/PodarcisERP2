@@ -63,7 +63,7 @@
                                     </div>
                                 </td>
                                 <td class="text-center align-middle">
-                                    <div class="btn-group-vertical">
+                                    <div class="btn-group">
 
 
                                         @can('update Tareas')
