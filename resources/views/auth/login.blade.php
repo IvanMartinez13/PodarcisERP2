@@ -12,13 +12,13 @@
                     <div class="row">
                         <div class="col-12 mb-3">
                             <label for="username">{{ __('forms.username') }}: </label>
-                            <input type="text" id="username" class="form-control" name="username"
+                            <input type="text" id="username" class="form-control text-dark" name="username"
                                 placeholder="{{ __('forms.username') }}...">
                         </div>
 
                         <div class="col-12 mb-3">
                             <label for="password">{{ __('forms.password') }}: </label>
-                            <input type="password" id="password" class="form-control" name="password"
+                            <input type="password" id="password" class="form-control text-dark" name="password"
                                 placeholder="{{ __('forms.password') }}...">
                         </div>
                     </div>
