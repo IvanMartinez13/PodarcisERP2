@@ -50,6 +50,8 @@ $(document).ready(function(){
                     );
                     var title = $(cell).text();
                     if (title != 'Acciones') {
+                        title = title.replace(/                                                    /g,'')
+                        console.log(title);
                         $(cell).html('<input type="text" class="form-control " placeholder="' + title + '" />');
                     }else{
                         $(cell).html('');

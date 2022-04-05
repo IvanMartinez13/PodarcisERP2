@@ -72,11 +72,12 @@
                                             <tr>
                                                 <th class="align-middle" style="15%">{{ __('columns.title') }}</th>
                                                 <th class="align-middle" style="width: 20%">
-                                                    {{ __('columns.description') }}</th>
+                                                    {{ __('columns.description') }}
+                                                </th>
                                                 <th class="align-middle" style="width: 15%">
                                                     {{ __('columns.indicator') }}</th>
                                                 <th class="align-middle" style="width: 10%">
-                                                    {{ __('columns.increase') . ' | ' . __('columns.decrease') }} </th>
+                                                    {{ __('columns.increase') . ' | ' . __('columns.decrease') }}</th>
                                                 <th class="align-middle" style="width: 10%">{{ __('columns.target') }}
                                                 </th>
                                                 <th class="align-middle" style="width: 12.5%">
