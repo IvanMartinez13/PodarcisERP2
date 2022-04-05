@@ -27,7 +27,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
+Route::prefix('dashboard')->middleware(['auth'])->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
+    Route::post('/evolutionTasks', [DashboardController::class, 'evolutionTasks'])->middleware(['auth'])->name('dashboard.evolutionTasks');
+});
+
 
 //IMPERSONATE OTHER USERS
 Route::impersonate();
@@ -137,7 +141,6 @@ Route::prefix('ods')->middleware(['auth'])->group(function () {
     Route::post('/strategy/observation', [OdsController::class, 'strategy_observation'])->name('ods.objective.strategy.observation');
 });
 
-
 //TASKS MODULE
 Route::prefix('tasks')->middleware(['auth'])->group(function () {
     Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
@@ -163,7 +166,6 @@ Route::prefix('tasks')->middleware(['auth'])->group(function () {
     Route::put('/project/delete', [TaskController::class, 'project_delete'])->name('tasks.project.delete');
     Route::put('/project/deleteFile', [TaskController::class, 'file_delete'])->name('tasks.project.deleteFile');
 });
-
 
 //VAO MODULE
 Route::prefix('vao')->middleware(['auth', 'can:read Vigilancia Ambiental'])->group(function () {

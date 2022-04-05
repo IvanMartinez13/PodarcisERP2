@@ -68,10 +68,10 @@ class DashboardOds extends React.Component{
 
                     <div className="col-lg-5 mb-lg-0 mb-5 order-0">
 
-                        <div className="glassCard text-dark">
-                            <h3 className="mb-3 text-center">
+                        <div className="glassCard text-dark" style={{height: '100%'}}>
+                            <h5 className="mb-3 text-center">
                                 {this.objective.title} 
-                            </h3>
+                            </h5>
                     
                             <div className="row">
                                 <div className="col-lg-12">
@@ -158,7 +158,7 @@ class DashboardOds extends React.Component{
                         
                             <hr></hr>
                             
-                            <h5>VARIACIÓN de {this.objective.indicator}</h5>
+                            <h3>VARIACIÓN de {this.objective.indicator}</h3>
                             <div className="mx-lg-5">
                                 <IndicatorVariation objective={this.objective}></IndicatorVariation>
                             </div>
@@ -170,10 +170,10 @@ class DashboardOds extends React.Component{
 
                     <div className="col-lg-7 mb-lg-0 mb-5 order-1">
                         
-                        <div className="glassCard text-dark">
-                            <h3 className="mb-3 text-center">
+                        <div className="glassCard text-dark" style={{height: '100%'}}>
+                            <h5 className="mb-3 text-center">
                                 Estrategias
-                            </h3>
+                            </h5>
 
                             <div className="row">
                                 {

@@ -205,9 +205,9 @@
 
             </div>
 
-            <div class="col-lg-6">
-                <div id="branches_map" style="height: 100%" class="glassCard text-dark">
-                    <h5>MAPA</h5>
+            <div class="col-lg-6 mb-lg-0 mb-4">
+                <div style="height: 100%" class="glassCard text-dark p-0">
+                    <map-branches branches="{{ json_encode($branches) }}"></map-branches>
                 </div>
             </div>
 
@@ -215,6 +215,8 @@
 
                 <div class="glassCard text-dark">
                     <h5 class="text-center">Evolución de las tareas</h5>
+
+                    <evolutionTasks-chart user="{{ json_encode(auth()->user()) }}"></evolutionTasks-chart>
                 </div>
 
             </div>
