@@ -166,6 +166,10 @@
     color: black;
 }
 
+.cards-container{
+
+    margin: 0 15%;
+}
 
 .marco {
     
@@ -187,28 +191,176 @@
     
 }
 
+footer > .part-1{
+
+    background: #212F3C;
+    color: white;
+    padding: 15px;
+    display: flex;
+}
+
+footer > .part-2{
+
+    background: #2E4053;
+    color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+footer > .part-3{
+    padding: 15px;
+    background: #212F3C;
+    color: white;
+}
 
 
-@media (max-width: 700px) {
+.social-button{
+
+    
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0 5px;
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    text-align: center;
+}
+
+.facebook{
+
+    background-color: #1877F2;
+    border: 1px solid #1877F2;
+    color: white;
+    transition: 0.2s ease;
+}
+
+.facebook:hover{
+
+    background-color: #1556aa;
+    border: 1px solid #1556aa;
+    color: white;
+}
+
+.linkedin{
+
+    background-color: #0A66C2;
+    border: 1px solid #0A66C2;
+    color: white;
+    transition: 0.2s ease;
+}
+
+.linkedin:hover{
+
+    background-color: #07417a;
+    border: 1px solid #07417a;
+    color: white;
+}
+
+.twitter{
+    background-color: #fff;
+    border: 1px solid #fff;
+    color: #1A8CD8;
+    transition: 0.2s ease;
+}
+
+.twitter:hover{
+
+    background-color: #d3d3d3;
+    border: 1px solid #d3d3d3;
+    color: #1A8CD8;
+}
+
+.instagram{
+    background: #f09433; 
+    background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+    background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+    border: 1px solid #f09433;
+    color: #fff;
+    transition: 0.2s ease;
+}
+
+.instagram:hover{
+    background: #b87227; 
+    background: -moz-linear-gradient(45deg, #b87227 0%, #994628 25%, #911a2b 50%, #881844 75%, #7e105b 100%); 
+    background: -webkit-linear-gradient(45deg, #b87227 0%,#994628 25%,#911a2b 50%,#881844 75%,#7e105b 100%); 
+    background: linear-gradient(45deg, #b87227 0%,#994628 25%,#911a2b 50%,#881844 75%,#7e105b 100%); 
+    border: 1px solid #b87227;
+}
+
+
+.foot-link{
+    color: #afaeae;
+    transition: 0.2s ease;
+}
+
+.foot-link:hover{
+    color: #1ab394;
+}
+
+
+@media (max-width: 1600px){
+    .cards-container{
+
+        margin: 0 5%;
+    }
+}
+
+
+@media (max-width: 890px){
+    .cards-container{
+
+        margin: 0 25%;
+    }
+}
+
+
+
+@media (max-width: 750px) {
+
+    .cards-container{
+
+        margin: 0 5%;
+    }
     .text-header {
+
         margin: 100px 0;
-        font-size: 40px;
+        font-size: 30px;
         font-weight: bold;
         width: 100%;
     }
 
     .to-right {
+
         width: 100%;
         margin-left: 0%;
         padding: 5% 5%;
     }
 
     .nav-init {
+
         position: relative;
         width: 100%;
         z-index: 100;
         background-color: #1ab394 !important;
     }
 
+    .glassCard {
+
+        height: auto;
+    }
+
+
+    footer > .part-1{
+
+        display: block;
+        align-items: center;
+        text-align: center;
+    }
     
+    .button-container{
+        margin: 25px 0 0 0;
+
+    }
 }

@@ -99,114 +99,160 @@
 
     <main>
 
+        <div class="container-fluid py-5">
+            <div class="container">
+                <div class="row">
+
+
+                    <div class="col-md-7 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="0.5s">
+                        <img class="img-fluid zoom" src="{{ url('/') }}/img/landing/perspective.png" alt="">
+                    </div>
+
+                    <div class="col-md-5 wow fadeInRight" data-wow-duration="2s" data-wow-delay="0.5s">
+                        <h3 class="mt-5">
+                            <i class="fas fa-stopwatch"></i> Rápido
+                        </h3>
+                        <p>
+                            Accede a toda la información de manera rápida y sencilla. Con nuestro <b>dashboard
+                                reactivo</b>
+                            olvidate de las pantallas de cargado.
+                        </p>
+
+                        <h3 class="mt-5">
+                            <i class="fas fa-mobile-alt"></i> Accesible
+                        </h3>
+                        <p>
+                            ¿Móvil, tablet o pc? No importa <b>{{ env('APP_NAME') }}</b> se ajusta a tu dispositivo.
+                            Donde sea como sea y cuando sea ¡No hay limites!
+                        </p>
+
+                        <h3 class="mt-5">
+                            <i class="fa-solid fa-face-grin-wink"></i> Amigable
+                        </h3>
+                        <p>
+                            Contamos con un panel de gestión y una interfaz de usuario muy intuitiva y amigable. De esta
+                            manera podrás ser el <b>doble de eficaz en la mitad de tiempo.</b>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
         {{-- CARACTERISTICAS --}}
         <div class="container-fluid text-center py-5 caracteristics">
 
             <div class="caracteristics-content">
-                <h1 class="wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.5s">
-                    Características
+                <h1 class="wow fadeInUp " data-wow-duration="2s" data-wow-delay="0.5s">
+                    Una <b>aplicación</b> para cada necesidad
                 </h1>
 
-                <div class="row mx-lg-5 mt-5">
-                    <div class="col-lg-4 mb-5 px-5 ">
+                <div class="cards-container pt-5">
+                    <div class="row  mt-5">
+                        <div class="col-lg-4 mb-5">
 
-                        <div class="glassCard text-dark">
+                            <div class="glassCard text-dark">
 
+                                <div class="marco">
+                                    <img src="{{ url('/') }}/img/landing/charts.jpg" />
+                                </div>
+                                <hr class="border-dark" />
 
-                            <div class="marco">
-                                <img src="{{ url('/') }}/img/landing/charts.jpg" />
+                                <h3>
+                                    <dt>Proyectos</dt>
+                                </h3>
+                                <p class="text-left">
+                                    Una solución <b>sencilla</b> a los <b>proyectos</b> más complejos.
+                                    Con
+                                    <b>Podarcis ERP</b> podrás observar el avance de tus proyectos en tiempo real.
+
+                                </p>
+
+                                <ul class="text-left">
+                                    <li>Registros de comunicaciones.</li>
+                                    <li>Repositorios de documentos.</li>
+                                    <li>Indicadores.</li>
+                                </ul>
+
+                                <p class="text-left">
+                                    Podrás tener un control total en el avance de tus proyectos.
+                                </p>
+
                             </div>
-                            <hr class="border-dark" />
-
-                            <h3>
-                                <dt>Proyectos</dt>
-                            </h3>
-                            <p class="text-left">
-                                Una solución <b>sencilla</b> a los <b>proyectos</b> más complejos.
-                                Con
-                                <b>Podarcis ERP</b> podrás observar el avance de tus proyectos en tiempo real.
-
-                            </p>
-
-                            <ul class="text-left">
-                                <li>Registros de comunicaciones.</li>
-                                <li>Repositorios de documentos.</li>
-                                <li>Indicadores.</li>
-                            </ul>
-
-                            <p class="text-left">
-                                Podrás tener un control total en el avance de tus proyectos.
-                            </p>
 
                         </div>
 
-                    </div>
+                        <div class="col-lg-4 mb-5">
 
-                    <div class="col-lg-4 mb-5 px-5">
+                            <div class="glassCard text-dark">
+                                <div class="marco">
+                                    <img src="{{ url('/') }}/img/landing/ods.png" />
+                                </div>
+                                <hr class="border-dark" />
 
-                        <div class="glassCard text-dark">
-                            <div class="marco">
-                                <img src="{{ url('/') }}/img/landing/ods.png" />
+                                <h3>
+                                    <dt>Objetivos de desarrollo sostenible</dt>
+                                </h3>
+
+                                <p class="text-left">
+                                    Los Objetivos de Desarrollo Sostenible son 17 objetivos y 169 metas propuestos como
+                                    continuación de los ODM (Objetivos de Desarrollo del Milenio) incluyendo nuevas
+                                    esferas
+                                    como el cambio climático, la
+                                    desigualdad económica, la innovación, el consumo sostenible, la paz y la justicia,
+                                    entre
+                                    otras prioridades.
+                                </p>
+
+                                <p class="text-left">
+                                    Con <b>Podarcis ERP</b> podrás definir cada uno de tus objetivos y asociarlos a un
+                                    ODS.
+                                    Controla el grado de cumplimiento de cada uno de tus objetivos y estrategias.
+                                </p>
                             </div>
-                            <hr class="border-dark" />
-
-                            <h3>
-                                <dt>Objetivos de desarrollo sostenible</dt>
-                            </h3>
-
-                            <p class="text-left">
-                                Los Objetivos de Desarrollo Sostenible son 17 objetivos y 169 metas propuestos como
-                                continuación de los ODM (Objetivos de Desarrollo del Milenio) incluyendo nuevas esferas
-                                como el cambio climático, la
-                                desigualdad económica, la innovación, el consumo sostenible, la paz y la justicia, entre
-                                otras prioridades.
-                            </p>
-
-                            <p class="text-left">
-                                Con <b>Podarcis ERP</b> podrás definir cada uno de tus objetivos y asociarlos a un ODS.
-                                Controla el grado de cumplimiento de cada uno de tus objetivos y estrategias.
-                            </p>
-                        </div>
-
-                    </div>
-
-                    <div class="col-lg-4 mb-5 px-5">
-
-                        <div class="glassCard text-dark">
-                            <div class="marco">
-                                <img src="{{ url('/') }}/img/landing/equipo.jpg" />
-                            </div>
-                            <hr class="border-dark" />
-
-                            <h3>
-                                <dt>Equipos de trabajo</dt>
-                            </h3>
-
-                            <p class="text-left">
-                                Controla quien puede acceder a tus proyectos. <b>Podarcis ERP</b> te permite
-                                personalizar
-                                al máximo tu equipo de
-                                trabajo.
-                            </p>
-                            <p class="text-left">
-                                Define los permisos y los roles de cada uno de tus colaboradores. Coordina <b>quién,
-                                    cuándo
-                                    y cómo</b> gestionar cada una de las tareas.
-                            </p>
-
-
-
-                            <p class="text-left">
-                                En la unión está la fuerza.
-                            </p>
-
 
                         </div>
 
+                        <div class="col-lg-4 mb-5">
+
+                            <div class="glassCard text-dark">
+                                <div class="marco">
+                                    <img src="{{ url('/') }}/img/landing/equipo.jpg" />
+                                </div>
+                                <hr class="border-dark" />
+
+                                <h3>
+                                    <dt>Equipos de trabajo</dt>
+                                </h3>
+
+                                <p class="text-left">
+                                    Controla quien puede acceder a tus proyectos. <b>Podarcis ERP</b> te permite
+                                    personalizar
+                                    al máximo tu equipo de
+                                    trabajo.
+                                </p>
+                                <p class="text-left">
+                                    Define los permisos y los roles de cada uno de tus colaboradores. Coordina <b>quién,
+                                        cuándo
+                                        y cómo</b> gestionar cada una de las tareas.
+                                </p>
+
+
+
+                                <p class="text-left">
+                                    En la unión está la fuerza.
+                                </p>
+
+
+                            </div>
+
+                        </div>
+
+
                     </div>
-
-
                 </div>
+
 
             </div>
 
@@ -225,28 +271,10 @@
         </div>
 
 
-        {{-- <div class="container-fluid py-5">
-            <div class="container py-5">
-                <div class="row">
-                    <div class="col-md-7 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="0.5s">
-                        <img class="img-fluid zoom" src="{{ url('/') }}/img/landing/perspective.png" alt="">
-                    </div>
 
-                    <div class="col-md-5 wow fadeInRight" data-wow-duration="2s" data-wow-delay="0.5s">
-                        <p class="mt-5">
 
-                            Contamos con un panel de gestión y una interfaz de usuario muy intuitiva y amigable. De esta
-                            manera podrás ser el doble de eficaz en la mitad de tiempo.
-                        </p>
-                    </div>
 
-                </div>
-            </div>
-
-        </div>
-
-        
-        <div class=" bg-charts">
+        {{-- <div class=" bg-charts">
             <div class="bg-transparentDark">
                 <div class="to-right">
 
@@ -285,65 +313,124 @@
 
     <footer>
 
-        <div class="py-3 px-5 border-top-dark bg-dark text-white">
+        <div class="part-1">
 
-            <div class="pt-5">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <h3>{{ env('APP_NAME') }}</h3>
-
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum exercitationem, earum sed
-                            ratione et maxime tenetur labore vel facilis placeat. Nam temporibus aut, fugiat
-                            consequuntur dolorem incidunt voluptate similique dolore.</p>
-                    </div>
-
-                    <div class="col-lg-8">
-                        <h3 class="text-center">Contáctanos</h3>
-
-                        <div class="container-form" style="width: 50%; margin: 0 25%;">
-                            <div class="mb-3">
-                                <label for="name">{{ __('forms.name') }}:</label>
-                                <input type="text" id="name" name="name" placeholder="{{ __('forms.name') }}..."
-                                    class="form-control">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="email">{{ __('forms.email') }}:</label>
-                                <input type="email" id="email" name="email" placeholder="{{ __('forms.email') }}..."
-                                    class="form-control">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="message">{{ __('forms.message') }}:</label>
-                                <textarea rows="10" type="text" id="message" name="message" placeholder="{{ __('forms.message') }}..."
-                                    class="form-control"></textarea>
-                            </div>
-
-                            <button class="btn btn-primary">
-                                Guardar
-                            </button>
-
-
-
-                        </div>
-
-                    </div>
-                </div>
+            <div class="my-auto">
+                Mantente conectado con nostros en las redes sociales:
             </div>
 
-            <div class="pt-5">
+            <div class="ml-md-auto button-container">
+                <button class="linkedin social-button">
+                    <i class="fa-brands fa-linkedin-in"></i>
+                </button>
+                <button class="instagram social-button">
+                    <i class="fa-brands fa-instagram"></i>
+                </button>
+                <button class="facebook social-button">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </button>
+                <button class="twitter social-button">
+                    <i class="fa-brands fa-twitter"></i>
+                </button>
+            </div>
+        </div>
 
-                <div class="float-right">
-                    Todos los derechos reservados.
+        <div class="part-2 px-5">
+            <div class="row py-3">
+
+                <div class="col-lg-4 mb-lg-0 mb-3 pr-5">
+                    <h2>{{ env('APP_NAME') }}</h2>
+                    <hr class="border-white">
+                    <p class="text-justify">
+                        El mejor software de gestión que tiene todo lo que necesitas.
+                        Desarrollado por Podarcis SL. Somos su consultoría de referencia. Si necesita ayuda para
+                        optimizar sus procesos organizativos, de calidad, gestión empresarial, o precisa de una
+                        tramitación ambiental para poder seguir desarrollando su negocio, no dude en contactar con
+                        nosotros.
+                    </p>
+
+                    <a class="foot-link" href="https://www.podarcis.com/" target="_BLANK">Leer más...</a>
                 </div>
-                <div>
-                    <strong>Copyright</strong> Podarcis SL. &copy; {{ date('Y') }}
+
+                <div class="col-lg-4 mb-lg-0 mb-3 px-5">
+                    {{-- <h2>Otros productos</h2>
+
+                    <p>
+                        <a class="foot-link" href="https://legislaciononline.es/" target="_BLANK">Legislación
+                            online</a>
+                    </p>
+
+
+
+                    <p>
+                        <a class="foot-link" href="https://calculatuhuelladecarbono.com/" target="_BLANK">Calcula
+                            tu huella de
+                            carbono</a>
+                    </p>
+
+                    <p>
+                        <a class="foot-link" href="https://www.vigilanciaambiental.com/" target="_BLANK">Vigilancia
+                            ambiental</a>
+                    </p>
+
+
+
+                    <p>
+                        <a class="foot-link" href="https://www.uuupsapp.com/" target="_BLANK">Uuupsap | Gestión
+                            de incidencias</a>
+                    </p> --}}
+
+
                 </div>
+
+                <div class="col-lg-4 mb-lg-0 mb-3 pr-5">
+                    <h2>Otros productos</h2>
+                    <hr class="border-white">
+                    <p>
+                        <a class="foot-link" href="https://legislaciononline.es/" target="_BLANK">Legislación
+                            online</a>
+                    </p>
+
+
+
+                    <p>
+                        <a class="foot-link" href="https://calculatuhuelladecarbono.com/" target="_BLANK">Calcula
+                            tu huella de
+                            carbono</a>
+                    </p>
+
+                    <p>
+                        <a class="foot-link" href="https://www.vigilanciaambiental.com/" target="_BLANK">Vigilancia
+                            ambiental</a>
+                    </p>
+
+
+
+                    <p>
+                        <a class="foot-link" href="https://www.uuupsapp.com/" target="_BLANK">Uuupsap | Gestión
+                            de incidencias</a>
+                    </p>
+
+                </div>
+
 
             </div>
-
 
         </div>
+
+        <div class="part-3">
+
+            <div class="float-right">
+                Todos los derechos reservados.
+            </div>
+
+            <div>
+                <strong>Copyright</strong> Podarcis SL. &copy; {{ date('Y') }}
+            </div>
+
+        </div>
+
+
 
 
 
