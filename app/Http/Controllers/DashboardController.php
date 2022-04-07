@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use App\Models\Branch;
 use App\Models\Customer;
 use App\Models\Module;
@@ -38,8 +39,10 @@ class DashboardController extends Controller
                 $size = $size . " Bytes";
             }
 
+            $blogs = Blog::get();
 
-            return view('dashboard', compact('customers', 'modules', 'size', 'restante'));
+
+            return view('dashboard', compact('customers', 'modules', 'size', 'restante', 'blogs'));
         }
 
         $customer = Customer::where('id', $user->customer_id)->first();

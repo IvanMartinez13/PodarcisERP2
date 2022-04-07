@@ -3,57 +3,48 @@
 @section('content')
     @if (auth()->user()->hasRole('super-admin'))
         <div class="row">
-            <div class="col-md-3">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>Clientes</h5>
+            <div class="col-lg-3 col-md-6 mb-4">
+               <div class="glassCard text-dark h-100">
+                    <div class="text-center">
+                        <h1>Clientes</h1>
+                        <h1>{{count($customers)}}</h1>
                     </div>
-                    <div class="ibox-content" style="height: 120px;">
+                   
+               </div>
+            </div>
 
-                        <h2> {{ count($customers) }} </h2>
-                        <div class="m-t-sm small">Total de clientes.</div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="glassCard text-dark h-100">
+                    
+                    <div class="text-center">
+                        <h1>Módulos</h1>
+                        <h1>{{count($modules)}}</h1>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>Módulos</h5>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="glassCard text-dark h-100">
+                    
+                    <div class="text-center">
+                        <h1>Espacio en disco</h1>
+                        <p class="h6">{{ $size }} usados.</p>
                     </div>
-                    <div class="ibox-content" style="height: 120px;">
-                        <h2> {{ count($modules) }}</h2>
-                        <div class="m-t-sm small">Total de modulos.</div>
+                   
+                    <div class="progress progress-mini">
+                        <div style="width: {{ 100 - ($restante * 100) }}%;" class="progress-bar"></div>
                     </div>
+
+                    <div class="m-t-sm small">Espacio restante {{ ($restante * 100 * 1024) / 100 }} GB</div>
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>Espacio en disco</h5>
-                    </div>
-                    <div class="ibox-content" style="height: 120px;">
-
-                        <h2> {{ $size }} usados.</h2>
-
-                        <div class="progress progress-mini">
-                            <div style="width: {{ 100 - $restante * 100 }}%;" class="progress-bar"></div>
-                        </div>
-
-                        <div class="m-t-sm small">Espacio restante {{ ($restante * 100 * 1024) / 100 }} GB</div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>Mensajes</h5>
-                    </div>
-                    <div class="ibox-content" style="height: 120px;">
-                        No disponible
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="glassCard text-dark h-100">
+                    
+                    <div class="text-center">
+                        <h1>Mensajes</h1>
+                        <h1>No disponible.</h1>
                     </div>
                 </div>
             </div>
@@ -61,27 +52,63 @@
 
         <div class="row">
             <div class="col-lg-6">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>In box</h5>
-                    </div>
-
-                    <div class="ibox-content">
-                        <h5>Tabla con incidencias de los usuarios</h5>
+                <div class="glassCard text-dark h-100">
+                    
+                    <div class="text-left">
+                        <h2>In box</h2>
+                        <h2>No disponible.</h2>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-6">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>Blog</h5>
-                    </div>
+                <div class="glassCard text-dark h-100">
+                    
+                    <div class="text-left">
+                        <h2>Blog</h2>
+                        @foreach ($blogs as $key => $blog)
+                            @if ($key < 4)
+                            <div class="row">
+                                
+                                    <div class="col-4">
+                                        <a class="link-blog" href="{{route('blog.preview', $blog->token)}}">
+                                            @if ($blog->image)
+                                                <div class="blog-marco">
+                                                    <img src="{{url('/').'/storage'.$blog->image}}" class="img-fluid" />
+                                                </div>
+                                                
+                                            @else
+                                                No tiene imagen.
+                                            @endif
+                                        </a>
+                                    </div>
 
-                    <div class="ibox-content">
-                        <h5>Entrads del blog</h5>
+                                    <div class="col-8 text-left my-auto">
+
+                                        <a class="link-blog" href="{{route('blog.preview', $blog->token)}}">
+                                            <div>
+                                                <h4>{{$blog->title}}</h4>
+
+                                                {!!substr($blog->content, 0, 150);!!}...
+                                            </div>
+                                        </a>
+
+                                            
+                                        
+                                    </div>
+                                
+
+                            </div>
+                                
+                            @endif
+                        @endforeach
+
+                        <a href="{{route('blog.index')}}" class="btn btn-primary mt-3">
+                            Ver más...
+                        </a>
                     </div>
                 </div>
+
             </div>
         </div>
     @else

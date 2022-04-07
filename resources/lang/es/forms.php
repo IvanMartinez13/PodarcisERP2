@@ -1,17 +1,6 @@
 <?php
 return [
 
-    /*
-|--------------------------------------------------------------------------
-| Authentication Language Lines
-|--------------------------------------------------------------------------
-|
-| The following language lines are used during authentication for various
-| messages that we need to display to the user. You are free to modify
-| these language lines according to your application's requirements.
-|
-*/
-    //BOTONES
     'create' => 'Crear',
     'edit' => 'Editar',
     'save' => 'Guardar',
@@ -21,8 +10,6 @@ return [
     'save_strategy' => 'Guardar y crear estrategias',
     'strategy' => 'Guardar y visualizar estrategias',
     'close' => 'Cerrar',
-
-    //LABELS
     'name' => 'Nombre',
     'username' => 'Username',
     'nif' => 'Nif',
@@ -66,11 +53,10 @@ return [
     'type' => 'Tipo',
     'group' => 'Grupo',
     'resources' => 'Recursos',
-
-    //PERMISSIONS
     'store' => 'Crear',
     'update' => 'Editar',
     'delete' => 'Eliminar',
     'read' => 'Leer',
+    'content' => 'Contenido',
 
 ];

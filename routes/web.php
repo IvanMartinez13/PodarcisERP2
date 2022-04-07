@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BranchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
@@ -55,14 +56,24 @@ Route::prefix('modules')->middleware(['auth', 'role:super-admin'])->group(functi
     Route::put('/update', [ModuleController::class, 'update'])->name('modules.update');
 });
 
-//CUSTOMERS
-Route::prefix('customers')->middleware(['auth', 'role:super-admin'])->group(function () {
-    Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
-    Route::get('/create', [CustomerController::class, 'create'])->name('customers.create');
-    Route::put('/create', [CustomerController::class, 'store'])->name('customers.store');
-    Route::get('/edit/{token}', [CustomerController::class, 'edit'])->name('customers.edit');
-    Route::put('/update', [CustomerController::class, 'update'])->name('customers.update');
+
+//BLOG
+Route::prefix('blog')->middleware(['auth', 'role:super-admin'])->group(function () {
+
+    Route::get('/', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('/create', [BlogController::class, 'create'])->name('blog.create');
+    Route::put('/create', [BlogController::class, 'store'])->name('blog.store');
+    Route::post('/changeState', [BlogController::class, 'changeState'])->name('blog.changeState');
+    Route::get('/edit/{token}', [BlogController::class, 'edit'])->name('blog.edit');
+    Route::put('/update', [BlogController::class, 'update'])->name('blog.update');
+    Route::put('/delete', [BlogController::class, 'delete'])->name('blog.delete');
+    Route::get('/preview/{token}', [BlogController::class, 'preview'])->name('blog.preview');
+
+    
+    
+
 });
+
 
 //USERS
 Route::prefix('users')->middleware(['auth', 'role:customer-manager'])->group(function () {
