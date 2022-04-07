@@ -730,6 +730,7 @@
     "You will recover this objective!": "¡Recuperarás este objectivo!",
     "You will not be able to recover this project!": "¡No podrá recuperar este projecto!",
     "You will not be able to recover this subtask!": "¡No podrá recuperar esta subtarea!",
+    "You will not be able to recover this post!": "¡No podrá recuperar esta entrada!",
     "Start pending": "Pendiente de Inicio",
     "In process": "En proceso",
     "Stopped": "Parado",
@@ -744,5 +745,6 @@
     "Recover objetives": "Recuperar objetivos",
     "Evaluation": "Evaluación",
     "Reduction": "Reducción",
-    "Target value": "Valor objetivo"
+    "Target value": "Valor objetivo",
+    "Preview": "Previsualizar"
 }

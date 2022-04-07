@@ -27,6 +27,7 @@ return [
     'comments' => 'Comentarios',
     'sub_tasks' => 'Subtareas',
     'files' => 'Documentos',
-    'vao' => 'Vigilancia ambiental'
+    'vao' => 'Vigilancia ambiental',
+    'blog' => 'Blog',
 
 ];
