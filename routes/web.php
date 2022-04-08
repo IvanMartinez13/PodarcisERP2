@@ -9,6 +9,7 @@ use App\Http\Controllers\DepartamentController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\OdsController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VaoController;
 use App\Http\Controllers\VisitController;
@@ -68,9 +69,6 @@ Route::prefix('blog')->middleware(['auth', 'role:super-admin'])->group(function 
     Route::put('/update', [BlogController::class, 'update'])->name('blog.update');
     Route::put('/delete', [BlogController::class, 'delete'])->name('blog.delete');
     Route::get('/preview/{token}', [BlogController::class, 'preview'])->name('blog.preview');
-
-    
-    
 
 });
 
@@ -202,6 +200,17 @@ Route::prefix('vao')->middleware(['auth', 'can:read Vigilancia Ambiental'])->gro
     Route::get('/visit/{token_visit}', [VisitController::class, 'details'])->name('vao.visit');
 });
 
+//TEAMS MODULE
+Route::prefix('teams')->middleware(['auth', 'can:read Teams'])->group(function() {
+
+    Route::get("/", [TeamController::class, 'index'])->name("teams.index");
+    Route::get("/create", [TeamController::class, 'create'])->name("teams.create");
+    Route::put("/store", [TeamController::class, 'store'])->name("teams.store");
+    Route::get("/edit/{token}", [TeamController::class, 'edit'])->name("teams.edit");
+    Route::put("/update", [TeamController::class, 'update'])->name("teams.update");
+    
+    
+});
 
 
 
