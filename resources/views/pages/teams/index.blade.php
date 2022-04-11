@@ -31,9 +31,12 @@
 
             <div class="col-lg-3">
                 <div class="glassCard text-dark h-100">
-                    <div class="team-marco">
-                        <img src="{{url('/storage').$team->image}}" class="img-fluid" alt="">
-                    </div>
+                    <a href="{{route('teams.team', $team->token)}}">
+                        <div class="team-marco">
+                            <img src="{{url('/storage').$team->image}}" class="img-fluid" alt="">
+                        </div>
+                    </a>
+                    
                     <h5 class="text-center">{{ $team->name }}</h5>
                     <p>
                         {{$team->description}}

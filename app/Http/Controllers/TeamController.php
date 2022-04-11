@@ -84,9 +84,9 @@ class TeamController extends Controller
             "name" => $request->name,
             "description" => $request->description,
         ];
-        $users = User::where("token", $request->users)->get('id');
+        $users = User::whereIn("token", $request->users)->get('id');
+        
         $image = $request->file('image');
-        //2) PREPARE DATA
         //2) PREPARE DATA
         if ($image != null) {
             
@@ -112,5 +112,12 @@ class TeamController extends Controller
         $team->users()->sync($users);
         //4) RETURN REDIRECT
         return redirect( route('teams.index') )->with("status", "success")->with("message", "Equipo de trabajo editado.");
+    }
+
+
+    public function team($token){
+
+        $team = Team::where("token", $token)->with('users')->first();
+        return view("pages.teams.team", compact('team'));
     }
 }

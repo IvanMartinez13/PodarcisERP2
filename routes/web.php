@@ -208,6 +208,7 @@ Route::prefix('teams')->middleware(['auth', 'can:read Teams'])->group(function()
     Route::put("/store", [TeamController::class, 'store'])->name("teams.store");
     Route::get("/edit/{token}", [TeamController::class, 'edit'])->name("teams.edit");
     Route::put("/update", [TeamController::class, 'update'])->name("teams.update");
+    Route::get("/team/{token}", [TeamController::class, 'team'])->name("teams.team");
     
     
 });
