@@ -144,4 +144,11 @@ class DashboardController extends Controller
             return response()->json(['respuesta' => 'no tienes derecho']);
         }
     }
+
+    public function changeSkin($skin){
+
+        session(['skin' => $skin]);
+
+        return redirect()->back();
+    }
 }

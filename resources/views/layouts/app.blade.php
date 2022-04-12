@@ -39,14 +39,14 @@
 
 </head>
 
-<body class="md-skin">
+<body class="{{ (session()->get('skin') == null)? 'md-skin' : session()->get('skin')}}">
 
     <div id="wrapper">
 
         {{-- SIDEBAR --}}
         @include('shared.sidebar')
 
-        <div id="page-wrapper" class="gray-bg">
+        <div id="page-wrapper">
             <ul class="circles">
                 <li></li>
                 <li></li>
@@ -82,6 +82,51 @@
 
         </div>
     </div>
+
+
+    {{-- MODAL CONFIG THEME --}}
+    <div class="modal fade" id="configThemeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-xs modal-dialog" role="document">
+          <div class="modal-content bg-primary">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">{{__('Config theme')}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body bg-white">
+                <a href="{{route('dashboard.changeSkin', 'md-skin')}}" class="btn btn-block btn-primary">
+                    Material design
+                </a>
+                
+                <a href="{{route('dashboard.changeSkin', 'skin-1')}}" class="btn btn-block btn-bluelight">
+                    Blue light
+                </a>
+
+                <a href="{{route('dashboard.changeSkin', 'skin-2')}}" class="btn btn-block btn-darkblue">
+                    Dark blue
+                </a>
+
+                <a href="{{route('dashboard.changeSkin', 'skin-3')}}" class="btn btn-block btn-orange">
+                    Purple orange
+                </a>
+
+                <a href="{{route('dashboard.changeSkin', 'basic')}}" class="btn btn-block border btn-secondary">
+                    Basic skin
+                </a>
+
+                <a href="{{route('dashboard.changeSkin', 'light-skin')}}" class="btn btn-block border btn-light">
+                    Light skin
+                </a>
+
+
+            </div>
+            <div class="modal-footer bg-white">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Cancel')}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <!-- Mainly scripts -->
     <script src="{{ url('/') }}/js/jquery-3.1.1.min.js"></script>
@@ -147,14 +192,6 @@
 
     <script>
 
-        if (localStorage.getItem('navbarCollapsed') > 0) {
-            
-            $("body").removeClass('mini-navbar')
-
-        }else{
-
-            $("body").addClass('mini-navbar');
-        }
         
         $(document).ready(() => {
             var switches = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
@@ -166,10 +203,18 @@
                 });
             });
             
-
-
-
         })
+
+        setTimeout(() => {
+            if (localStorage.getItem('navbarCollapsed') > 0) {
+            
+            $("body").removeClass('mini-navbar')
+
+            }else{
+
+                $("body").addClass('mini-navbar');
+            }
+        }, 800);
 
         function toggleNav(){
             

@@ -6,6 +6,12 @@
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li>
+                <a role="button" data-toggle="modal" data-target="#configThemeModal">
+                    <i class="fa fa-cogs"></i>
+                </a>
+            </li>
+
+            <li>
 
                 @impersonating
                 <a type="button" href="{{ route('impersonate.leave') }}"> <i class="fa-solid fa-ghost"></i> Salir del

@@ -32,7 +32,11 @@ Route::get('/', function () {
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
     Route::post('/evolutionTasks', [DashboardController::class, 'evolutionTasks'])->middleware(['auth'])->name('dashboard.evolutionTasks');
+    Route::get('/changeSkin/{skin}', [DashboardController::class, 'changeSkin'])->middleware(['auth'])->name('dashboard.changeSkin');
 });
+
+
+
 
 
 //IMPERSONATE OTHER USERS
