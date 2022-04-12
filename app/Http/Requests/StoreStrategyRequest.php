@@ -33,8 +33,8 @@ class StoreStrategyRequest extends FormRequest
             "target" => ['required', 'numeric'],
             "base_year" => ['required', 'numeric'],
             "target_year" => ['required', 'numeric'],
-            "resources" => ['required', 'string'],
-            "manager" => ['required', 'string', 'max:255'],
+            "resources" => ['nullable', 'string'],
+            "manager" => ['nullable', 'string', 'max:255'],
         ];
     }
 

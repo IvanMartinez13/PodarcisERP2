@@ -4839,6 +4839,10 @@ table {
     background-color: white !important;
 }
 
+.table-bordered > thead > .filters2 > th {
+    background-color: white !important;
+}
+
 .table-bordered > thead > .filtersUpdate > th {
     background-color: white !important;
 }
@@ -10204,4 +10208,24 @@ body.md-skin {
 
 .link-blog:hover div {
     transform: scale(1.05);
+}
+
+.team-marco {
+    height: 200px;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.team-marco > img {
+    height: 100%;
+    width: 100%;
+    transition: 0.5s ease;
+}
+
+.team-marco > img:hover {
+    transform: scale(1.3);
+}
+
+.partner-photo {
+    width: 25%;
 }

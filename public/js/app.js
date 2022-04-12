@@ -5604,7 +5604,7 @@ var Map_branches = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
         id: "branch_map",
         style: {
-          height: '100%',
+          height: "100%",
           borderRadius: "16px"
         }
       });
@@ -5631,35 +5631,30 @@ var Map_branches = /*#__PURE__*/function (_React$Component) {
         }, 250);
       });
       promise.then(function (coordinates) {
-        var map = new L.Map('branch_map', {
+        var map = new L.Map("branch_map", {
           preferCanvas: true,
           attributionControl: false
         });
         map.setView(new L.LatLng(37.91603433975963, -1.1206054687500002), 6);
-        var localLang = 'es';
-        var satelital = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+        var localLang = "es";
+        var satelital = L.tileLayer("http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", {
           maxZoom: 20,
           minZoom: 5,
-          subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+          subdomains: ["mt0", "mt1", "mt2", "mt3"]
         });
-        var hybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+        var streets = L.tileLayer("http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", {
           maxZoom: 20,
-          subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+          subdomains: ["mt0", "mt1", "mt2", "mt3"]
         });
-        var streets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+        var terrain = L.tileLayer("http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}", {
           maxZoom: 20,
-          subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+          subdomains: ["mt0", "mt1", "mt2", "mt3"]
         });
-        var terrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
-          maxZoom: 20,
-          subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-        });
-        map.addLayer(hybrid);
+        map.addLayer(satelital);
         var baseMaps = {
-          "Satelite": satelital,
-          "Ciudades": streets,
-          "Ciudades Satelite": hybrid,
-          "Terreno": terrain
+          Satelite: satelital,
+          Ciudades: streets,
+          Terreno: terrain
         };
         var control = L.control.layers(baseMaps, null, {
           collapsed: true
@@ -5673,11 +5668,11 @@ var Map_branches = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "addPin",
     value: function addPin(coordinates, map, name) {
-      coordinates = coordinates.split(',');
+      coordinates = coordinates.split(",");
       var icon = L.icon({
-        iconUrl: '/img/markers/building.svg',
+        iconUrl: "/img/markers/branch.png",
         //shadowUrl: 'leaf-shadow.png',
-        iconSize: [30, 30],
+        iconSize: [25, 30],
         // size of the icon
         shadowSize: [30, 30],
         // size of the shadow
@@ -5701,9 +5696,9 @@ var Map_branches = /*#__PURE__*/function (_React$Component) {
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Map_branches);
 
-if (document.getElementsByTagName('map-branches').length >= 1) {
-  var component = document.getElementsByTagName('map-branches')[0];
-  var branches = JSON.parse(component.getAttribute('branches'));
+if (document.getElementsByTagName("map-branches").length >= 1) {
+  var component = document.getElementsByTagName("map-branches")[0];
+  var branches = JSON.parse(component.getAttribute("branches"));
   react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Map_branches, {
     branches: branches
   }), component);
@@ -6212,7 +6207,7 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
                 className: "ibox-tools",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
-                  role: 'button',
+                  role: "button",
                   className: "collapse-link",
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
                     className: "fa fa-chevron-up",
@@ -6286,9 +6281,9 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                       className: "col-lg-4",
                       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h5", {
-                        children: this.strategy.increase == 1 ? 'Incremento Objetivo(%)' : 'Reducción Objetivo(%)'
+                        children: this.strategy.increase == 1 ? "Incremento Objetivo(%)" : "Reducción Objetivo(%)"
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
-                        children: [this.formatValue(Number(this.strategy.target).toFixed(3)), " %"]
+                        children: [this.formatValue(Number(this.strategy.target).toFixed(3)), " ", "%"]
                       })]
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                       className: "col-lg-4",
@@ -6456,7 +6451,7 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_2___default().post('/ods/evaluate/get_evaluations', {
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post("/ods/evaluate/get_evaluations", {
         token: this.strategy.token
       }).then(function (response) {
         //GET YEARS
@@ -6468,7 +6463,7 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
         var rows = _this3.state.rows;
         var evaluations = response.data.evaluations;
 
-        if (evaluations != null) {
+        if (evaluations.length > 0) {
           //EVALUATIONS NOT NULL
           evaluations.map(function (evaluation, index) {
             var item = {
@@ -6485,9 +6480,9 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
           //EVALUATIONS IS NULL
           var item = {
             index: 0,
-            id: 'row_0',
-            year: '',
-            value: '',
+            id: "row_0",
+            year: "",
+            value: "",
             files: [],
             "delete": false
           };
@@ -6500,16 +6495,16 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
           save: false
         });
       }).then(function () {
-        $('#observations').summernote({
+        $("#observations").summernote({
           placeholder: "Observaciones...",
-          height: '200px'
+          height: "200px"
         });
 
         var handleObservations = function handleObservations(val) {
           _this3.observations = val;
         };
 
-        $('#observations').on('summernote.change', function (e) {
+        $("#observations").on("summernote.change", function (e) {
           handleObservations(e.target.value);
         });
       });
@@ -6520,9 +6515,11 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
       var _this4 = this;
 
       if (this.state.save == true && this.state.saved == true) {
-        axios__WEBPACK_IMPORTED_MODULE_2___default().post('/ods/evaluate/get_evaluations', {
+        axios__WEBPACK_IMPORTED_MODULE_2___default().post("/ods/evaluate/get_evaluations", {
           token: this.strategy.token
         }).then(function (response) {
+          $("#observations").summernote("destroy");
+          $(".note-editor").remove();
           _this4.years = []; //GET YEARS
 
           for (var index = _this4.objective.base_year; index <= _this4.objective.target_year; index++) {
@@ -6550,9 +6547,9 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
             //EVALUATIONS IS NULL
             var item = {
               index: 0,
-              id: 'row_0',
-              year: '',
-              value: '',
+              id: "row_0",
+              year: "",
+              value: "",
               files: [],
               "delete": false
             };
@@ -6566,20 +6563,19 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
             saved: false
           });
         }).then(function () {
-          $('#observations').summernote({
+          $("#observations").summernote({
             placeholder: "Observaciones...",
-            height: '200px'
+            height: "200px"
           });
 
           var handleObservations = function handleObservations(val) {
             _this4.observations = val;
           };
 
-          $('#observations').on('summernote.change', function (e) {
+          $("#observations").on("summernote.change", function (e) {
             handleObservations(e.target.value);
           });
         });
-        ;
       }
     } //METHODS
 
@@ -6589,9 +6585,9 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
       var rows = this.state.rows;
       var item = {
         index: rows.length,
-        id: 'row_' + rows.length,
-        year: '',
-        value: '',
+        id: "row_" + rows.length,
+        year: "",
+        value: "",
         files: [],
         "delete": false
       };
@@ -6628,7 +6624,7 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
         loading: true,
         save: true
       });
-      axios__WEBPACK_IMPORTED_MODULE_2___default().post('/ods/evaluate/save', {
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post("/ods/evaluate/save", {
         data: rows,
         token: token
       }).then(function (response) {
@@ -6657,16 +6653,16 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
       var _this6 = this;
 
       var value = $("#observations").val();
-      $('#observations').summernote('destroy');
+      $("#observations").summernote("destroy");
       this.setState({
         loading: true,
         save: true
       });
-      axios__WEBPACK_IMPORTED_MODULE_2___default().post('/ods/strategy/observation', {
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post("/ods/strategy/observation", {
         observations: value,
         token: this.strategy.token
       }).then(function (response) {
-        if (response.data.status == 'success') {
+        if (response.data.status == "success") {
           toastr.success(response.data.message);
 
           _this6.setState({
@@ -6685,7 +6681,7 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
     key: "formatValue",
     value: function formatValue(number) {
       var value = number;
-      value = value.replace('.', ',');
+      value = value.replace(".", ",");
       return value;
     }
   }]);
@@ -6695,12 +6691,12 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Evaluation);
 
-if (document.getElementsByTagName('evaluation').length >= 1) {
-  var component = document.getElementsByTagName('evaluation')[0];
-  var strategy = JSON.parse(component.getAttribute('strategy'));
-  var objective = JSON.parse(component.getAttribute('objective'));
-  var update = component.getAttribute('update');
-  var del = component.getAttribute('delete');
+if (document.getElementsByTagName("evaluation").length >= 1) {
+  var component = document.getElementsByTagName("evaluation")[0];
+  var strategy = JSON.parse(component.getAttribute("strategy"));
+  var objective = JSON.parse(component.getAttribute("objective"));
+  var update = component.getAttribute("update");
+  var del = component.getAttribute("delete");
   react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(Evaluation, {
     strategy: strategy,
     objective: objective,
@@ -7003,9 +6999,9 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
       var rows = this.state.rows;
       var item = {
         index: rows.length,
-        id: 'row_' + rows.length,
-        year: '',
-        value: '',
+        id: "row_" + rows.length,
+        year: "",
+        value: "",
         files: [],
         "delete": false
       };
@@ -7022,7 +7018,7 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/ods/objective/get_evaluations', {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/ods/objective/get_evaluations", {
         token: this.objective.token
       }).then(function (response) {
         var evaluations = response.data.evaluations;
@@ -7055,16 +7051,16 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
           rows: rows
         });
       }).then(function () {
-        $('#observations').summernote({
+        $("#observations").summernote({
           placeholder: "Observaciones...",
-          height: '200px'
+          height: "200px"
         });
 
         var handleObservations = function handleObservations(val) {
           _this3.observations = val;
         };
 
-        $('#observations').on('summernote.change', function (e) {
+        $("#observations").on("summernote.change", function (e) {
           handleObservations(e.target.value);
         });
       });
@@ -7075,9 +7071,11 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
       var _this4 = this;
 
       if (this.state.saved == true) {
-        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/ods/objective/get_evaluations', {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("/ods/objective/get_evaluations", {
           token: this.objective.token
         }).then(function (response) {
+          $("#observations").summernote("destroy");
+          $(".note-editor").remove();
           var evaluations = response.data.evaluations;
           var rows = [];
 
@@ -7111,16 +7109,16 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
             rows: rows
           });
         }).then(function () {
-          $('#observations').summernote({
+          $("#observations").summernote({
             placeholder: "Observaciones...",
-            height: '200px'
+            height: "200px"
           });
 
           var handleObservations = function handleObservations(val) {
             _this4.observations = val;
           };
 
-          $('#observations').on('summernote.change', function (e) {
+          $("#observations").on("summernote.change", function (e) {
             handleObservations(e.target.value);
           });
         });
@@ -7152,11 +7150,11 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
         loading: true,
         save: true
       });
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/ods/objective/evaluate/save', {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/ods/objective/evaluate/save", {
         data: rows,
         token: token
       }).then(function (response) {
-        if (response.data.status == 'success') {
+        if (response.data.status == "success") {
           toastr.success(response.data.message);
 
           _this5.setState({
@@ -7175,7 +7173,7 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
     key: "formatValue",
     value: function formatValue(number) {
       var value = number;
-      value = value.replace('.', ',');
+      value = value.replace(".", ",");
       return value;
     }
   }, {
@@ -7184,16 +7182,16 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
       var _this6 = this;
 
       var value = $("#observations").val();
-      $('#observations').summernote('destroy');
+      $("#observations").summernote("destroy");
       this.setState({
         loading: true,
         save: true
       });
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/ods/observation', {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/ods/observation", {
         observations: value,
         token: this.objective.token
       }).then(function (response) {
-        if (response.data.status == 'success') {
+        if (response.data.status == "success") {
           toastr.success(response.data.message);
 
           _this6.setState({
@@ -7215,11 +7213,11 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Objective_evaluation);
 
-if (document.getElementsByTagName('objective-evaluation').length >= 1) {
-  var component = document.getElementsByTagName('objective-evaluation')[0];
-  var update = component.getAttribute('update');
-  var del = component.getAttribute('delete');
-  var objective = JSON.parse(component.getAttribute('objective'));
+if (document.getElementsByTagName("objective-evaluation").length >= 1) {
+  var component = document.getElementsByTagName("objective-evaluation")[0];
+  var update = component.getAttribute("update");
+  var del = component.getAttribute("delete");
+  var objective = JSON.parse(component.getAttribute("objective"));
   /*let strategy = JSON.parse(component.getAttribute('strategy'));
   let objective = JSON.parse(component.getAttribute('objective'));
   let update = component.getAttribute('update');
@@ -8537,7 +8535,7 @@ var IndicatorVariation = /*#__PURE__*/function (_React$Component) {
         className: "text-center",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("canvas", {
           id: "indicator_variation",
-          height: '200px'
+          height: "200px"
         })
       });
     }
@@ -8546,17 +8544,17 @@ var IndicatorVariation = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/ods/objective/variationChart', {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/ods/objective/variationChart", {
         token: this.objective.token
       }).then(function (response) {
         var years = response.data.years;
         var variation = response.data.variation;
         _this2.target = response.data.targetValue;
 
-        if (typeof _this2.target == 'number') {
-          $('#target_value').text(_this2.formatValue(_this2.target.toFixed(3)) + " " + _this2.objective.indicator);
+        if (typeof _this2.target == "number") {
+          $("#target_value").text(_this2.formatValue(_this2.target.toFixed(3)) + " " + _this2.objective.indicator);
         } else {
-          $('#target_value').text(_this2.target);
+          $("#target_value").text(_this2.target);
         }
 
         var data = [];
@@ -8570,56 +8568,56 @@ var IndicatorVariation = /*#__PURE__*/function (_React$Component) {
           loading: false
         });
       }).then(function () {
-        var ctx = document.getElementById('indicator_variation').getContext('2d');
+        var ctx = document.getElementById("indicator_variation").getContext("2d");
 
-        if (typeof _this2.target == 'number') {
+        if (typeof _this2.target == "number") {
           var config = {
-            type: 'line',
+            type: "line",
             data: {
               labels: _this2.years,
               datasets: [{
                 label: _this2.objective.indicator,
                 data: _this2.dataSets,
                 fill: false,
-                borderColor: '#1AB394',
-                backgroundColor: '#1AB394',
+                borderColor: "#1AB394",
+                backgroundColor: "#1AB394",
                 tension: 0.2
               }]
             },
             options: {
               responsive: true,
               interaction: {
-                mode: 'index',
+                mode: "index",
                 intersect: false
               },
-              "horizontalLine": [{
+              horizontalLine: [{
                 y: _this2.target,
                 style: "#ed5565",
-                text: 'Valor objetivo ' + _this2.formatValue(_this2.target.toFixed(3))
+                text: "Valor objetivo " + _this2.formatValue(_this2.target.toFixed(3))
               }],
               plugins: {
                 legend: {
-                  position: 'top'
+                  position: "top"
                 }
               },
               hover: {
-                mode: 'nearest',
+                mode: "nearest",
                 intersect: true
               },
               scales: {
                 xAxes: {
                   scaleLabel: {
                     display: true,
-                    labelString: 'Años',
-                    fontColor: 'white'
+                    labelString: "Años",
+                    fontColor: "white"
                   },
                   title: {
                     display: true,
-                    text: 'Años',
-                    color: '#343a40',
+                    text: "Años",
+                    color: "#343a40",
                     font: {
                       size: 12,
-                      weight: 'bold',
+                      weight: "bold",
                       lineHeight: 1.2,
                       family: '"Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif'
                     },
@@ -8688,50 +8686,48 @@ var IndicatorVariation = /*#__PURE__*/function (_React$Component) {
 
                 return;
               }
-
-              ;
             }
           };
           Chart.pluginService.register(horizonalLinePlugin);
           _this2.chart = new Chart(ctx, config);
         } else {
           var _config = {
-            type: 'line',
+            type: "line",
             data: {
               labels: _this2.years,
               datasets: [{
                 label: _this2.objective.indicator,
                 data: _this2.dataSets,
                 fill: false,
-                borderColor: '#1AB394',
-                backgroundColor: '#1AB394',
+                borderColor: "#1AB394",
+                backgroundColor: "#1AB394",
                 tension: 0.2
               }]
             },
             options: {
               responsive: true,
               interaction: {
-                mode: 'index',
+                mode: "index",
                 intersect: false
               },
               plugins: {
                 legend: {
-                  position: 'top'
+                  position: "top"
                 }
               },
               hover: {
-                mode: 'nearest',
+                mode: "nearest",
                 intersect: true
               },
               scales: {
                 xAxes: [{
                   title: {
                     display: true,
-                    text: 'Años',
-                    color: '#343a40',
+                    text: "Años",
+                    color: "#343a40",
                     font: {
                       size: 12,
-                      weight: 'bold',
+                      weight: "bold",
                       lineHeight: 1.2,
                       family: '"Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif'
                     },
@@ -8747,10 +8743,10 @@ var IndicatorVariation = /*#__PURE__*/function (_React$Component) {
                   title: {
                     display: true,
                     text: _this2.objective.indicator,
-                    color: '#343a40',
+                    color: "#343a40",
                     font: {
                       size: 12,
-                      weight: 'bold',
+                      weight: "bold",
                       lineHeight: 1.2,
                       family: '"Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif'
                     },
@@ -8776,7 +8772,7 @@ var IndicatorVariation = /*#__PURE__*/function (_React$Component) {
     key: "formatValue",
     value: function formatValue(number) {
       var value = number;
-      value = value.replace('.', ',');
+      value = value.replace(".", ",");
       return value;
     }
   }]);
@@ -9383,7 +9379,7 @@ var StrategyEvolution = /*#__PURE__*/function (_React$Component) {
     };
     _this.dataSets = [];
     _this.years = [];
-    _this.targetValue = '';
+    _this.targetValue = "";
     return _this;
   }
 
@@ -9420,7 +9416,7 @@ var StrategyEvolution = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/ods/strategy/evolution_chart', {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/ods/strategy/evolution_chart", {
         token: this.strategy.token
       }).then(function (response) {
         var evaluations = response.data.evaluations;
@@ -9437,45 +9433,50 @@ var StrategyEvolution = /*#__PURE__*/function (_React$Component) {
         _this2.dataSets = data;
         _this2.years = years;
         _this2.targetValue = targetValue;
-        $("#strategy_target_value" + _this2.strategy.token).text(_this2.formatValue(targetValue.toFixed(3)) + ' ' + _this2.strategy.indicator);
+
+        if (typeof _this2.targetValue == "number") {
+          $("#strategy_target_value" + _this2.strategy.token).text(_this2.formatValue(targetValue.toFixed(3)) + " " + _this2.strategy.indicator);
+        } else {
+          $("#strategy_target_value" + _this2.strategy.token).text("Introduce un valor en el año base");
+        }
 
         _this2.setState({
           loading: false
         });
       }).then(function () {
-        if (typeof _this2.targetValue == 'number') {
-          var ctx = document.getElementById('strategy_evolution' + _this2.strategy.token).getContext('2d');
+        if (typeof _this2.targetValue == "number") {
+          var ctx = document.getElementById("strategy_evolution" + _this2.strategy.token).getContext("2d");
           var config = {
-            type: 'line',
+            type: "line",
             data: {
               labels: _this2.years,
               datasets: [{
                 label: _this2.strategy.indicator,
                 data: _this2.dataSets,
                 fill: false,
-                borderColor: '#1AB394',
-                backgroundColor: '#1AB394',
+                borderColor: "#1AB394",
+                backgroundColor: "#1AB394",
                 tension: 0.2
               }]
             },
             options: {
               responsive: true,
               interaction: {
-                mode: 'index',
+                mode: "index",
                 intersect: false
               },
               plugins: {
                 legend: {
-                  position: 'top'
+                  position: "top"
                 }
               },
-              "horizontalLine": [{
+              horizontalLine: [{
                 y: _this2.targetValue,
                 style: "#ed5565",
-                text: 'Valor objetivo ' + _this2.formatValue(_this2.targetValue.toFixed(3))
+                text: "Valor objetivo " + _this2.formatValue(_this2.targetValue.toFixed(3))
               }],
               hover: {
-                mode: 'nearest',
+                mode: "nearest",
                 intersect: true
               },
               scales: {
@@ -9535,40 +9536,38 @@ var StrategyEvolution = /*#__PURE__*/function (_React$Component) {
 
                 return;
               }
-
-              ;
             }
           };
           Chart.pluginService.register(horizonalLinePlugin);
         } else {
-          var _ctx = document.getElementById('strategy_evolution' + _this2.strategy.token).getContext('2d');
+          var _ctx = document.getElementById("strategy_evolution" + _this2.strategy.token).getContext("2d");
 
           var _config = {
-            type: 'line',
+            type: "line",
             data: {
               labels: _this2.years,
               datasets: [{
                 label: _this2.strategy.indicator,
                 data: _this2.dataSets,
                 fill: false,
-                borderColor: '#1AB394',
-                backgroundColor: '#1AB394',
+                borderColor: "#1AB394",
+                backgroundColor: "#1AB394",
                 tension: 0.2
               }]
             },
             options: {
               responsive: true,
               interaction: {
-                mode: 'index',
+                mode: "index",
                 intersect: false
               },
               plugins: {
                 legend: {
-                  position: 'top'
+                  position: "top"
                 }
               },
               hover: {
-                mode: 'nearest',
+                mode: "nearest",
                 intersect: true
               },
               scales: {
@@ -9588,7 +9587,7 @@ var StrategyEvolution = /*#__PURE__*/function (_React$Component) {
     key: "formatValue",
     value: function formatValue(number) {
       var value = number;
-      value = value.replace('.', ',');
+      value = value.replace(".", ",");
       return value;
     }
   }]);

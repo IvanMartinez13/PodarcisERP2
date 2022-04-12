@@ -160,6 +160,16 @@
 
             @unlessrole('super-admin')
 
+                
+                @can('read Teams')
+                    <li class="{{ request()->is('teams*') ? 'active' : '' }}">
+                        <a href="{{ route('teams.index') }}">
+                            <i class="fas fa-user-friends    "></i>
+                            <span class="nav-label">{{ __('modules.teams') }}</span>
+                        </a>
+                    </li>
+                @endcan
+
                 @can('read Ods')
                     <li class="{{ request()->is('ods*') ? 'active' : '' }}">
                         <a href="{{ route('ods.index') }}">
@@ -186,6 +196,8 @@
                         </a>
                     </li>
                 @endcan
+
+
                 <li>
                     <a href="https://vigilanciaambiental.com" target="_blank">
 

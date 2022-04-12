@@ -1,14 +1,13 @@
 import axios from "axios";
 import React from "react";
-import ReactDOM  from "react-dom";
+import ReactDOM from "react-dom";
 import RowObjective_evaluation from "./components/RowObjective_evaluation";
 import IndicatorVariation from "./components/IndicatorVariation";
 import EvolutionObjective from "./components/EvolutionObjective";
 
-class Objective_evaluation extends React.Component{
-
-    constructor(props){
-        super(props)
+class Objective_evaluation extends React.Component {
+    constructor(props) {
+        super(props);
 
         this.update = this.props.update;
         this.del = this.props.delete;
@@ -26,15 +25,16 @@ class Objective_evaluation extends React.Component{
         };
 
         this.updateRows = this.updateRows.bind(this);
-
     }
 
-    render(){
-        {/* LOADING */}
+    render() {
+        {
+            /* LOADING */
+        }
         if (this.state.loading) {
-            return(
+            return (
                 <div className="text-center">
-                   <div className="spiner-example">   
+                    <div className="spiner-example">
                         <div className="sk-spinner sk-spinner-double-bounce">
                             <div className="sk-double-bounce1"></div>
                             <div className="sk-double-bounce2"></div>
@@ -43,51 +43,46 @@ class Objective_evaluation extends React.Component{
 
                     <p className="text-center">Cargando...</p>
                 </div>
-
-
-                );
+            );
         }
 
-        return(
+        return (
             <div className="animated fadeInRight">
-
                 <div className="row mx-1 mb-3">
-
                     <div className="col-lg-8">
                         <div className="row">
-
                             <div className="col-lg-6">
                                 <h5>Descripción</h5>
-                                <p dangerouslySetInnerHTML={{ __html: this.objective.description }}>
-                                </p>
+                                <p
+                                    dangerouslySetInnerHTML={{
+                                        __html: this.objective.description,
+                                    }}
+                                ></p>
                             </div>
 
                             <div className="col-lg-6">
                                 <h5>Recursos</h5>
-                                <p dangerouslySetInnerHTML={{ __html: this.objective.resources }}>
-                                </p>
+                                <p
+                                    dangerouslySetInnerHTML={{
+                                        __html: this.objective.resources,
+                                    }}
+                                ></p>
                             </div>
 
                             <div className="col-lg-4">
                                 <h5>Indicador</h5>
-                                <p>
-                                    {this.objective.indicator}
-                                </p>
+                                <p>{this.objective.indicator}</p>
                             </div>
 
                             <div className="col-lg-4">
                                 <h5>Encargado</h5>
-                                <p>
-                                    {this.objective.manager}
-                                </p>
+                                <p>{this.objective.manager}</p>
                             </div>
-
 
                             <div className="col-lg-4">
                                 <h5>Año de referencia</h5>
                                 {this.objective.base_year}
                             </div>
-
 
                             <div className="col-lg-4">
                                 <h5>Año del objetivo</h5>
@@ -95,87 +90,87 @@ class Objective_evaluation extends React.Component{
                             </div>
 
                             <div className="col-lg-4">
-                                {
-                                    (this.objective.increase == 0)?
-                                        
-                                        <h5>Reducción Objetivo(%)</h5>
-                                       
-                                    :
-                                        <h5>Incremento Objetivo(%)</h5>
-
-                                }
-
-                                { this.formatValue( this.objective.target ) } %
+                                {this.objective.increase == 0 ? (
+                                    <h5>Reducción Objetivo(%)</h5>
+                                ) : (
+                                    <h5>Incremento Objetivo(%)</h5>
+                                )}
+                                {this.formatValue(this.objective.target)} %
                             </div>
 
                             <div className="col-lg-4">
                                 <h5>Valor objetivo</h5>
                                 <span id="target_value"></span>
                             </div>
-
-                            
                         </div>
                         <h5 className="mt-3">
                             <label htmlFor="observations">Observaciones:</label>
                         </h5>
                         <textarea
-                            id="observations" 
+                            id="observations"
                             className="form-control"
                             placeholder="Observaciones..."
                             defaultValue={this.observations}
                         ></textarea>
 
-                        {
-                            (this.update == 1)?
-                                <div className="text-right">
-                                    <button className="btn btn-primary mt-2 " onClick={() => {
+                        {this.update == 1 ? (
+                            <div className="text-right">
+                                <button
+                                    className="btn btn-primary mt-2 "
+                                    onClick={() => {
                                         this.oservations();
-                                    }}>Guardar observaciones</button>
-                                </div>
-                            :
-                                <div className="alert alert-warning">
-                                    No tienes permisos para cambiar las observaciones.
-                                </div>
-                        }
-                        
+                                    }}
+                                >
+                                    Guardar observaciones
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="alert alert-warning">
+                                No tienes permisos para cambiar las
+                                observaciones.
+                            </div>
+                        )}
                     </div>
-
 
                     <div className="col-lg-4">
-
-                        <h5 className="text-center">VARIACIÓN de {this.objective.indicator}</h5>
+                        <h5 className="text-center">
+                            VARIACIÓN de {this.objective.indicator}
+                        </h5>
                         <IndicatorVariation objective={this.objective} />
                     </div>
-
-
                 </div>
 
-                {
-                    (this.update == 1) ?  
-                    
+                {this.update == 1 ? (
                     <div className="row mx-1 mb-3">
                         <div className="col-6 text-left">
-                            <button className="btn btn-primary" onClick={ () => {
-                                this.newRow()
-                            } }>
+                            <button
+                                className="btn btn-primary"
+                                onClick={() => {
+                                    this.newRow();
+                                }}
+                            >
                                 Nueva fila...
                             </button>
                         </div>
                         <div className="col-6 text-right">
-                            <button className="btn btn-primary" onClick={ () => {
-                                this.save();
-                            } }>
+                            <button
+                                className="btn btn-primary"
+                                onClick={() => {
+                                    this.save();
+                                }}
+                            >
                                 Guardar
                             </button>
                         </div>
                     </div>
-                    :  
-                    <div className="alert alert-warning">No tienes permisos para modificar esta tabla</div>
-                }
+                ) : (
+                    <div className="alert alert-warning">
+                        No tienes permisos para modificar esta tabla
+                    </div>
+                )}
 
                 <div className="container-fluid table-responsive">
                     <table className="table table-hover table-bordered table-striped">
-
                         <thead>
                             <tr>
                                 <th>Archivo</th>
@@ -186,160 +181,97 @@ class Objective_evaluation extends React.Component{
                         </thead>
 
                         <tbody>
- 
-                            {   this.state.rows.map( (row, index) => {
-
-                                    return(
-                                        
-                                        <RowObjective_evaluation
-                                            key={row.id+index}
-                                            id={row.id}
-                                            year={row.year}
-                                            value={row.value}
-                                            years={this.years}
-                                            files={row.files}
-                                            updateRows={this.updateRows}
-                                            delete={row.delete}
-                                            update={this.update}
-                                            del={this.del}
-                                        />
-                                    );
-                                } )
-                            }
-          
+                            {this.state.rows.map((row, index) => {
+                                return (
+                                    <RowObjective_evaluation
+                                        key={row.id + index}
+                                        id={row.id}
+                                        year={row.year}
+                                        value={row.value}
+                                        years={this.years}
+                                        files={row.files}
+                                        updateRows={this.updateRows}
+                                        delete={row.delete}
+                                        update={this.update}
+                                        del={this.del}
+                                    />
+                                );
+                            })}
                         </tbody>
-
                     </table>
                 </div>
 
-
-                {
-                    (this.update == 1) ?  
-                    
+                {this.update == 1 ? (
                     <div className="row mx-1 mb-3">
                         <div className="col-6 text-left">
-                            <button className="btn btn-primary" onClick={ () => {
-                                this.newRow()
-                            } }>
+                            <button
+                                className="btn btn-primary"
+                                onClick={() => {
+                                    this.newRow();
+                                }}
+                            >
                                 Nueva fila...
                             </button>
                         </div>
                         <div className="col-6 text-right">
-                            <button className="btn btn-primary" onClick={ () => {
-                                this.save();
-                            } }>
+                            <button
+                                className="btn btn-primary"
+                                onClick={() => {
+                                    this.save();
+                                }}
+                            >
                                 Guardar
                             </button>
                         </div>
                     </div>
-                    :  
-                    <div className="alert alert-warning">No tienes permisos para modificar esta tabla</div>
-                }
-
- 
+                ) : (
+                    <div className="alert alert-warning">
+                        No tienes permisos para modificar esta tabla
+                    </div>
+                )}
             </div>
-
-        )
+        );
     }
 
-
-    newRow(){
-
+    newRow() {
         var rows = this.state.rows;
 
         let item = {
             index: rows.length,
-            id: 'row_'+rows.length,
-            year: '',
-            value: '',
+            id: "row_" + rows.length,
+            year: "",
+            value: "",
             files: [],
             delete: false,
+        };
 
-        }
-
-        rows.unshift(item);//PUSH TO TOP
+        rows.unshift(item); //PUSH TO TOP
 
         this.setState({
             loading: false,
             rows: rows,
         });
-
-
     }
 
     //ON MOUNT
-    componentDidMount(){
-
-        axios.post('/ods/objective/get_evaluations', {token: this.objective.token}).then( (response) => {
-
-            let evaluations = response.data.evaluations;
-
-            var rows = this.state.rows;
-
-            if (evaluations.length == 0) {//EVALUATIONS IS EMPTY
-               this.newRow();
-            }
-
-            
-            evaluations.map( (evaluation, index) => {//EVALUATION MAP
-
-                let item = {
-                    index: index,
-                    id: evaluation.token,
-                    year: evaluation.year,
-                    value: evaluation.value,
-                    files: evaluation.files,
-                    delete: false,
-        
-                }
-
-                rows.push(item); //PUSH TO TOP
-            } );
-
-
-            for (let index = this.objective.base_year; index <= this.objective.target_year; index++) {
-                this.years.push(index)
-            }
-
-            this.setState({
-                loading: false,
-                rows: rows,
-            });
-        } ).then( () => {
-
-            $('#observations').summernote({
-                placeholder: "Observaciones...",
-                height: '200px'
+    componentDidMount() {
+        axios
+            .post("/ods/objective/get_evaluations", {
+                token: this.objective.token,
             })
-            const handleObservations = (val) => { this.observations = val }
-                    
-            $('#observations').on('summernote.change', function(e){
-                handleObservations(e.target.value)
-            })
-
-        } )
-
-
-
-
-
-    }
-
-    componentDidUpdate(){
-
-        if (this.state.saved == true) {
-            axios.post('/ods/objective/get_evaluations', {token: this.objective.token}).then( (response) => {
-
+            .then((response) => {
                 let evaluations = response.data.evaluations;
-                var rows = [];
-    
-                if (evaluations.length == 0) {//EVALUATIONS IS EMPTY
-                   this.newRow();
+
+                var rows = this.state.rows;
+
+                if (evaluations.length == 0) {
+                    //EVALUATIONS IS EMPTY
+                    this.newRow();
                 }
-    
-                
-                evaluations.map( (evaluation, index) => {//EVALUATION MAP
-    
+
+                evaluations.map((evaluation, index) => {
+                    //EVALUATION MAP
+
                     let item = {
                         index: index,
                         id: evaluation.token,
@@ -347,57 +279,117 @@ class Objective_evaluation extends React.Component{
                         value: evaluation.value,
                         files: evaluation.files,
                         delete: false,
-            
-                    }
-    
-                    rows.push(item); //PUSH TO TOP
-                } );
+                    };
 
-                this.years = [];
-    
-                for (let index = this.objective.base_year; index <= this.objective.target_year; index++) {
-                    this.years.push(index)
-                }
-    
-                this.setState({
-                    loading: false,
-                    save: false,
-                    saved: false,
-                    rows: rows,
+                    rows.push(item); //PUSH TO TOP
                 });
 
-            } ).then( () => {
+                for (
+                    let index = this.objective.base_year;
+                    index <= this.objective.target_year;
+                    index++
+                ) {
+                    this.years.push(index);
+                }
 
-                    $('#observations').summernote({
-                        placeholder: "Observaciones...",
-                        height: '200px'
-                    })
+                this.setState({
+                    loading: false,
+                    rows: rows,
+                });
+            })
+            .then(() => {
+                $("#observations").summernote({
+                    placeholder: "Observaciones...",
+                    height: "200px",
+                });
 
-                    const handleObservations = (val) => {  this.observations = val; }
-                    
-                    $('#observations').on('summernote.change', function(e){
-                        handleObservations(e.target.value)
-                    })
+                const handleObservations = (val) => {
+                    this.observations = val;
+                };
 
-                
-            } )
-    
-        }
-
-
+                $("#observations").on("summernote.change", function (e) {
+                    handleObservations(e.target.value);
+                });
+            });
     }
 
-    updateRows(data){
+    componentDidUpdate() {
+        if (this.state.saved == true) {
+            axios
+                .post("/ods/objective/get_evaluations", {
+                    token: this.objective.token,
+                })
+                .then((response) => {
+                    $("#observations").summernote("destroy");
 
+                    $(".note-editor").remove();
+
+                    let evaluations = response.data.evaluations;
+                    var rows = [];
+
+                    if (evaluations.length == 0) {
+                        //EVALUATIONS IS EMPTY
+                        this.newRow();
+                    }
+
+                    evaluations.map((evaluation, index) => {
+                        //EVALUATION MAP
+
+                        let item = {
+                            index: index,
+                            id: evaluation.token,
+                            year: evaluation.year,
+                            value: evaluation.value,
+                            files: evaluation.files,
+                            delete: false,
+                        };
+
+                        rows.push(item); //PUSH TO TOP
+                    });
+
+                    this.years = [];
+
+                    for (
+                        let index = this.objective.base_year;
+                        index <= this.objective.target_year;
+                        index++
+                    ) {
+                        this.years.push(index);
+                    }
+
+                    this.setState({
+                        loading: false,
+                        save: false,
+                        saved: false,
+                        rows: rows,
+                    });
+                })
+                .then(() => {
+                    $("#observations").summernote({
+                        placeholder: "Observaciones...",
+                        height: "200px",
+                    });
+
+                    const handleObservations = (val) => {
+                        this.observations = val;
+                    };
+
+                    $("#observations").on("summernote.change", function (e) {
+                        handleObservations(e.target.value);
+                    });
+                });
+        }
+    }
+
+    updateRows(data) {
         let id = data.id;
         let rows = this.state.rows;
-        
-        rows.map( (row, index) => {
+
+        rows.map((row, index) => {
             if (id == row.id) {
                 rows[index] = data;
             }
-        } );
-
+        });
 
         this.setState({
             loading: false,
@@ -405,71 +397,74 @@ class Objective_evaluation extends React.Component{
         });
     }
 
-    save(){
-
-
+    save() {
         let rows = this.state.rows;
         let token = this.objective.token;
 
-        this.setState({loading: true, save: true});
+        this.setState({ loading: true, save: true });
 
-        axios.post('/ods/objective/evaluate/save', {data: rows, token: token}).then( (response) => {
-            if (response.data.status == 'success') {
-                
-                toastr.success( response.data.message )
+        axios
+            .post("/ods/objective/evaluate/save", { data: rows, token: token })
+            .then((response) => {
+                if (response.data.status == "success") {
+                    toastr.success(response.data.message);
 
-                this.setState({saved: true});
-            }else{
-                
-                toastr.error( response.data.message )
+                    this.setState({ saved: true });
+                } else {
+                    toastr.error(response.data.message);
 
-                this.setState({saved: true});
-            }
-        })
+                    this.setState({ saved: true });
+                }
+            });
     }
 
-    formatValue(number){
-        let value = number
-        value = value.replace('.', ',');
+    formatValue(number) {
+        let value = number;
+        value = value.replace(".", ",");
         return value;
-        
     }
 
-    oservations(){
+    oservations() {
         let value = $("#observations").val();
-        $('#observations').summernote('destroy');
-        this.setState({loading: true, save: true});
-        axios.post('/ods/observation', {observations: value, token: this.objective.token}).then( (response) => {
-            if (response.data.status == 'success') {
-                
-                toastr.success( response.data.message )
+        $("#observations").summernote("destroy");
+        this.setState({ loading: true, save: true });
+        axios
+            .post("/ods/observation", {
+                observations: value,
+                token: this.objective.token,
+            })
+            .then((response) => {
+                if (response.data.status == "success") {
+                    toastr.success(response.data.message);
 
-                this.setState({saved: true});
-            }else{
-                
-                toastr.error( response.data.message )
+                    this.setState({ saved: true });
+                } else {
+                    toastr.error(response.data.message);
 
-                this.setState({saved: true});
-            }
-        })
+                    this.setState({ saved: true });
+                }
+            });
     }
-
-
 }
 
 export default Objective_evaluation;
 
-if (document.getElementsByTagName('objective-evaluation').length >=1) {
-    
-    let component = document.getElementsByTagName('objective-evaluation')[0];
-    let update = component.getAttribute('update');
-    let del = component.getAttribute('delete');
-    let objective = JSON.parse(component.getAttribute('objective'));
+if (document.getElementsByTagName("objective-evaluation").length >= 1) {
+    let component = document.getElementsByTagName("objective-evaluation")[0];
+    let update = component.getAttribute("update");
+    let del = component.getAttribute("delete");
+    let objective = JSON.parse(component.getAttribute("objective"));
     /*let strategy = JSON.parse(component.getAttribute('strategy'));
     let objective = JSON.parse(component.getAttribute('objective'));
     let update = component.getAttribute('update');
     let del = component.getAttribute('delete');*/
-    
 
-    ReactDOM.render(<Objective_evaluation update={update} objective={objective} delete={del} />, component);
+    ReactDOM.render(
+        <Objective_evaluation
+            update={update}
+            objective={objective}
+            delete={del}
+        />,
+        component
+    );
 }
