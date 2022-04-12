@@ -32,7 +32,7 @@
                     </div>
                    
                     <div class="progress progress-mini">
-                        <div style="width: {{ 100 - ($restante * 100) }}%;" class="progress-bar"></div>
+                        <div style="width: {{ ( (100 - ($restante * 100)) > 1 )? (100 - ($restante * 100)) : 1}}%;" class="progress-bar"></div>
                     </div>
 
                     <div class="m-t-sm small">Espacio restante {{ ($restante * 100 * 1024) / 100 }} GB</div>
