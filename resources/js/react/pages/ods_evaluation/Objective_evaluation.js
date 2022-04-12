@@ -91,9 +91,9 @@ class Objective_evaluation extends React.Component {
 
                             <div className="col-lg-4">
                                 {this.objective.increase == 0 ? (
-                                    <h5>Reducción Objetivo(%)</h5>
+                                    <h5>Reducción Objetivo</h5>
                                 ) : (
-                                    <h5>Incremento Objetivo(%)</h5>
+                                    <h5>Incremento Objetivo</h5>
                                 )}
                                 {this.formatValue(this.objective.target)} %
                             </div>
