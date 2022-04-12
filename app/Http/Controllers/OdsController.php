@@ -1208,4 +1208,11 @@ class OdsController extends Controller
         //4) RETURN REDIRECT
         return redirect()->back()->with('status', 'success')->with('message', 'Documento editado.');
     }
+
+
+    public function deleteFile(Request $request){
+        $file = Ods_document::where('token', $request->token)->delete();
+
+        return redirect()->back()->with('status', 'success')->with('message', 'Documento eliminado.');
+    }
 }

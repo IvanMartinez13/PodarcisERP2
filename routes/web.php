@@ -32,7 +32,11 @@ Route::get('/', function () {
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
     Route::post('/evolutionTasks', [DashboardController::class, 'evolutionTasks'])->middleware(['auth'])->name('dashboard.evolutionTasks');
+    Route::get('/changeSkin/{skin}', [DashboardController::class, 'changeSkin'])->middleware(['auth'])->name('dashboard.changeSkin');
 });
+
+
+
 
 
 //IMPERSONATE OTHER USERS
@@ -149,8 +153,8 @@ Route::prefix('ods')->middleware(['auth'])->group(function () {
     Route::post('/strategy/observation', [OdsController::class, 'strategy_observation'])->name('ods.objective.strategy.observation');
     Route::post('/addFile', [OdsController::class, 'addFile'])->name('ods.addFiles');
     Route::put('/updateFile', [OdsController::class, 'updateFile'])->name('ods.updateFile');
+    Route::put('/delete_file', [OdsController::class, 'deleteFile'])->name('ods.deleteFile');
     
-
     
 });
 

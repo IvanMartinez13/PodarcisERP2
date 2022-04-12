@@ -1004,6 +1004,7 @@ h5 {
     padding: 33px 25px;
     background-color: #2f4050;
     background-image: url("patterns/header-profile.png");
+    background-size: cover;
 }
 .caret {
     display: inline-block;
@@ -1192,6 +1193,9 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 }
 .footer {
     transition: margin 0s;
+}
+#page-wrapper {
+    background-color: #f3f3f4;
 }
 .pace-done .navbar-static-side,
 .pace-done .nav-header,
@@ -8974,6 +8978,7 @@ body.rtls.top-navigation .footer.fixed {
 .skin-1 .nav-header {
     background-color: #0e9aef;
     background-image: url("patterns/header-profile-skin-1.png");
+    background-size: cover;
 }
 .skin-1.mini-navbar .nav-second-level {
     background: #3e495f;
@@ -9080,6 +9085,7 @@ body.skin-2 {
 .skin-2 .nav-header {
     background-color: #23c6c8;
     background-image: url("patterns/header-profile-skin-2.png");
+    background-size: cover;
 }
 .skin-2.mini-navbar .nav-second-level {
     background: #ededed;
@@ -9143,6 +9149,7 @@ body.skin-2 #wrapper {
 }
 .skin-2 .nav-header {
     padding: 30px 25px 30px 25px;
+    background-size: cover;
 }
 .skin-2 .dashboard-header {
     background: rgba(255, 255, 255, 0.4);
@@ -9248,6 +9255,7 @@ body.boxed-layout.skin-3 #wrapper {
 .skin-3 .nav-header {
     background-color: #ecba52;
     background-image: url("patterns/header-profile-skin-3.png");
+    background-size: cover;
 }
 .skin-3.mini-navbar .nav-second-level {
     background: #3e2c42;
@@ -9436,6 +9444,7 @@ body.light-skin {
     background-color: #f9f9f9;
     background-image: none;
     padding: 20px 25px 20px 25px;
+    background-size: cover;
 }
 .light-skin .profile-element img {
     border-radius: 6px !important;
@@ -10070,7 +10079,67 @@ body.md-skin {
     overflow: hidden;
 }
 
-.circles li {
+.skin-1 .circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(14, 154, 239, 0.5);
+    animation: animationDash 25s linear infinite;
+    bottom: -150px;
+}
+
+.skin-2 .circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(33, 58, 83, 0.5);
+    animation: animationDash 25s linear infinite;
+    bottom: -150px;
+}
+
+.skin-2 .nav-tabs > li > a,
+.skin-2 .welcome-message {
+    color: #1a2d41;
+}
+
+.skin-3 .circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(119, 84, 126, 0.5);
+    animation: animationDash 25s linear infinite;
+    bottom: -150px;
+}
+
+.basic .circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(47, 64, 80, 0.5);
+    animation: animationDash 25s linear infinite;
+    bottom: -150px;
+}
+
+.md-skin .circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(26, 179, 148, 0.5);
+    animation: animationDash 25s linear infinite;
+    bottom: -150px;
+}
+
+.light-skin .circles li {
     position: absolute;
     display: block;
     list-style: none;
@@ -10228,4 +10297,34 @@ body.md-skin {
 
 .partner-photo {
     width: 25%;
+}
+
+.btn-orange {
+    background-color: #f79d3c;
+    color: white;
+}
+
+.btn-orange:hover {
+    background-color: #f8ac59;
+    color: white;
+}
+
+.btn-darkblue {
+    background-color: #213a53;
+    color: white;
+}
+
+.btn-darkblue:hover {
+    background-color: #1e2e3d;
+    color: white;
+}
+
+.btn-bluelight {
+    background-color: #0d8ddb;
+    color: white;
+}
+
+.btn-bluelight:hover {
+    background-color: #1872ab;
+    color: white;
 }

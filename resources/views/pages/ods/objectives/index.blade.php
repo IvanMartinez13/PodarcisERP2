@@ -207,9 +207,9 @@
                                                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                                                 </a>
                             
-                                                                {{--<button class="btn btn-link">
+                                                                <button class="btn btn-link" onclick="remove_file('{{$ods_document->token}}')">
                                                                     <i class="fa fa-trash-alt" aria-hidden="true"></i>
-                                                                </button>--}}
+                                                                </button>
                             
                                                                 
                                                             </div>
@@ -287,6 +287,12 @@
                 </div>
             </div>
         </div>
+
+        <form action="{{ route('ods.deleteFile') }}" id="delete_file{{ $ods_document->token }}" method="POST">
+            @csrf
+            @method('put')
+            <input name="token" type="hidden" value="{{ $ods_document->token }}">
+        </form>
     @endforeach
 @endsection
 
@@ -325,6 +331,23 @@
                 cancelButtonText: "Cancelar",
             }, function() {
                 $('#delete_' + token).submit();
+
+            });
+        }
+
+        function remove_file(token){
+            swal({
+                title: "{{ __('Are you sure?') }}",
+                text: "{{ __('You will not be able to recover this file!') }}",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#ed5565",
+                confirmButtonText: "Si, deseo eliminarlo",
+                closeOnConfirm: false,
+                cancelButtonColor: "#ed5565",
+                cancelButtonText: "Cancelar",
+            }, function() {
+                $('#delete_file' + token).submit();
 
             });
         }
@@ -515,6 +538,10 @@
                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                     </a>
 
+                                    <button class="btn btn-link" onclick="remove_file('${ods_file.token}')">
+                                        <i class="fa fa-trash-alt" aria-hidden="true"></i>
+                                    </button>
+
                                     
                                 </div>
                             </td>
@@ -564,6 +591,12 @@
                                 </div>
                                 </div>
                             </div>
+
+                            <form action="{{ route('ods.deleteFile') }}" id="delete_file${ods_file.token}" method="POST">
+                                @csrf
+                                @method('put')
+                                <input name="token" type="hidden" value="${ods_file.token}">
+                            </form>
                         `
                         );
                     })
