@@ -419,7 +419,8 @@
                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                     </a>
 
-                                    <button class="btn btn-link">
+                                    <button onclick="remove('${task_file.token}')"
+                                        class="btn btn-link">
                                         <i class="fa fa-trash-alt" aria-hidden="true"></i>
                                     </button>
 
@@ -472,6 +473,12 @@
                             </div>
                             </div>
                         </div>
+
+                        <form id="delete_${task_file.token}" action="{{ route('tasks.project.deleteFile') }}" method="post">
+                            @csrf
+                            @method('put')
+                            <input name="token" type="hidden" value="${task_file.token}" />
+                        </form>
                         `
                         );
                     })
