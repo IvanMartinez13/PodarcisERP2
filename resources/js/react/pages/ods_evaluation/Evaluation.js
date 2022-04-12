@@ -176,8 +176,8 @@ class Evaluation extends React.Component {
                                         <div className="col-lg-4">
                                             <h5>
                                                 {this.strategy.increase == 1
-                                                    ? "Incremento Objetivo(%)"
-                                                    : "Reducción Objetivo(%)"}
+                                                    ? "Incremento Objetivo"
+                                                    : "Reducción Objetivo"}
                                             </h5>
 
                                             <p>

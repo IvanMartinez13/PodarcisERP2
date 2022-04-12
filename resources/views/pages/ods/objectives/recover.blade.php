@@ -5,9 +5,7 @@
         <div class="col-10 my-auto">
             <h2>{{ __('modules.ods') }}</h2>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{{ route('dashboard') }}">Dashboard</a>
-                </li>
+
                 <li class="breadcrumb-item active">
                     <a href="{{ route('ods.index') }}">{{ __('modules.targets') }}</a>
                 </li>
