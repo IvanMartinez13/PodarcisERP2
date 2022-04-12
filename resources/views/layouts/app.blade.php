@@ -146,6 +146,16 @@
     @stack('scripts')
 
     <script>
+
+        if (localStorage.getItem('navbarCollapsed') > 0) {
+            
+            $("body").removeClass('mini-navbar')
+
+        }else{
+
+            $("body").addClass('mini-navbar');
+        }
+        
         $(document).ready(() => {
             var switches = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
 
@@ -155,8 +165,27 @@
                     jackColor: '#f3f3f4'
                 });
             });
+            
+
+
 
         })
+
+        function toggleNav(){
+            
+            let value = localStorage.getItem('navbarCollapsed');
+
+            if (localStorage.getItem('navbarCollapsed') > 0) {
+
+                localStorage.setItem('navbarCollapsed', 0);
+            }else{
+                localStorage.setItem('navbarCollapsed', 1);
+            }
+
+            
+        }
+
+
     </script>
 
 </body>
