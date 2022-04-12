@@ -6518,6 +6518,8 @@ var Evaluation = /*#__PURE__*/function (_React$Component) {
         axios__WEBPACK_IMPORTED_MODULE_2___default().post("/ods/evaluate/get_evaluations", {
           token: this.strategy.token
         }).then(function (response) {
+          $("#observations").summernote("destroy");
+          $(".note-editor").remove();
           _this4.years = []; //GET YEARS
 
           for (var index = _this4.objective.base_year; index <= _this4.objective.target_year; index++) {
@@ -6997,9 +6999,9 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
       var rows = this.state.rows;
       var item = {
         index: rows.length,
-        id: 'row_' + rows.length,
-        year: '',
-        value: '',
+        id: "row_" + rows.length,
+        year: "",
+        value: "",
         files: [],
         "delete": false
       };
@@ -7016,7 +7018,7 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/ods/objective/get_evaluations', {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/ods/objective/get_evaluations", {
         token: this.objective.token
       }).then(function (response) {
         var evaluations = response.data.evaluations;
@@ -7049,16 +7051,16 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
           rows: rows
         });
       }).then(function () {
-        $('#observations').summernote({
+        $("#observations").summernote({
           placeholder: "Observaciones...",
-          height: '200px'
+          height: "200px"
         });
 
         var handleObservations = function handleObservations(val) {
           _this3.observations = val;
         };
 
-        $('#observations').on('summernote.change', function (e) {
+        $("#observations").on("summernote.change", function (e) {
           handleObservations(e.target.value);
         });
       });
@@ -7069,9 +7071,11 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
       var _this4 = this;
 
       if (this.state.saved == true) {
-        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/ods/objective/get_evaluations', {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("/ods/objective/get_evaluations", {
           token: this.objective.token
         }).then(function (response) {
+          $("#observations").summernote("destroy");
+          $(".note-editor").remove();
           var evaluations = response.data.evaluations;
           var rows = [];
 
@@ -7105,16 +7109,16 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
             rows: rows
           });
         }).then(function () {
-          $('#observations').summernote({
+          $("#observations").summernote({
             placeholder: "Observaciones...",
-            height: '200px'
+            height: "200px"
           });
 
           var handleObservations = function handleObservations(val) {
             _this4.observations = val;
           };
 
-          $('#observations').on('summernote.change', function (e) {
+          $("#observations").on("summernote.change", function (e) {
             handleObservations(e.target.value);
           });
         });
@@ -7146,11 +7150,11 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
         loading: true,
         save: true
       });
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/ods/objective/evaluate/save', {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/ods/objective/evaluate/save", {
         data: rows,
         token: token
       }).then(function (response) {
-        if (response.data.status == 'success') {
+        if (response.data.status == "success") {
           toastr.success(response.data.message);
 
           _this5.setState({
@@ -7169,7 +7173,7 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
     key: "formatValue",
     value: function formatValue(number) {
       var value = number;
-      value = value.replace('.', ',');
+      value = value.replace(".", ",");
       return value;
     }
   }, {
@@ -7178,16 +7182,16 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
       var _this6 = this;
 
       var value = $("#observations").val();
-      $('#observations').summernote('destroy');
+      $("#observations").summernote("destroy");
       this.setState({
         loading: true,
         save: true
       });
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/ods/observation', {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/ods/observation", {
         observations: value,
         token: this.objective.token
       }).then(function (response) {
-        if (response.data.status == 'success') {
+        if (response.data.status == "success") {
           toastr.success(response.data.message);
 
           _this6.setState({
@@ -7209,11 +7213,11 @@ var Objective_evaluation = /*#__PURE__*/function (_React$Component) {
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Objective_evaluation);
 
-if (document.getElementsByTagName('objective-evaluation').length >= 1) {
-  var component = document.getElementsByTagName('objective-evaluation')[0];
-  var update = component.getAttribute('update');
-  var del = component.getAttribute('delete');
-  var objective = JSON.parse(component.getAttribute('objective'));
+if (document.getElementsByTagName("objective-evaluation").length >= 1) {
+  var component = document.getElementsByTagName("objective-evaluation")[0];
+  var update = component.getAttribute("update");
+  var del = component.getAttribute("delete");
+  var objective = JSON.parse(component.getAttribute("objective"));
   /*let strategy = JSON.parse(component.getAttribute('strategy'));
   let objective = JSON.parse(component.getAttribute('objective'));
   let update = component.getAttribute('update');

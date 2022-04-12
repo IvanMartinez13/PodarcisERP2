@@ -4839,6 +4839,10 @@ table {
     background-color: white !important;
 }
 
+.table-bordered > thead > .filters2 > th {
+    background-color: white !important;
+}
+
 .table-bordered > thead > .filtersUpdate > th {
     background-color: white !important;
 }

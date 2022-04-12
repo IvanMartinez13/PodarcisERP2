@@ -448,6 +448,10 @@ class Evaluation extends React.Component {
                     token: this.strategy.token,
                 })
                 .then((response) => {
+                    $("#observations").summernote("destroy");
+
+                    $(".note-editor").remove();
+
                     this.years = [];
                     //GET YEARS
                     for (

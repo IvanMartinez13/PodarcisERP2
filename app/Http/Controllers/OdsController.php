@@ -14,6 +14,7 @@ use App\Models\Evaluation_file;
 use App\Models\Objective;
 use App\Models\Objective_evaluation;
 use App\Models\Objective_evaluation_file;
+use App\Models\Ods_document;
 use App\Models\Project;
 use App\Models\Strategy;
 use App\Models\Task;
@@ -32,8 +33,9 @@ class OdsController extends Controller
     {
         $customer_id = Auth::user()->customer_id;
         $objectives = Objective::where('customer_id', $customer_id)->get();
+        $ods_documents = Ods_document::where('customer_id', $customer_id)->get();
 
-        return view('pages.ods.objectives.index', compact('objectives'));
+        return view('pages.ods.objectives.index', compact('objectives', 'ods_documents'));
     }
 
     //PAGE CREATE
@@ -1108,5 +1110,102 @@ class OdsController extends Controller
         }
 
         return redirect(route('tasks.project.task_details', ['project' => $project->token, 'task' => $task->token]));
+    }
+
+    public function addFile(Request $request)
+    {
+        //1) GET DATA
+        $customer_id = Auth::user()->customer_id;
+        $customer = Customer::where('id', $customer_id)->first();
+        $files = $request->file('file');
+        $ods_files = [];
+
+        foreach ($files as $file) {
+
+            $filename = $file->getClientOriginalName();
+
+            $folder = '/ods/' . $customer->id;
+
+            $token = md5($filename . '+' . date('d/m/Y H:i:s'));
+
+            $ext = '.' . $file->guessExtension();
+
+            if (!is_dir(storage_path('app/public') . $folder)) {
+
+                mkdir(storage_path('app/public') . $folder, 0777, true); //CREATE FOLDER
+            }
+
+            $data = [
+                "name" => $filename,
+                "customer_id" => $customer->id,
+                "token" => $token,
+                "path" => $folder . '/' . $token . $ext
+            ];
+
+            //2) STORE DATA
+            move_uploaded_file($file, storage_path('app/public') . $data['path']); //STORE FILE
+            $ods_file = new Ods_document($data);
+            $ods_file->save();
+            array_push($ods_files, $ods_file);
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Documentos guardados.', 'ods_files' => $ods_files]);
+    }
+
+    public function updateFile(Request $request)
+    {
+        //1) GET DATA
+        $token = $request->token;
+        $ods_document = Ods_document::where('token', $token)->first();
+        $customer_id = Auth::user()->customer_id;
+
+        $data = ['name' => $request->name];
+
+        //2) VALIDATE DATA
+        $rules = [
+            'name' => ['string', 'required', 'max:255'],
+            'token' => ['string', 'required', 'max:255'],
+            'file' => ['file', 'nullable']
+        ];
+
+        $attributes = [
+            'name' => 'Nombre',
+            'token' => 'Token',
+            'file' => 'Documento'
+        ];
+
+        $validator = Validator::make($request->all(), $rules, [], $attributes);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        //3) UPDATE DATA
+        $file = $request->file('file');
+
+        if ($file != null) {
+            //change file
+            $folder = '/ods/' . $customer_id;
+
+            if (!is_dir(storage_path('app/public') . $folder)) {
+
+                mkdir(storage_path('app/public') . $folder, 0777, true); //CREATE FOLDER
+            }
+
+            $ext = '.' . $file->guessExtension();
+
+            $data["path"] = $folder . '/' . $token . $ext;
+
+            if (is_file(storage_path('app/public') . $ods_document->path)) {
+                unlink(storage_path('app/public') . $ods_document->path);
+            }
+
+            move_uploaded_file($file, storage_path('app/public') . $data['path']); //STORE FILE
+        }
+
+        $ods_document = Ods_document::where('token', $token)->update($data);
+
+        //4) RETURN REDIRECT
+        return redirect()->back()->with('status', 'success')->with('message', 'Documento editado.');
     }
 }

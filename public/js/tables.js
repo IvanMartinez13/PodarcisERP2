@@ -54,6 +54,7 @@ $(document).ready(function () {
                             /                                                    /g,
                             ""
                         );
+
                         $(cell).html(
                             '<input type="text" class="form-control " placeholder="' +
                                 title +
