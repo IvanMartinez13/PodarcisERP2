@@ -158,7 +158,7 @@
                 </div>
             </div>
 
-            <div role="tabpanel" id="documents-tab" class="tab-pane active">
+            <div role="tabpanel" id="documents-tab" class="tab-pane">
                 <div class="panel-body bg-transparent">
                     <div class="animated fadeIn">
 
