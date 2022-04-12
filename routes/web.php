@@ -149,8 +149,8 @@ Route::prefix('ods')->middleware(['auth'])->group(function () {
     Route::post('/strategy/observation', [OdsController::class, 'strategy_observation'])->name('ods.objective.strategy.observation');
     Route::post('/addFile', [OdsController::class, 'addFile'])->name('ods.addFiles');
     Route::put('/updateFile', [OdsController::class, 'updateFile'])->name('ods.updateFile');
+    Route::put('/delete_file', [OdsController::class, 'deleteFile'])->name('ods.deleteFile');
     
-
     
 });
 
