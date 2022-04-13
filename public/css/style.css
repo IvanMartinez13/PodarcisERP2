@@ -9025,7 +9025,7 @@ body.rtls.top-navigation .footer.fixed {
 }
 
 .skin-1 .bg-primary {
-    background-color: #0e9aef;
+    background-color: #0e9aef !important;
 }
 
 .skin-1 .btn-primary {
@@ -9129,7 +9129,7 @@ body.skin-1 {
 */
 
 .skin-2 .bg-primary {
-    background-color: #213a53;
+    background-color: #213a53 !important;
 }
 
 .skin-2 .btn-primary {
@@ -9352,7 +9352,7 @@ body.skin-2 #wrapper {
 }
 
 .skin-3 .bg-primary {
-    background-color: #eaa642;
+    background-color: #eaa642 !important;
 }
 
 .skin-3 .btn-primary {
