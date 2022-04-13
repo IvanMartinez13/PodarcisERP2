@@ -115,9 +115,15 @@
                     Basic skin
                 </a>
 
+                <a href="{{route('dashboard.changeSkin', 'dark-skin')}}" class="btn btn-block btn-dark">
+                    Dark skin
+                </a>
+
                 <a href="{{route('dashboard.changeSkin', 'light-skin')}}" class="btn btn-block border btn-light">
                     Light skin
                 </a>
+
+
 
 
             </div>
