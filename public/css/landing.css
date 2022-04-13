@@ -166,13 +166,11 @@
     color: black;
 }
 
-.cards-container{
-
+.cards-container {
     margin: 0 15%;
 }
 
 .marco {
-    
     height: 250px;
     overflow: hidden;
 
@@ -186,37 +184,30 @@
 }
 
 .marco > img:hover {
-
     transform: scale(1.3);
-    
 }
 
-footer > .part-1{
-
-    background: #212F3C;
+footer > .part-1 {
+    background: #212f3c;
     color: white;
     padding: 15px;
     display: flex;
 }
 
-footer > .part-2{
-
-    background: #2E4053;
+footer > .part-2 {
+    background: #2e4053;
     color: white;
     padding-top: 15px;
     padding-bottom: 15px;
 }
 
-footer > .part-3{
+footer > .part-3 {
     padding: 15px;
-    background: #212F3C;
+    background: #212f3c;
     color: white;
 }
 
-
-.social-button{
-
-    
+.social-button {
     font-size: 16px;
     font-weight: 400;
     margin: 0 5px;
@@ -227,104 +218,142 @@ footer > .part-3{
     text-align: center;
 }
 
-.facebook{
-
-    background-color: #1877F2;
-    border: 1px solid #1877F2;
+.facebook {
+    background-color: #1877f2;
+    border: 1px solid #1877f2;
     color: white;
     transition: 0.2s ease;
 }
 
-.facebook:hover{
-
+.facebook:hover {
     background-color: #1556aa;
     border: 1px solid #1556aa;
     color: white;
 }
 
-.linkedin{
-
-    background-color: #0A66C2;
-    border: 1px solid #0A66C2;
+.linkedin {
+    background-color: #0a66c2;
+    border: 1px solid #0a66c2;
     color: white;
     transition: 0.2s ease;
 }
 
-.linkedin:hover{
-
+.linkedin:hover {
     background-color: #07417a;
     border: 1px solid #07417a;
     color: white;
 }
 
-.twitter{
+.twitter {
     background-color: #fff;
     border: 1px solid #fff;
-    color: #1A8CD8;
+    color: #1a8cd8;
     transition: 0.2s ease;
 }
 
-.twitter:hover{
-
+.twitter:hover {
     background-color: #d3d3d3;
     border: 1px solid #d3d3d3;
-    color: #1A8CD8;
+    color: #1a8cd8;
 }
 
-.instagram{
-    background: #f09433; 
-    background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
-    background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
-    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+.instagram {
+    background: #f09433;
+    background: -moz-linear-gradient(
+        45deg,
+        #f09433 0%,
+        #e6683c 25%,
+        #dc2743 50%,
+        #cc2366 75%,
+        #bc1888 100%
+    );
+    background: -webkit-linear-gradient(
+        45deg,
+        #f09433 0%,
+        #e6683c 25%,
+        #dc2743 50%,
+        #cc2366 75%,
+        #bc1888 100%
+    );
+    background: linear-gradient(
+        45deg,
+        #f09433 0%,
+        #e6683c 25%,
+        #dc2743 50%,
+        #cc2366 75%,
+        #bc1888 100%
+    );
     border: 1px solid #f09433;
     color: #fff;
     transition: 0.2s ease;
 }
 
-.instagram:hover{
-    background: #b87227; 
-    background: -moz-linear-gradient(45deg, #b87227 0%, #994628 25%, #911a2b 50%, #881844 75%, #7e105b 100%); 
-    background: -webkit-linear-gradient(45deg, #b87227 0%,#994628 25%,#911a2b 50%,#881844 75%,#7e105b 100%); 
-    background: linear-gradient(45deg, #b87227 0%,#994628 25%,#911a2b 50%,#881844 75%,#7e105b 100%); 
+.instagram:hover {
+    background: #b87227;
+    background: -moz-linear-gradient(
+        45deg,
+        #b87227 0%,
+        #994628 25%,
+        #911a2b 50%,
+        #881844 75%,
+        #7e105b 100%
+    );
+    background: -webkit-linear-gradient(
+        45deg,
+        #b87227 0%,
+        #994628 25%,
+        #911a2b 50%,
+        #881844 75%,
+        #7e105b 100%
+    );
+    background: linear-gradient(
+        45deg,
+        #b87227 0%,
+        #994628 25%,
+        #911a2b 50%,
+        #881844 75%,
+        #7e105b 100%
+    );
     border: 1px solid #b87227;
 }
 
-
-.foot-link{
+.foot-link {
     color: #afaeae;
     transition: 0.2s ease;
 }
 
-.foot-link:hover{
+.foot-link:hover {
     color: #1ab394;
 }
 
+.circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(26, 179, 148, 0.5);
+    animation: animationDash 25s linear infinite;
+    bottom: -150px;
+}
 
-@media (max-width: 1600px){
-    .cards-container{
-
+@media (max-width: 1600px) {
+    .cards-container {
         margin: 0 5%;
     }
 }
 
-
-@media (max-width: 890px){
-    .cards-container{
-
+@media (max-width: 890px) {
+    .cards-container {
         margin: 0 25%;
     }
 }
 
-
-
 @media (max-width: 750px) {
-
-    .cards-container{
-
+    .cards-container {
         margin: 0 5%;
     }
     .text-header {
-
         margin: 100px 0;
         font-size: 30px;
         font-weight: bold;
@@ -332,14 +361,12 @@ footer > .part-3{
     }
 
     .to-right {
-
         width: 100%;
         margin-left: 0%;
         padding: 5% 5%;
     }
 
     .nav-init {
-
         position: relative;
         width: 100%;
         z-index: 100;
@@ -347,20 +374,16 @@ footer > .part-3{
     }
 
     .glassCard {
-
         height: auto;
     }
 
-
-    footer > .part-1{
-
+    footer > .part-1 {
         display: block;
         align-items: center;
         text-align: center;
     }
-    
-    .button-container{
-        margin: 25px 0 0 0;
 
+    .button-container {
+        margin: 25px 0 0 0;
     }
 }
