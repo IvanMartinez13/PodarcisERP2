@@ -95,7 +95,7 @@
               </button>
             </div>
             <div class="modal-body bg-white">
-                <a href="{{route('dashboard.changeSkin', 'md-skin')}}" class="btn btn-block btn-primary">
+                <a href="{{route('dashboard.changeSkin', 'md-skin')}}" class="btn btn-block" style="background-color: #1abc9c; color:white">
                     Material design
                 </a>
                 

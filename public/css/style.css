@@ -8993,6 +8993,11 @@ body.rtls.top-navigation .footer.fixed {
     background-image: url("patterns/header-profile-skin-1.png");
     background-size: cover;
 }
+
+.skin-1 .nav-header .text-muted {
+    color: white !important;
+}
+
 .skin-1.mini-navbar .nav-second-level {
     background: #3e495f;
 }
@@ -9018,6 +9023,45 @@ body.rtls.top-navigation .footer.fixed {
     background: #0e9aef;
     border-color: #0e9aef;
 }
+
+.skin-1 .bg-primary {
+    background-color: #0e9aef;
+}
+
+.skin-1 .btn-primary {
+    background-color: #0e9aef;
+    border-color: #0e9aef;
+}
+
+.skin-1 .table-bordered thead tr th {
+    background: #0e9aef !important;
+}
+
+.skin-1 .table-bordered thead .filters th {
+    background: white !important;
+}
+
+.skin-1 .table-bordered thead .filtersUpdate th {
+    background: white !important;
+}
+
+.skin-1 .table-bordered thead .filters2 th {
+    background: white !important;
+}
+
+.skin-1 .page-item.active .page-link {
+    background: #0e9aef !important;
+    border-color: white !important;
+}
+
+.skin-1 .dropzone {
+    min-height: 140px;
+    border: 1px dashed #0e9aef;
+    background: white;
+    padding: 20px 20px;
+    cursor: pointer;
+}
+
 body.skin-1 {
     background: #3e495f;
 }
@@ -9083,6 +9127,45 @@ body.skin-1 {
  *   NAME - Inspinia Ultra
  *
 */
+
+.skin-2 .bg-primary {
+    background-color: #213a53;
+}
+
+.skin-2 .btn-primary {
+    background-color: #213a53;
+    border-color: #213a53;
+}
+
+.skin-2 .table-bordered thead tr th {
+    background: #213a53 !important;
+}
+
+.skin-2 .table-bordered thead .filters th {
+    background: white !important;
+}
+
+.skin-2 .table-bordered thead .filtersUpdate th {
+    background: white !important;
+}
+
+.skin-2 .table-bordered thead .filters2 th {
+    background: white !important;
+}
+
+.skin-2 .page-item.active .page-link {
+    background: #213a53 !important;
+    border-color: white !important;
+}
+
+.skin-2 .dropzone {
+    min-height: 140px;
+    border: 1px dashed #213a53;
+    background: white;
+    padding: 20px 20px;
+    cursor: pointer;
+}
+
 body.skin-2 {
     color: #565758 !important;
 }
@@ -9259,9 +9342,53 @@ body.skin-2 #wrapper {
 .skin-3.fixed-nav .minimalize-styl-2 {
     margin: 14px 5px 5px 15px;
 }
+
+.skin-3 .nav-header .text-muted {
+    color: white !important;
+}
+
 .skin-3 .spin-icon {
     background: #ecba52 !important;
 }
+
+.skin-3 .bg-primary {
+    background-color: #eaa642;
+}
+
+.skin-3 .btn-primary {
+    background-color: #eaa642;
+    border-color: #eaa642;
+}
+
+.skin-3 .table-bordered thead tr th {
+    background: #eaa642 !important;
+}
+
+.skin-3 .table-bordered thead .filters th {
+    background: white !important;
+}
+
+.skin-3 .table-bordered thead .filtersUpdate th {
+    background: white !important;
+}
+
+.skin-3 .table-bordered thead .filters2 th {
+    background: white !important;
+}
+
+.skin-3 .page-item.active .page-link {
+    background: #eaa642 !important;
+    border-color: white !important;
+}
+
+.skin-3 .dropzone {
+    min-height: 140px;
+    border: 1px dashed #213a53;
+    background: white;
+    padding: 20px 20px;
+    cursor: pointer;
+}
+
 body.boxed-layout.skin-3 #wrapper {
     background: #3e2c42;
 }
