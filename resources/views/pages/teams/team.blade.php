@@ -54,49 +54,19 @@
             </ul>
             <div class="tab-content">
 
+                {{-- CHAT --}}
                 <div class="tab-pane fade show active" id="chat" role="tabpanel" aria-labelledby="chat-tab">
                     <div class="p-lg-2 panel-body">
-
-                        <div class="container border p-2">
-                            MENSAJES
-                        </div>
-
-                        <div class="container">
-                            <div class="row py-2   rounded">
-                                <div class="col-12">
-                                    <textarea class="form-control" name="message" id="message" rows="1" placeholder="Mensaje..."></textarea>
-                                </div>
-
-                                <div class="col-6  text-left">
-                                    <div class="btn-group">
-                                        <button class="btn btn-link">
-                                            <i class="fa-solid fa-face-smile"></i>
-                                        </button>
-
-                                        <button class="btn btn-link">
-                                            <i class="fa-solid fa-paperclip"></i>
-                                        </button>
-                                    </div>
-
-                                </div>
-    
-    
-                                <div class="col-6 text-right">
-                                    <button class="btn btn-link my-auto">
-                                        <i class="fa-solid fa-paper-plane"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
+                        <chat user="{{json_encode(auth()->user())}}" team="{{$team}}"></chat>
                     </div>
                 </div>
                 
+                {{-- PARTNERS --}}
                 <div class="tab-pane fade" id="partners" role="tabpanel" aria-labelledby="partners-tab">
 
                     <div class="p-lg-2 panel-body">
 
-                        <div class="pt-5">
+                        <div class="py-5">
                             @foreach ($team->users as $user)
                                 @if ($user->id != auth()->user()->id)
                                     <div class="row mb-5">
@@ -131,6 +101,7 @@
                     </div>
                 </div>
 
+                {{-- RESOURCES --}}
                 <div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="resources-tab">
                     RESOURCES
                 </div>
@@ -140,7 +111,6 @@
     </div>
 
 
-    
 
     <div class="ibox-footer">
         Podarcis SL. &copy; {{date('Y')}}

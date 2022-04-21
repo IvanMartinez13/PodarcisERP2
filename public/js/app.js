@@ -5276,7 +5276,9 @@ __webpack_require__(/*! ./react/pages/tasks/Tasks */ "./resources/js/react/pages
 
 __webpack_require__(/*! ./react/pages/tasks/Subtasks */ "./resources/js/react/pages/tasks/Subtasks.js");
 
-__webpack_require__(/*! ./react/pages/vao/Vao */ "./resources/js/react/pages/vao/Vao.js"); //COMPONENTS
+__webpack_require__(/*! ./react/pages/vao/Vao */ "./resources/js/react/pages/vao/Vao.js");
+
+__webpack_require__(/*! ./react/pages/teams/Chat */ "./resources/js/react/pages/teams/Chat.js"); //COMPONENTS
 
 
 __webpack_require__(/*! ./react/pages/dashboard/Evolution_tasks */ "./resources/js/react/pages/dashboard/Evolution_tasks.js");
@@ -11689,6 +11691,484 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__.Component);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Update_task);
+
+/***/ }),
+
+/***/ "./resources/js/react/pages/teams/Chat.js":
+/*!************************************************!*\
+  !*** ./resources/js/react/pages/teams/Chat.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Message */ "./resources/js/react/pages/teams/Message.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+
+
+var Chat = /*#__PURE__*/function (_React$Component) {
+  _inherits(Chat, _React$Component);
+
+  var _super = _createSuper(Chat);
+
+  function Chat(props) {
+    var _this;
+
+    _classCallCheck(this, Chat);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      loading: true,
+      sending: true,
+      messages: []
+    };
+    _this.user = _this.props.user;
+    _this.team = _this.props.team;
+    return _this;
+  }
+
+  _createClass(Chat, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      if (this.state.loading == true) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "animated fadeIn",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "spiner-example",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "sk-spinner sk-spinner-double-bounce",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "sk-double-bounce1"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "sk-double-bounce2"
+              })]
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+            className: "text-center",
+            children: "Cargando..."
+          })]
+        });
+      }
+
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "container py-2",
+          children: this.state.messages.map(function (message, index) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Message__WEBPACK_IMPORTED_MODULE_3__["default"], {
+              user: message.user,
+              value: message.value,
+              sended: message.sended,
+              is_mine: message.is_mine,
+              date: message.date,
+              team: message.team
+            }, message.message + " " + index);
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "container-fluid mt-5 py-2 bg-light rounded border",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "row mx-md-5",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "col-md-10",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("textarea", {
+                style: {
+                  resize: "none"
+                },
+                className: "form-control",
+                name: "message",
+                id: "message",
+                rows: "1",
+                placeholder: "Mensaje...",
+                onInput: function onInput(event) {
+                  _this2.textAreaAdjust(event);
+                }
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "col-md-2 mt-md-0 mt-4 text-md-left text-center",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "btn-group my-auto",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                  className: "btn btn-link px-md-3 px-5",
+                  onClick: function onClick(e) {
+                    e.preventDefault();
+
+                    _this2.sendMessage();
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                    className: "fa-solid fa-paper-plane"
+                  }), " "]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                  className: "btn btn-link px-md-3 px-5",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                    className: "fa-solid fa-face-smile"
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                  className: "btn btn-link px-md-3 px-5",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                    className: "fa-solid fa-paperclip"
+                  })
+                })]
+              })
+            })]
+          })
+        })]
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this3 = this;
+
+      //1) GET MESSAGES
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/teams/get/messages", {
+        team: this.team.id
+      }).then(function (response) {
+        var messages = response.data.messages;
+        var array_messages = [];
+        messages.map(function (message) {
+          var date = new Date(message.created_at);
+          date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
+
+          if (message.user.id == _this3.user.id) {
+            var messageObj = {
+              user: message.user,
+              value: message.value,
+              sended: true,
+              is_mine: true,
+              date: date,
+              team: _this3.team
+            };
+          } else {
+            var messageObj = {
+              user: message.user,
+              value: message.value,
+              sended: true,
+              is_mine: false,
+              date: date,
+              team: _this3.team
+            };
+          }
+
+          array_messages.push(messageObj);
+        });
+
+        _this3.setState({
+          messages: array_messages,
+          loading: false
+        });
+      }); //2) CHECK NEW MESSAGES
+
+      var handleCheckMessages = function handleCheckMessages(team) {
+        _this3.checkMessages(team);
+      };
+
+      var team = this.team; //DESCOMENTAR ESTA PARTE PARA AÑADIR UN COMPROBADOR AUTOMATICO
+
+      setInterval(function () {
+        handleCheckMessages(team);
+      }, 500);
+    }
+  }, {
+    key: "textAreaAdjust",
+    value: function textAreaAdjust(event) {
+      var element = event.target;
+      element.style.height = "1px";
+      element.style.height = 1.5 + element.scrollHeight + "px";
+    }
+  }, {
+    key: "sendMessage",
+    value: function sendMessage() {
+      //1) GET DATA
+      var message = $("#message").val();
+      var date = new Date();
+      date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
+
+      if (message != null && message != "" && message != undefined) {
+        //2) CLEAN TEXTAREA
+        $("#message").val(null); //clean value
+
+        var textarea = document.getElementById("message"); //get textarea
+
+        textarea.style.height = "35.58px"; //resize textarea
+        //3) CREATE MESSAJE OBJECT
+
+        var messageObj = {
+          user: this.user,
+          value: message,
+          sended: false,
+          is_mine: true,
+          date: date,
+          team: this.team
+        };
+        var messages = this.state.messages;
+        messages.push(messageObj);
+        this.setState({
+          messages: messages
+        });
+      }
+    }
+  }, {
+    key: "checkMessages",
+    value: function checkMessages(team) {
+      var _this4 = this;
+
+      if (this.state.loading == false) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("/teams/get/messages", {
+          team: team.id
+        }).then(function (response) {
+          var messages = response.data.messages;
+          var array_messages = [];
+          messages.map(function (message) {
+            var date = new Date(message.created_at);
+            date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
+
+            if (message.user.id == _this4.user.id) {
+              var messageObj = {
+                user: message.user,
+                value: message.value,
+                sended: true,
+                is_mine: true,
+                date: date,
+                team: _this4.team
+              };
+            } else {
+              var messageObj = {
+                user: message.user,
+                value: message.value,
+                sended: true,
+                is_mine: false,
+                date: date,
+                team: _this4.team
+              };
+            }
+
+            array_messages.push(messageObj);
+          });
+
+          if (_this4.state.messages != array_messages) {
+            _this4.setState({
+              messages: array_messages
+            });
+          }
+        });
+      }
+    }
+  }]);
+
+  return Chat;
+}(react__WEBPACK_IMPORTED_MODULE_1__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Chat);
+
+if (document.getElementsByTagName("chat").length >= 1) {
+  var component = document.getElementsByTagName("chat")[0];
+  var user = JSON.parse(component.getAttribute("user"));
+  var team = JSON.parse(component.getAttribute("team"));
+  react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Chat, {
+    user: user,
+    team: team
+  }), component);
+}
+
+/***/ }),
+
+/***/ "./resources/js/react/pages/teams/Message.js":
+/*!***************************************************!*\
+  !*** ./resources/js/react/pages/teams/Message.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+var Message = /*#__PURE__*/function (_React$Component) {
+  _inherits(Message, _React$Component);
+
+  var _super = _createSuper(Message);
+
+  function Message(props) {
+    var _this;
+
+    _classCallCheck(this, Message);
+
+    _this = _super.call(this, props);
+    _this.value = _this.props.value;
+    _this.user = _this.props.user;
+    _this.is_mine = _this.props.is_mine;
+    _this.date = _this.props.date;
+    _this.team = _this.props.team;
+    _this.state = {
+      sended: _this.props.sended
+    };
+    return _this;
+  }
+
+  _createClass(Message, [{
+    key: "render",
+    value: function render() {
+      //RIGHT
+      if (this.is_mine) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "d-block mt-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "text-left d-flex",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              className: "ml-auto px-2 rounded bg-primary",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "my-auto py-1",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+                  children: [this.date, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), this.value]
+                })
+              })
+            }), this.state.sended ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("small", {
+              className: "mt-auto ml-2",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "fa fa-check",
+                "aria-hidden": "true"
+              }), " ", "Enviado"]
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("small", {
+              className: "mt-auto ml-2",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "fas fa-clock"
+              }), " Enviando"]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "text-left d-flex"
+          })]
+        });
+      } //LEFT
+
+
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "d-block mt-3",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "col-lg-1 col-3",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+              src: "/storage" + this.user.profile_photo,
+              className: "img-fluid rounded-circle"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "col-lg-11 col-9",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              className: "text-left d-flex",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "mr-auto px-2 rounded bg-light border",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                  className: "my-auto py-1",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("strong", {
+                      children: this.user.name
+                    }), "  ", this.date, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), this.value, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {})]
+                  })
+                })
+              })
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "text-left d-flex"
+        })]
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      if (!this.state.sended) {
+        //SEND
+        var message = {
+          date: this.date,
+          value: this.value,
+          team_id: this.team.id,
+          user_id: this.user.id
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("/teams/send/message", message).then(function (response) {
+          if (response.data.status == "success") {
+            _this2.setState({
+              sended: true
+            });
+          } else {
+            toastr.error(response.data.message);
+          }
+        });
+      }
+    }
+  }]);
+
+  return Message;
+}(react__WEBPACK_IMPORTED_MODULE_1__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Message);
 
 /***/ }),
 

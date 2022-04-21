@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
+use App\Models\Message;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class TeamController extends Controller
 {
@@ -119,5 +121,44 @@ class TeamController extends Controller
 
         $team = Team::where("token", $token)->with('users')->first();
         return view("pages.teams.team", compact('team'));
+    }
+
+    public function send_message(Request $request){
+
+        //1) GET DATA
+        $data = [
+            "value" => $request->value,
+            "user_id" => $request->user_id,
+            "team_id" => $request->team_id,
+            "token" => md5($request->value.'+'.date('d/m/Y H:i:s'))
+        ];
+
+        //2) VERIFY DATA
+        $rules = [
+            "value" => ["required", "string"],
+            "user_id" => ["required", "numeric"],
+            "team_id" => ["required", "numeric"],
+            "token" =>["required", "string"],
+        ];
+
+        $validator = Validator::make($data, $rules);
+
+        if ($validator->fails() == true) {
+
+            return response()->json(["status" => "error", "message" => "No se ha podido enviar el mensaje. "]);
+        }
+
+        //3) STORE DATA
+        $message = new Message($data);
+        $message->save();
+
+        //4) RETURN RESPONSE
+        return response()->json(["status" => "success", "message" => "Mensaje enviado."]);
+    }
+
+    public function get_messages(Request $request){
+
+        $messages = Message::where('team_id', $request->team)->with('user')->get();
+        return response()->json(["messages" => $messages]);
     }
 }
