@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
 use App\Models\Message;
+use App\Models\Notification;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Stmt\Nop;
 
 class TeamController extends Controller
 {
@@ -152,6 +154,32 @@ class TeamController extends Controller
         $message = new Message($data);
         $message->save();
 
+        $me = Auth::user();
+        //NOTIFY USERS
+        $team = Team::where('id', $data["team_id"])
+        ->with('users')
+        ->first();
+
+        $users = $team["users"];
+
+        foreach ($users as $key => $user) {
+            
+            if ($user->id != $me->id) {
+                
+                //CREATE NOTIFICATION
+                $data_notification = [
+                    "user_id" => $user->id,
+                    "message_id" => $message->id,
+                    "notified" => 0,
+                    "seen" => 0,
+                    "token" => md5( $message->id.'+'.$user->id.'+'.date('d/m/Y H:i:s'))
+                ];
+                $notification = new Notification($data_notification);
+                $notification->save();
+            }
+        }
+
+
         //4) RETURN RESPONSE
         return response()->json(["status" => "success", "message" => "Mensaje enviado."]);
     }
@@ -159,6 +187,17 @@ class TeamController extends Controller
     public function get_messages(Request $request){
 
         $messages = Message::where('team_id', $request->team)->with('user')->get();
+        //MARK AS SEEN FOR ME
+
+        $user = Auth::user();
+        foreach($messages as $message){
+
+            $notification = Notification::where('user_id', $user->id)
+            ->where('message_id', $message->id);
+
+            $notification->update(["seen" => 1, "notified" => 1]);
+        }
+
         return response()->json(["messages" => $messages]);
     }
 }

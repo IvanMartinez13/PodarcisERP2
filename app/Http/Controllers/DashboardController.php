@@ -6,10 +6,12 @@ use App\Models\Blog;
 use App\Models\Branch;
 use App\Models\Customer;
 use App\Models\Module;
+use App\Models\Notification;
 use App\Models\Objective;
 use App\Models\Project;
 use App\Models\Session;
 use App\Models\Task;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -205,5 +207,25 @@ class DashboardController extends Controller
         session(['skin' => $skin]);
 
         return redirect()->back();
+    }
+
+    public function get_notifications(Request $request){
+
+        $user = Auth::user();
+
+        $notifications = Notification::where("user_id", $user->id)->where("seen", 0)->with('message.team')->get();
+
+        $teams = Team::whereHas('users', function($q) use($user) {
+            $q->where("user_id", $user->id);
+        })->get();
+
+        foreach ($notifications as $key => $notification) {
+            if ($notification->notified == 0) {
+                Notification::where("user_id", $user->id)->where("seen", 0)->update(["notified" => 1]); //change 0 to 1
+            }
+        }
+        
+
+        return response()->json(["notifications" => $notifications, "teams" => $teams]);
     }
 }

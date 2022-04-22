@@ -239,6 +239,115 @@
 
     </script>
 
+    @if (\Request::route()->getName() != "teams.team")
+        <script>
+
+            var user = Number.parseInt("{{auth()->user()->id}}");
+
+            var notifications = [];
+
+            setInterval(() => {
+                
+                checkNotifications(user)
+            }, 500);
+            //CHECK NOTIFICATIONS
+
+            function checkNotifications(user){
+
+                var formData  = new FormData();
+
+                formData.append("user", user);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+
+                $.ajax({
+                    url: "{{url('/')}}/get_notifications",
+                    method: "POST",
+                    data: formData,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    dataType: "json",
+
+                    success: function(response) {
+                        
+                        if (notifications.length != response.notifications.length) {
+                            notifications = response.notifications;
+
+                            //NOTIFICATE
+                            $('#notifications_teams').removeClass('d-none');
+                            $('#notifications_teams').text(notifications.length);
+
+                            var notificate = false;
+
+                            notifications.map( notification => {
+                                if (notification.notified == 0) {
+                                    notificate = true;
+                                }
+                            } );
+
+                            if (notificate) {
+                                if (notifications.length == 1) {
+                                    toastr.info(`Tienes ${notifications.length} mensaje sin leer.`);
+                                    //sonido
+
+                                    if (!audio) {
+                                        var audio = new Audio('{{url("/")}}/audio/notification.mp3');
+                                    }
+                                    audio.play();
+
+                                }else{
+                                    toastr.info(`Tienes ${notifications.length} mensajes sin leer.`);
+                                    //sonido
+                                    if (!audio) {
+                                        var audio = new Audio('{{url("/")}}/audio/notification.mp3');
+                                    }
+                                    
+                                    audio.play();
+                                }
+                            }
+
+                            var teams = response.teams;
+
+                            var notifications_by_teams = [];
+                            
+                            teams.map( team => {
+                                
+                                notifications_by_teams[team.token] = 0;
+                                notifications.map( notification => {
+                                    
+                                    if (notification.message.team.token == team.token){
+
+                                        notifications_by_teams[team.token]++;
+
+                                        
+                                    }
+                                } )
+                            } );
+
+                            teams.map( team => {
+                                $('#notifications_'+team.token).removeClass('d-none');
+                                $('#notifications_'+team.token).text(notifications_by_teams[team.token]);
+                            });
+                            
+                            
+                            
+                        }
+                    }
+                
+                })
+            }
+
+
+            
+        </script>
+    @endif
+
 </body>
 
 </html>

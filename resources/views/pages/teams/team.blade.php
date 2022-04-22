@@ -28,7 +28,7 @@
 
 <div class="ibox">
     <div class="ibox-title">
-        <h5>{{ $team->name }}</h5>
+        <h5>{{ $team->name }} </h5>
 
         <div class="ibox-tools">
             <a href="#" class="collapse-link">

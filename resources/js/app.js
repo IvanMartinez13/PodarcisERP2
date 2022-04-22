@@ -1,5 +1,4 @@
 require("./bootstrap");
-
 //PAGES
 require("./react/pages/ods_evaluation/Ods_evaluation");
 require("./react/pages/ods_evaluation/Evaluation");

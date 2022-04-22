@@ -222,6 +222,6 @@ Route::prefix('teams')->middleware(['auth', 'can:read Teams'])->group(function()
     
 });
 
-
+Route::post('/get_notifications', [DashboardController::class, "get_notifications"])->name("get_notifications");
 
 require __DIR__ . '/auth.php';
