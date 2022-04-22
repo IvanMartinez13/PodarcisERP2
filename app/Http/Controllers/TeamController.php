@@ -11,7 +11,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use PhpParser\Node\Stmt\Nop;
 
 class TeamController extends Controller
 {
@@ -199,5 +198,46 @@ class TeamController extends Controller
         }
 
         return response()->json(["messages" => $messages]);
+    }
+
+    public function create_folder(Request $request){
+
+        //1) GET DATA
+        $team = Team::where("token", $request->team)->first();
+        $path = $request->path;
+        $name = $request->name;
+
+        $name = str_replace(' ', '_', $name);
+        $name = str_replace('.', '_', $name);
+        $name = str_replace('/', '_', $name);
+
+        $root = storage_path('/app/public').'/teams/'.$team->customer_id.'/'.$team->token;
+        //2) CREATE FOLDER
+        if ( !is_dir($root.'/resources') ) {
+            //create folder resources
+            mkdir($root.'/resources', 0777, true);
+        }
+
+        if ( !is_dir(storage_path('/app/public').'/teams/'.$team->customer_id.'/'.$path."/".$name) ) {
+            //create folder
+            mkdir(storage_path('/app/public').'/teams/'.$team->customer_id.'/'.$path."/".$name, 0777, true);
+        }else{
+
+            return response()->json( ["status" => "error", "message" => "Este directorio ya existe."] );
+        }
+
+        //3) RETURN RESPONSE
+        return response()->json( ["status" => "success", "message" => "Directorio creado."] );
+    }
+
+    public function get_files(Request $request){
+        $team = Team::where("token", $request->team)->first();
+        $path = $request->path;
+        $root = storage_path('/app/public').'/teams/'.$team->customer_id;
+
+        $files  = scandir($root."/".$path);
+
+        return response()->json(["files" => $files]);
+        
     }
 }

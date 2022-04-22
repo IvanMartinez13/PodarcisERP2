@@ -27,8 +27,13 @@
 </div>
 
 <div class="ibox">
-    <div class="ibox-title">
-        <h5>{{ $team->name }} </h5>
+    <div class="ibox-title d-flex">
+
+        <div class="teamIcon">
+            <img src="/storage/{{$team->image}}">
+        </div>
+
+        <h5 class="my-auto ml-3">{{ $team->name }}</h5>
 
         <div class="ibox-tools">
             <a href="#" class="collapse-link">
@@ -103,7 +108,13 @@
 
                 {{-- RESOURCES --}}
                 <div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="resources-tab">
-                    RESOURCES
+
+                    <div class="p-lg-2 panel-body">
+
+                        <resources user="{{json_encode(auth()->user())}}" team="{{$team}}"></resources>
+
+                    </div>
+
                 </div>
             </div>
         </div>
