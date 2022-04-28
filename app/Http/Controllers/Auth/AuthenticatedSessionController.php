@@ -35,6 +35,7 @@ class AuthenticatedSessionController extends Controller
 
         //REGISTER SESSION
         $user = Auth::user();
+        Session::where('user_id', $user->id)->where('ip_address', $this->getIp())->delete();//delete sessions
         $agent = $_SERVER['HTTP_USER_AGENT'];
         $session = new Session([
             'user_id' => $user->id,

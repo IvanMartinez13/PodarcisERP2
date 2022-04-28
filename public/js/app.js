@@ -5276,7 +5276,11 @@ __webpack_require__(/*! ./react/pages/tasks/Tasks */ "./resources/js/react/pages
 
 __webpack_require__(/*! ./react/pages/tasks/Subtasks */ "./resources/js/react/pages/tasks/Subtasks.js");
 
-__webpack_require__(/*! ./react/pages/vao/Vao */ "./resources/js/react/pages/vao/Vao.js"); //COMPONENTS
+__webpack_require__(/*! ./react/pages/vao/Vao */ "./resources/js/react/pages/vao/Vao.js");
+
+__webpack_require__(/*! ./react/pages/teams/Chat */ "./resources/js/react/pages/teams/Chat.js");
+
+__webpack_require__(/*! ./react/pages/teams/Resources */ "./resources/js/react/pages/teams/Resources.js"); //COMPONENTS
 
 
 __webpack_require__(/*! ./react/pages/dashboard/Evolution_tasks */ "./resources/js/react/pages/dashboard/Evolution_tasks.js");
@@ -11689,6 +11693,1277 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__.Component);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Update_task);
+
+/***/ }),
+
+/***/ "./resources/js/react/pages/teams/Chat.js":
+/*!************************************************!*\
+  !*** ./resources/js/react/pages/teams/Chat.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Message */ "./resources/js/react/pages/teams/Message.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+
+
+var Chat = /*#__PURE__*/function (_React$Component) {
+  _inherits(Chat, _React$Component);
+
+  var _super = _createSuper(Chat);
+
+  function Chat(props) {
+    var _this;
+
+    _classCallCheck(this, Chat);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      loading: true,
+      sending: true,
+      messages: []
+    };
+    _this.user = _this.props.user;
+    _this.team = _this.props.team;
+    return _this;
+  }
+
+  _createClass(Chat, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      if (this.state.loading == true) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "animated fadeIn",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "spiner-example",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "sk-spinner sk-spinner-double-bounce",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "sk-double-bounce1"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "sk-double-bounce2"
+              })]
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+            className: "text-center",
+            children: "Cargando..."
+          })]
+        });
+      }
+
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "container py-2",
+          children: this.state.messages.map(function (message, index) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Message__WEBPACK_IMPORTED_MODULE_3__["default"], {
+              user: message.user,
+              value: message.value,
+              sended: message.sended,
+              is_mine: message.is_mine,
+              date: message.date,
+              team: message.team
+            }, message.message + " " + index);
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "container-fluid mt-5 py-2 bg-light rounded border",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "row mx-md-5",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "col-md-10",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("textarea", {
+                style: {
+                  resize: "none"
+                },
+                className: "form-control",
+                name: "message",
+                id: "message",
+                rows: "1",
+                placeholder: "Mensaje...",
+                onInput: function onInput(event) {
+                  _this2.textAreaAdjust(event);
+                }
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "col-md-2 mt-md-0 mt-4 text-md-left text-center",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "btn-group my-auto",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                  className: "btn btn-link px-md-3 px-5",
+                  onClick: function onClick(e) {
+                    e.preventDefault();
+
+                    _this2.sendMessage();
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                    className: "fa-solid fa-paper-plane"
+                  }), " "]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                  className: "btn btn-link px-md-3 px-5",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                    className: "fa-solid fa-face-smile"
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                  className: "btn btn-link px-md-3 px-5",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                    className: "fa-solid fa-paperclip"
+                  })
+                })]
+              })
+            })]
+          })
+        })]
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this3 = this;
+
+      //1) GET MESSAGES
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/teams/get/messages", {
+        team: this.team.id
+      }).then(function (response) {
+        var messages = response.data.messages;
+        var array_messages = [];
+        messages.map(function (message) {
+          var date = new Date(message.created_at);
+          date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
+
+          if (message.user.id == _this3.user.id) {
+            var messageObj = {
+              user: message.user,
+              value: message.value,
+              sended: true,
+              is_mine: true,
+              date: date,
+              team: _this3.team
+            };
+          } else {
+            var messageObj = {
+              user: message.user,
+              value: message.value,
+              sended: true,
+              is_mine: false,
+              date: date,
+              team: _this3.team
+            };
+          }
+
+          array_messages.push(messageObj);
+        });
+
+        _this3.setState({
+          messages: array_messages,
+          loading: false
+        });
+      }); //2) CHECK NEW MESSAGES
+
+      var handleCheckMessages = function handleCheckMessages(team) {
+        _this3.checkMessages(team);
+      };
+
+      var team = this.team; //DESCOMENTAR ESTA PARTE PARA AÑADIR UN COMPROBADOR AUTOMATICO
+
+      setInterval(function () {
+        handleCheckMessages(team);
+      }, 500);
+    }
+  }, {
+    key: "textAreaAdjust",
+    value: function textAreaAdjust(event) {
+      var element = event.target;
+      element.style.height = "1px";
+      element.style.height = 1.5 + element.scrollHeight + "px";
+    }
+  }, {
+    key: "sendMessage",
+    value: function sendMessage() {
+      //1) GET DATA
+      var message = $("#message").val();
+      var date = new Date();
+      date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
+
+      if (message != null && message != "" && message != undefined) {
+        //2) CLEAN TEXTAREA
+        $("#message").val(null); //clean value
+
+        var textarea = document.getElementById("message"); //get textarea
+
+        textarea.style.height = "35.58px"; //resize textarea
+        //3) CREATE MESSAJE OBJECT
+
+        var messageObj = {
+          user: this.user,
+          value: message,
+          sended: false,
+          is_mine: true,
+          date: date,
+          team: this.team
+        };
+        var messages = this.state.messages;
+        messages.push(messageObj);
+        this.setState({
+          messages: messages
+        });
+      }
+    }
+  }, {
+    key: "checkMessages",
+    value: function checkMessages(team) {
+      var _this4 = this;
+
+      if (this.state.loading == false) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("/teams/get/messages", {
+          team: team.id
+        }).then(function (response) {
+          var messages = response.data.messages;
+          var array_messages = [];
+          messages.map(function (message) {
+            var date = new Date(message.created_at);
+            date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
+
+            if (message.user.id == _this4.user.id) {
+              var messageObj = {
+                user: message.user,
+                value: message.value,
+                sended: true,
+                is_mine: true,
+                date: date,
+                team: _this4.team
+              };
+            } else {
+              var messageObj = {
+                user: message.user,
+                value: message.value,
+                sended: true,
+                is_mine: false,
+                date: date,
+                team: _this4.team
+              };
+            }
+
+            array_messages.push(messageObj);
+          });
+
+          if (_this4.state.messages != array_messages) {
+            _this4.setState({
+              messages: array_messages
+            });
+          }
+        });
+      }
+    }
+  }]);
+
+  return Chat;
+}(react__WEBPACK_IMPORTED_MODULE_1__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Chat);
+
+if (document.getElementsByTagName("chat").length >= 1) {
+  var component = document.getElementsByTagName("chat")[0];
+  var user = JSON.parse(component.getAttribute("user"));
+  var team = JSON.parse(component.getAttribute("team"));
+  react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Chat, {
+    user: user,
+    team: team
+  }), component);
+}
+
+/***/ }),
+
+/***/ "./resources/js/react/pages/teams/CreateFile.js":
+/*!******************************************************!*\
+  !*** ./resources/js/react/pages/teams/CreateFile.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+/* harmony import */ var dropzone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! dropzone */ "./node_modules/dropzone/dist/dropzone.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+
+var CreateFile = /*#__PURE__*/function (_React$Component) {
+  _inherits(CreateFile, _React$Component);
+
+  var _super = _createSuper(CreateFile);
+
+  function CreateFile(props) {
+    var _this;
+
+    _classCallCheck(this, CreateFile);
+
+    _this = _super.call(this, props);
+    _this.path = _this.props.path;
+    _this.team = _this.props.team;
+
+    _this.updateMe = function () {
+      _this.props.updateMe();
+    };
+
+    return _this;
+  }
+
+  _createClass(CreateFile, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        className: "modal fade",
+        id: "createFile",
+        tabIndex: -1,
+        "aria-labelledby": "createFileLabel",
+        "aria-hidden": "true",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          className: "modal-dialog modal-xl",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "modal-content bg-primary",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: "modal-header",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
+                className: "modal-title",
+                id: "createFileLabel",
+                children: "Crear un nuevo archivo"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                type: "button",
+                className: "close",
+                "data-dismiss": "modal",
+                "aria-label": "Close",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                  "aria-hidden": "true",
+                  children: "\xD7"
+                })
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "modal-body bg-white text-dark",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                id: "uploadFiles",
+                className: "dropzone",
+                method: "POST",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                  className: "dz-message",
+                  children: "Arrastra aqui los archivos..."
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                  className: "previews"
+                })]
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "modal-footer bg-white text-dark",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                type: "button",
+                className: "btn btn-secondary",
+                "data-dismiss": "modal",
+                children: "Cancelar"
+              })
+            })]
+          })
+        })
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var path = this.path;
+      var team = this.team.token;
+
+      var handleFinish = function handleFinish() {
+        _this2.finish();
+      };
+
+      var dropzone = new dropzone__WEBPACK_IMPORTED_MODULE_1__["default"]("div#uploadFiles", {
+        url: "/teams/upload/file",
+        headers: {
+          "X-CSRF-TOKEN": jQuery('meta[name="csrf-token"]').attr("content")
+        },
+        uploadMultiple: true,
+        autoProcessQueue: true,
+        parallelUploads: 100,
+        maxFiles: 100,
+        init: function init() {
+          var myDropzone = this; // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
+          // of the sending event because uploadMultiple is set to true.
+
+          this.on("sendingmultiple", function (file, xsr, formData) {
+            // Gets triggered when the form is actually being sent.
+            // Hide the success button or the complete form.
+            formData.append("path", path);
+            formData.append("team", team);
+            console.log("sended");
+          });
+          this.on("successmultiple", function (files, response) {
+            // Gets triggered when the files have successfully been sent.
+            // Redirect user or notify of success.
+            this.removeAllFiles(); //MOSTAR ALERTA
+
+            if (response.status == "success") {
+              //ok
+              toastr.success(response.message + " con " + response.with_errors + " errores."); //close modal
+
+              handleFinish();
+            } else {
+              //error
+              toastr.error(response.message);
+            } //ACTUALIZAR
+
+          });
+          this.on("errormultiple", function (files, response) {
+            // Gets triggered when there was an error sending the files.
+            // Maybe show form again, and notify user of error
+            console.log("error"); //MOSTAR ALERTA
+
+            toastr.error(response.message);
+          });
+        }
+      });
+    }
+  }, {
+    key: "finish",
+    value: function finish() {
+      $("#createFile").modal("hide");
+      this.updateMe();
+    }
+  }]);
+
+  return CreateFile;
+}(react__WEBPACK_IMPORTED_MODULE_2__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CreateFile);
+
+/***/ }),
+
+/***/ "./resources/js/react/pages/teams/CreateFolder.js":
+/*!********************************************************!*\
+  !*** ./resources/js/react/pages/teams/CreateFolder.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+var CreateFolder = /*#__PURE__*/function (_React$Component) {
+  _inherits(CreateFolder, _React$Component);
+
+  var _super = _createSuper(CreateFolder);
+
+  //constructor
+  function CreateFolder(props) {
+    var _this;
+
+    _classCallCheck(this, CreateFolder);
+
+    _this = _super.call(this, props);
+    _this.path = _this.props.path;
+    _this.team = _this.props.team;
+
+    _this.updateMe = function () {
+      _this.props.updateMe();
+    };
+
+    return _this;
+  }
+
+  _createClass(CreateFolder, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "modal fade",
+        id: "createFolder",
+        tabIndex: -1,
+        "aria-labelledby": "createFolderLabel",
+        "aria-hidden": "true",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "modal-dialog",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "modal-content bg-primary",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "modal-header",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
+                className: "modal-title",
+                id: "createFolderLabel",
+                children: "Crear un nuevo directorio"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                type: "button",
+                className: "close",
+                "data-dismiss": "modal",
+                "aria-label": "Close",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                  "aria-hidden": "true",
+                  children: "\xD7"
+                })
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "modal-body bg-white text-dark",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+                htmlFor: "dirName",
+                children: "Nombre:"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+                className: "form-control",
+                placeholder: "Nombre...",
+                id: "dirName"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "modal-footer bg-white text-dark",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                type: "button",
+                className: "btn btn-primary",
+                "data-dismiss": "modal",
+                onClick: function onClick() {
+                  _this2.save();
+                },
+                children: "Crear"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                type: "button",
+                className: "btn btn-secondary",
+                "data-dismiss": "modal",
+                children: "Cancelar"
+              })]
+            })]
+          })
+        })
+      });
+    }
+  }, {
+    key: "save",
+    value: function save() {
+      var _this3 = this;
+
+      var name = $("#dirName").val();
+
+      if (name != null && name != "" && name != undefined) {
+        //save
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("/teams/create/folder", {
+          path: this.path,
+          team: this.team.token,
+          name: name
+        }).then(function (response) {
+          if (response.data.status == "error") {
+            toastr.error(response.data.message);
+            return null;
+          }
+
+          toastr.success(response.data.message);
+
+          _this3.updateMe();
+        });
+      } else {
+        toastr.error("El campo Nombre es obligatorio.");
+      }
+    }
+  }]);
+
+  return CreateFolder;
+}(react__WEBPACK_IMPORTED_MODULE_1__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CreateFolder);
+
+/***/ }),
+
+/***/ "./resources/js/react/pages/teams/Message.js":
+/*!***************************************************!*\
+  !*** ./resources/js/react/pages/teams/Message.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+var Message = /*#__PURE__*/function (_React$Component) {
+  _inherits(Message, _React$Component);
+
+  var _super = _createSuper(Message);
+
+  function Message(props) {
+    var _this;
+
+    _classCallCheck(this, Message);
+
+    _this = _super.call(this, props);
+    _this.value = _this.props.value;
+    _this.user = _this.props.user;
+    _this.is_mine = _this.props.is_mine;
+    _this.date = _this.props.date;
+    _this.team = _this.props.team;
+    _this.state = {
+      sended: _this.props.sended
+    };
+    return _this;
+  }
+
+  _createClass(Message, [{
+    key: "render",
+    value: function render() {
+      //RIGHT
+      if (this.is_mine) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "d-block mt-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "text-left d-flex",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              className: "ml-auto px-2 rounded bg-primary",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "my-auto py-1",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+                  children: [this.date, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), this.value]
+                })
+              })
+            }), this.state.sended ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("small", {
+              className: "mt-auto ml-2",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "fa fa-check",
+                "aria-hidden": "true"
+              }), " ", "Enviado"]
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("small", {
+              className: "mt-auto ml-2",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                className: "fas fa-clock"
+              }), " Enviando"]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "text-left d-flex"
+          })]
+        });
+      } //LEFT
+
+
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "d-block mt-3",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "col-lg-1 col-3",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+              src: "/storage" + this.user.profile_photo,
+              className: "img-fluid rounded-circle"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "col-lg-11 col-9",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              className: "text-left d-flex",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "mr-auto px-2 rounded bg-light border",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                  className: "my-auto py-1",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("strong", {
+                      children: this.user.name
+                    }), "  ", this.date, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), this.value, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {})]
+                  })
+                })
+              })
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "text-left d-flex"
+        })]
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      if (!this.state.sended) {
+        //SEND
+        var message = {
+          date: this.date,
+          value: this.value,
+          team_id: this.team.id,
+          user_id: this.user.id
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("/teams/send/message", message).then(function (response) {
+          if (response.data.status == "success") {
+            _this2.setState({
+              sended: true
+            });
+          } else {
+            toastr.error(response.data.message);
+          }
+        });
+      }
+    }
+  }]);
+
+  return Message;
+}(react__WEBPACK_IMPORTED_MODULE_1__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Message);
+
+/***/ }),
+
+/***/ "./resources/js/react/pages/teams/Resources.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/react/pages/teams/Resources.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var _CreateFolder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateFolder */ "./resources/js/react/pages/teams/CreateFolder.js");
+/* harmony import */ var _CreateFile__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CreateFile */ "./resources/js/react/pages/teams/CreateFile.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+
+
+var Resources = /*#__PURE__*/function (_React$Component) {
+  _inherits(Resources, _React$Component);
+
+  var _super = _createSuper(Resources);
+
+  //constructor
+  function Resources(props) {
+    var _this;
+
+    _classCallCheck(this, Resources);
+
+    _this = _super.call(this, props);
+    _this.user = _this.props.user;
+    _this.team = _this.props.team;
+    _this.root = _this.team.token + "/resources";
+    _this.state = {
+      loading: true,
+      actualPath: _this.root,
+      files: [],
+      update: false
+    };
+    _this.updateMe = _this.updateMe.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Resources, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      //LOADING
+      if (this.state.loading) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "animated fadeIn",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "spiner-example",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "sk-spinner sk-spinner-double-bounce",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "sk-double-bounce1"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "sk-double-bounce2"
+              })]
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+            className: "text-center",
+            children: "Cargando..."
+          })]
+        });
+      }
+
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "btn-group m-lg-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+            className: "btn btn-white mx-1 rounded",
+            "data-toggle": "modal",
+            "data-target": "#createFolder",
+            children: ["Crear directorio", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+              className: "fa fa-folder",
+              "aria-hidden": "true"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+            className: "btn btn-white mx-1 rounded",
+            "data-toggle": "modal",
+            onClick: function onClick() {
+              $("#createFile").modal("show");
+            },
+            children: ["A\xF1adir archivos", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+              className: "fa fa-file",
+              "aria-hidden": "true"
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "row m-lg-3 p-lg-2",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "col-8",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
+              className: "",
+              children: this.formatPath()
+            })
+          }), this.state.actualPath != this.root ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "col-4 text-right",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+              onClick: function onClick() {
+                _this2.changePath(_this2.root);
+              },
+              className: "btn btn-secondary mx-1",
+              children: "Recursos"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+              onClick: function onClick() {
+                //RETURN 1 STEP
+                var array = _this2.state.actualPath.split("/");
+
+                var path = _this2.state.actualPath.replace("/" + array[array.length - 1], "");
+
+                _this2.changePath(path);
+              },
+              className: "btn btn-danger mx-1",
+              children: "Volver"
+            })]
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "col-4 text-right"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "bg-light m-lg-3 p-lg-2 rounded",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "row p-3",
+            children: this.state.files.map(function (file, index) {
+              //FOLDER
+              if (file.type == "folder") {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "col-lg-3 col-md-4 mb-3",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+                    style: {
+                      color: "black"
+                    },
+                    role: "button",
+                    onClick: function onClick() {
+                      _this2.changePath(file.path);
+                    },
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                      className: "card h-100",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                        className: "card-body d-flex h-75",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                          className: "fa fa-folder fa-6x m-auto",
+                          "aria-hidden": "true"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                        className: "card-footer d-flex h-25",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+                          className: "my-auto",
+                          children: file.name
+                        })
+                      })]
+                    })
+                  })
+                }, file.name + index);
+              } //FILES
+
+
+              if (file.type == "pdf") {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "col-lg-3 col-md-4 mb-3",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+                    style: {
+                      color: "black"
+                    },
+                    role: "button",
+                    href: "/storage/teams/" + _this2.team.customer_id + "/" + file.path,
+                    target: "_blank",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                      className: "card h-100",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                        className: "card-body d-flex h-75",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                          "class": "fas fa-file-pdf  fa-6x m-auto"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                        className: "card-footer d-flex h-25",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+                          className: "my-auto",
+                          children: file.name
+                        })
+                      })]
+                    })
+                  })
+                }, file.name + index);
+              }
+
+              if (file.type == "image") {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "col-lg-3 col-md-4 mb-3",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+                    style: {
+                      color: "black"
+                    },
+                    role: "button",
+                    href: "/storage/teams/" + _this2.team.customer_id + "/" + file.path,
+                    target: "_blank",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                      className: "card h-100",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                        className: "card-body h-75 text-center",
+                        style: {
+                          overflow: "hidden"
+                        },
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                          src: "/storage/teams/" + _this2.team.customer_id + "/" + file.path,
+                          className: "img-fluid h-100"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                        className: "card-footer d-flex h-25",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+                          className: "my-auto",
+                          children: file.name
+                        })
+                      })]
+                    })
+                  })
+                }, file.name + index);
+              }
+            })
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_CreateFolder__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          path: this.state.actualPath,
+          team: this.team,
+          updateMe: this.updateMe
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_CreateFile__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          path: this.state.actualPath,
+          team: this.team,
+          updateMe: this.updateMe
+        })]
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this3 = this;
+
+      axios.post("/teams/get/files", {
+        path: this.state.actualPath,
+        team: this.team.token
+      }).then(function (response) {
+        var files = [];
+        var content = response.data.files;
+
+        if (content != false) {
+          content.map(function (file, index) {
+            if (index > 1) {
+              var check = file.split(".");
+
+              if (check.length == 1) {
+                files.push({
+                  type: "folder",
+                  path: _this3.state.actualPath + "/" + file,
+                  name: file
+                });
+              } else {
+                //IMG
+                if (check[check.length - 1] == "png" || check[check.length - 1] == "jpg" || check[check.length - 1] == "jpeg" || check[check.length - 1] == "svg" || check[check.length - 1] == "gif") {
+                  files.push({
+                    type: "image",
+                    path: _this3.state.actualPath + "/" + file,
+                    name: file
+                  });
+                } else {
+                  //PDF
+                  if (check[check.length - 1] == "pdf") {
+                    files.push({
+                      type: "pdf",
+                      path: _this3.state.actualPath + "/" + file,
+                      name: file
+                    });
+                  } else {
+                    //TEXT
+                    files.push({
+                      type: "other",
+                      path: _this3.state.actualPath + "/" + file,
+                      name: file
+                    });
+                  }
+                }
+              }
+            }
+          });
+
+          _this3.setState({
+            loading: false,
+            files: files
+          });
+        } else {
+          _this3.setState({
+            loading: false,
+            files: []
+          });
+        }
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      var _this4 = this;
+
+      if (this.state.actualPath != prevState.actualPath || this.state.update == true) {
+        axios.post("/teams/get/files", {
+          path: this.state.actualPath,
+          team: this.team.token
+        }).then(function (response) {
+          var files = [];
+          var content = response.data.files;
+
+          if (content != false) {
+            content.map(function (file, index) {
+              if (index > 1) {
+                var check = file.split(".");
+
+                if (check.length == 1) {
+                  files.push({
+                    type: "folder",
+                    path: _this4.state.actualPath + "/" + file,
+                    name: file
+                  });
+                } else {
+                  //IMG
+                  console.log(check[check.length - 1]);
+
+                  if (check[check.length - 1] == "png" || check[check.length - 1] == "jpg" || check[check.length - 1] == "jpeg" || check[check.length - 1] == "svg" || check[check.length - 1] == "gif") {
+                    files.push({
+                      type: "image",
+                      path: _this4.state.actualPath + "/" + file,
+                      name: file
+                    });
+                  } else {
+                    //PDF
+                    if (check[check.length - 1] == "pdf") {
+                      files.push({
+                        type: "pdf",
+                        path: _this4.state.actualPath + "/" + file,
+                        name: file
+                      });
+                    } else {
+                      //TEXT
+                      files.push({
+                        type: "other",
+                        path: _this4.state.actualPath + "/" + file,
+                        name: file
+                      });
+                    }
+                  }
+                }
+              }
+            });
+
+            _this4.setState({
+              loading: false,
+              files: files,
+              update: false
+            });
+          } else {
+            _this4.setState({
+              loading: false,
+              files: [],
+              update: false
+            });
+          }
+        });
+      }
+    }
+  }, {
+    key: "changePath",
+    value: function changePath(newPath) {
+      this.setState({
+        loading: true,
+        actualPath: newPath
+      });
+    }
+  }, {
+    key: "formatPath",
+    value: function formatPath() {
+      var path = this.state.actualPath;
+      var root = this.root;
+      path = path.replace(this.root, "Recursos");
+      return path;
+    }
+  }, {
+    key: "updateMe",
+    value: function updateMe() {
+      this.setState({
+        loading: true,
+        actualPath: this.state.actualPath,
+        update: true
+      });
+    }
+  }]);
+
+  return Resources;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Resources);
+
+if (document.getElementsByTagName("resources").length >= 1) {
+  var component = document.getElementsByTagName("resources")[0];
+  var user = JSON.parse(component.getAttribute("user"));
+  var team = JSON.parse(component.getAttribute("team"));
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Resources, {
+    user: user,
+    team: team
+  }), component);
+}
 
 /***/ }),
 

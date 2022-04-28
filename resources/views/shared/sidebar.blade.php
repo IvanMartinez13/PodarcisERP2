@@ -166,6 +166,7 @@
                         <a href="{{ route('teams.index') }}">
                             <i class="fas fa-user-friends    "></i>
                             <span class="nav-label">{{ __('modules.teams') }}</span>
+                            <span id="notifications_teams" class="animated fadeIn label bg-primary float-right d-none">  </span>
                         </a>
                     </li>
                 @endcan

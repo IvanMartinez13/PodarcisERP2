@@ -60,6 +60,7 @@
                         </div>
                     </div>
 
+                    <span id="notifications_{{$team->token}}" class="animated fadeIn label bg-primary float-right d-none mb-3"></span>
                 </div>
             </div>
 
