@@ -7,6 +7,10 @@ class CreateFolder extends React.Component {
         super(props);
         this.path = this.props.path;
         this.team = this.props.team;
+
+        this.updateMe = () => {
+            this.props.updateMe();
+        };
     }
 
     render() {
@@ -46,6 +50,7 @@ class CreateFolder extends React.Component {
                             <button
                                 type="button"
                                 className="btn btn-primary"
+                                data-dismiss="modal"
                                 onClick={() => {
                                     this.save();
                                 }}
@@ -84,6 +89,8 @@ class CreateFolder extends React.Component {
                         return null;
                     }
                     toastr.success(response.data.message);
+
+                    this.updateMe();
                 });
         } else {
             toastr.error("El campo Nombre es obligatorio.");

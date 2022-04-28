@@ -17,7 +17,10 @@ class Resources extends React.Component {
             loading: true,
             actualPath: this.root,
             files: [],
+            update: false,
         };
+
+        this.updateMe = this.updateMe.bind(this);
     }
 
     render() {
@@ -52,11 +55,52 @@ class Resources extends React.Component {
                     <button
                         className="btn btn-white mx-1 rounded"
                         data-toggle="modal"
-                        data-target="#createFile"
+                        onClick={() => {
+                            $("#createFile").modal("show");
+                        }}
                     >
                         Añadir archivos{" "}
                         <i className="fa fa-file" aria-hidden="true"></i>
                     </button>
+                </div>
+
+                <div className="row m-lg-3 p-lg-2">
+                    <div className="col-8">
+                        <h3 className="">{this.formatPath()}</h3>
+                    </div>
+
+                    {this.state.actualPath != this.root ? (
+                        <div className="col-4 text-right">
+                            <button
+                                onClick={() => {
+                                    this.changePath(this.root);
+                                }}
+                                className="btn btn-secondary mx-1"
+                            >
+                                Recursos
+                            </button>
+
+                            <button
+                                onClick={() => {
+                                    //RETURN 1 STEP
+                                    let array =
+                                        this.state.actualPath.split("/");
+
+                                    let path = this.state.actualPath.replace(
+                                        "/" + array[array.length - 1],
+                                        ``
+                                    );
+
+                                    this.changePath(path);
+                                }}
+                                className="btn btn-danger mx-1"
+                            >
+                                Volver
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="col-4 text-right"></div>
+                    )}
                 </div>
 
                 <div className="bg-light m-lg-3 p-lg-2 rounded">
@@ -70,14 +114,10 @@ class Resources extends React.Component {
                                         className="col-lg-3 col-md-4 mb-3"
                                     >
                                         <a
+                                            style={{ color: "black" }}
                                             role={"button"}
                                             onClick={() => {
-                                                console.log(
-                                                    "/storage/teams/" +
-                                                        this.team.customer_id +
-                                                        "/" +
-                                                        file.path
-                                                );
+                                                this.changePath(file.path);
                                             }}
                                         >
                                             <div className="card h-100">
@@ -107,15 +147,15 @@ class Resources extends React.Component {
                                         className="col-lg-3 col-md-4 mb-3"
                                     >
                                         <a
+                                            style={{ color: "black" }}
                                             role={"button"}
-                                            onClick={() => {
-                                                console.log(
-                                                    "/storage/teams/" +
-                                                        this.team.customer_id +
-                                                        "/" +
-                                                        file.path
-                                                );
-                                            }}
+                                            href={
+                                                "/storage/teams/" +
+                                                this.team.customer_id +
+                                                "/" +
+                                                file.path
+                                            }
+                                            target={"_blank"}
                                         >
                                             <div className="card h-100">
                                                 <div className="card-body d-flex h-75">
@@ -140,14 +180,19 @@ class Resources extends React.Component {
                                         className="col-lg-3 col-md-4 mb-3"
                                     >
                                         <a
+                                            style={{ color: "black" }}
                                             role={"button"}
-                                            onClick={() => {
-                                                console.log(file.path);
-                                            }}
+                                            href={
+                                                "/storage/teams/" +
+                                                this.team.customer_id +
+                                                "/" +
+                                                file.path
+                                            }
+                                            target={"_blank"}
                                         >
                                             <div className="card h-100">
                                                 <div
-                                                    className="card-body h-75"
+                                                    className="card-body h-75 text-center"
                                                     style={{
                                                         overflow: "hidden",
                                                     }}
@@ -181,11 +226,13 @@ class Resources extends React.Component {
                 <CreateFolder
                     path={this.state.actualPath}
                     team={this.team}
+                    updateMe={this.updateMe}
                 ></CreateFolder>
 
                 <CreateFile
                     path={this.state.actualPath}
                     team={this.team}
+                    updateMe={this.updateMe}
                 ></CreateFile>
             </div>
         );
@@ -201,57 +248,182 @@ class Resources extends React.Component {
                 var files = [];
                 var content = response.data.files;
 
-                content.map((file, index) => {
-                    if (index > 1) {
-                        var check = file.split(".");
+                if (content != false) {
+                    content.map((file, index) => {
+                        if (index > 1) {
+                            var check = file.split(".");
 
-                        if (check.length == 1) {
-                            files.push({
-                                type: "folder",
-                                path: this.state.actualPath + "/" + file,
-                                name: file,
-                            });
-                        } else {
-                            //IMG
-                            if (
-                                check[1] == "png" ||
-                                check[1] == "jpg" ||
-                                check[1] == "svg" ||
-                                check[1] == "gif"
-                            ) {
+                            if (check.length == 1) {
                                 files.push({
-                                    type: "image",
+                                    type: "folder",
                                     path: this.state.actualPath + "/" + file,
                                     name: file,
                                 });
                             } else {
-                                //PDF
-                                if (check[1] == "pdf") {
+                                //IMG
+
+                                if (
+                                    check[check.length - 1] == "png" ||
+                                    check[check.length - 1] == "jpg" ||
+                                    check[check.length - 1] == "jpeg" ||
+                                    check[check.length - 1] == "svg" ||
+                                    check[check.length - 1] == "gif"
+                                ) {
                                     files.push({
-                                        type: "pdf",
+                                        type: "image",
                                         path:
                                             this.state.actualPath + "/" + file,
                                         name: file,
                                     });
                                 } else {
-                                    //TEXT
+                                    //PDF
+                                    if (check[check.length - 1] == "pdf") {
+                                        files.push({
+                                            type: "pdf",
+                                            path:
+                                                this.state.actualPath +
+                                                "/" +
+                                                file,
+                                            name: file,
+                                        });
+                                    } else {
+                                        //TEXT
+                                        files.push({
+                                            type: "other",
+                                            path:
+                                                this.state.actualPath +
+                                                "/" +
+                                                file,
+                                            name: file,
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    this.setState({
+                        loading: false,
+                        files: files,
+                    });
+                } else {
+                    this.setState({
+                        loading: false,
+                        files: [],
+                    });
+                }
+            });
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (
+            this.state.actualPath != prevState.actualPath ||
+            this.state.update == true
+        ) {
+            axios
+                .post("/teams/get/files", {
+                    path: this.state.actualPath,
+                    team: this.team.token,
+                })
+                .then((response) => {
+                    var files = [];
+                    var content = response.data.files;
+
+                    if (content != false) {
+                        content.map((file, index) => {
+                            if (index > 1) {
+                                var check = file.split(".");
+
+                                if (check.length == 1) {
                                     files.push({
-                                        type: "other",
+                                        type: "folder",
                                         path:
                                             this.state.actualPath + "/" + file,
                                         name: file,
                                     });
+                                } else {
+                                    //IMG
+                                    console.log(check[check.length - 1]);
+                                    if (
+                                        check[check.length - 1] == "png" ||
+                                        check[check.length - 1] == "jpg" ||
+                                        check[check.length - 1] == "jpeg" ||
+                                        check[check.length - 1] == "svg" ||
+                                        check[check.length - 1] == "gif"
+                                    ) {
+                                        files.push({
+                                            type: "image",
+                                            path:
+                                                this.state.actualPath +
+                                                "/" +
+                                                file,
+                                            name: file,
+                                        });
+                                    } else {
+                                        //PDF
+                                        if (check[check.length - 1] == "pdf") {
+                                            files.push({
+                                                type: "pdf",
+                                                path:
+                                                    this.state.actualPath +
+                                                    "/" +
+                                                    file,
+                                                name: file,
+                                            });
+                                        } else {
+                                            //TEXT
+                                            files.push({
+                                                type: "other",
+                                                path:
+                                                    this.state.actualPath +
+                                                    "/" +
+                                                    file,
+                                                name: file,
+                                            });
+                                        }
+                                    }
                                 }
                             }
-                        }
+                        });
+
+                        this.setState({
+                            loading: false,
+                            files: files,
+                            update: false,
+                        });
+                    } else {
+                        this.setState({
+                            loading: false,
+                            files: [],
+                            update: false,
+                        });
                     }
                 });
+        }
+    }
 
-                this.setState({
-                    loading: false,
-                    files: files,
-                });
-            });
+    changePath(newPath) {
+        this.setState({
+            loading: true,
+            actualPath: newPath,
+        });
+    }
+
+    formatPath() {
+        let path = this.state.actualPath;
+        let root = this.root;
+
+        path = path.replace(this.root, `Recursos`);
+
+        return path;
+    }
+
+    updateMe() {
+        this.setState({
+            loading: true,
+            actualPath: this.state.actualPath,
+            update: true,
+        });
     }
 }
 

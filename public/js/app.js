@@ -12020,8 +12020,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+/* harmony import */ var dropzone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! dropzone */ "./node_modules/dropzone/dist/dropzone.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12048,62 +12050,74 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
 var CreateFile = /*#__PURE__*/function (_React$Component) {
   _inherits(CreateFile, _React$Component);
 
   var _super = _createSuper(CreateFile);
 
-  function CreateFile() {
+  function CreateFile(props) {
+    var _this;
+
     _classCallCheck(this, CreateFile);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this, props);
+    _this.path = _this.props.path;
+    _this.team = _this.props.team;
+
+    _this.updateMe = function () {
+      _this.props.updateMe();
+    };
+
+    return _this;
   }
 
   _createClass(CreateFile, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
         className: "modal fade",
         id: "createFile",
         tabIndex: -1,
         "aria-labelledby": "createFileLabel",
         "aria-hidden": "true",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: "modal-dialog modal-xl",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "modal-content bg-primary",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
               className: "modal-header",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h5", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
                 className: "modal-title",
                 id: "createFileLabel",
                 children: "Crear un nuevo archivo"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
                 type: "button",
                 className: "close",
                 "data-dismiss": "modal",
                 "aria-label": "Close",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
                   "aria-hidden": "true",
                   children: "\xD7"
                 })
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
               className: "modal-body bg-white text-dark",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("form", {
-                action: "/teams/uploadFile",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                id: "uploadFiles",
                 className: "dropzone",
                 method: "POST",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
                   className: "dz-message",
                   children: "Arrastra aqui los archivos..."
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-                  "class": "previews"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                  className: "previews"
                 })]
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
               className: "modal-footer bg-white text-dark",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
                 type: "button",
                 className: "btn btn-secondary",
                 "data-dismiss": "modal",
@@ -12114,10 +12128,74 @@ var CreateFile = /*#__PURE__*/function (_React$Component) {
         })
       });
     }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var path = this.path;
+      var team = this.team.token;
+
+      var handleFinish = function handleFinish() {
+        _this2.finish();
+      };
+
+      var dropzone = new dropzone__WEBPACK_IMPORTED_MODULE_1__["default"]("div#uploadFiles", {
+        url: "/teams/upload/file",
+        headers: {
+          "X-CSRF-TOKEN": jQuery('meta[name="csrf-token"]').attr("content")
+        },
+        uploadMultiple: true,
+        autoProcessQueue: true,
+        parallelUploads: 100,
+        maxFiles: 100,
+        init: function init() {
+          var myDropzone = this; // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
+          // of the sending event because uploadMultiple is set to true.
+
+          this.on("sendingmultiple", function (file, xsr, formData) {
+            // Gets triggered when the form is actually being sent.
+            // Hide the success button or the complete form.
+            formData.append("path", path);
+            formData.append("team", team);
+            console.log("sended");
+          });
+          this.on("successmultiple", function (files, response) {
+            // Gets triggered when the files have successfully been sent.
+            // Redirect user or notify of success.
+            this.removeAllFiles(); //MOSTAR ALERTA
+
+            if (response.status == "success") {
+              //ok
+              toastr.success(response.message + " con " + response.with_errors + " errores."); //close modal
+
+              handleFinish();
+            } else {
+              //error
+              toastr.error(response.message);
+            } //ACTUALIZAR
+
+          });
+          this.on("errormultiple", function (files, response) {
+            // Gets triggered when there was an error sending the files.
+            // Maybe show form again, and notify user of error
+            console.log("error"); //MOSTAR ALERTA
+
+            toastr.error(response.message);
+          });
+        }
+      });
+    }
+  }, {
+    key: "finish",
+    value: function finish() {
+      $("#createFile").modal("hide");
+      this.updateMe();
+    }
   }]);
 
   return CreateFile;
-}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+}(react__WEBPACK_IMPORTED_MODULE_2__.Component);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CreateFile);
 
@@ -12179,6 +12257,11 @@ var CreateFolder = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.path = _this.props.path;
     _this.team = _this.props.team;
+
+    _this.updateMe = function () {
+      _this.props.updateMe();
+    };
+
     return _this;
   }
 
@@ -12228,6 +12311,7 @@ var CreateFolder = /*#__PURE__*/function (_React$Component) {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
                 type: "button",
                 className: "btn btn-primary",
+                "data-dismiss": "modal",
                 onClick: function onClick() {
                   _this2.save();
                 },
@@ -12246,6 +12330,8 @@ var CreateFolder = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "save",
     value: function save() {
+      var _this3 = this;
+
       var name = $("#dirName").val();
 
       if (name != null && name != "" && name != undefined) {
@@ -12261,6 +12347,8 @@ var CreateFolder = /*#__PURE__*/function (_React$Component) {
           }
 
           toastr.success(response.data.message);
+
+          _this3.updateMe();
         });
       } else {
         toastr.error("El campo Nombre es obligatorio.");
@@ -12503,8 +12591,10 @@ var Resources = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       loading: true,
       actualPath: _this.root,
-      files: []
+      files: [],
+      update: false
     };
+    _this.updateMe = _this.updateMe.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -12548,11 +12638,44 @@ var Resources = /*#__PURE__*/function (_React$Component) {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
             className: "btn btn-white mx-1 rounded",
             "data-toggle": "modal",
-            "data-target": "#createFile",
+            onClick: function onClick() {
+              $("#createFile").modal("show");
+            },
             children: ["A\xF1adir archivos", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
               className: "fa fa-file",
               "aria-hidden": "true"
             })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "row m-lg-3 p-lg-2",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "col-8",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
+              className: "",
+              children: this.formatPath()
+            })
+          }), this.state.actualPath != this.root ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "col-4 text-right",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+              onClick: function onClick() {
+                _this2.changePath(_this2.root);
+              },
+              className: "btn btn-secondary mx-1",
+              children: "Recursos"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+              onClick: function onClick() {
+                //RETURN 1 STEP
+                var array = _this2.state.actualPath.split("/");
+
+                var path = _this2.state.actualPath.replace("/" + array[array.length - 1], "");
+
+                _this2.changePath(path);
+              },
+              className: "btn btn-danger mx-1",
+              children: "Volver"
+            })]
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "col-4 text-right"
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
           className: "bg-light m-lg-3 p-lg-2 rounded",
@@ -12564,9 +12687,12 @@ var Resources = /*#__PURE__*/function (_React$Component) {
                 return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                   className: "col-lg-3 col-md-4 mb-3",
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+                    style: {
+                      color: "black"
+                    },
                     role: "button",
                     onClick: function onClick() {
-                      console.log("/storage/teams/" + _this2.team.customer_id + "/" + file.path);
+                      _this2.changePath(file.path);
                     },
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                       className: "card h-100",
@@ -12593,10 +12719,12 @@ var Resources = /*#__PURE__*/function (_React$Component) {
                 return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                   className: "col-lg-3 col-md-4 mb-3",
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
-                    role: "button",
-                    onClick: function onClick() {
-                      console.log("/storage/teams/" + _this2.team.customer_id + "/" + file.path);
+                    style: {
+                      color: "black"
                     },
+                    role: "button",
+                    href: "/storage/teams/" + _this2.team.customer_id + "/" + file.path,
+                    target: "_blank",
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                       className: "card h-100",
                       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
@@ -12620,14 +12748,16 @@ var Resources = /*#__PURE__*/function (_React$Component) {
                 return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                   className: "col-lg-3 col-md-4 mb-3",
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
-                    role: "button",
-                    onClick: function onClick() {
-                      console.log(file.path);
+                    style: {
+                      color: "black"
                     },
+                    role: "button",
+                    href: "/storage/teams/" + _this2.team.customer_id + "/" + file.path,
+                    target: "_blank",
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                       className: "card h-100",
                       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-                        className: "card-body h-75",
+                        className: "card-body h-75 text-center",
                         style: {
                           overflow: "hidden"
                         },
@@ -12650,10 +12780,12 @@ var Resources = /*#__PURE__*/function (_React$Component) {
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_CreateFolder__WEBPACK_IMPORTED_MODULE_2__["default"], {
           path: this.state.actualPath,
-          team: this.team
+          team: this.team,
+          updateMe: this.updateMe
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_CreateFile__WEBPACK_IMPORTED_MODULE_3__["default"], {
           path: this.state.actualPath,
-          team: this.team
+          team: this.team,
+          updateMe: this.updateMe
         })]
       });
     }
@@ -12668,49 +12800,152 @@ var Resources = /*#__PURE__*/function (_React$Component) {
       }).then(function (response) {
         var files = [];
         var content = response.data.files;
-        content.map(function (file, index) {
-          if (index > 1) {
-            var check = file.split(".");
 
-            if (check.length == 1) {
-              files.push({
-                type: "folder",
-                path: _this3.state.actualPath + "/" + file,
-                name: file
-              });
-            } else {
-              //IMG
-              if (check[1] == "png" || check[1] == "jpg" || check[1] == "svg" || check[1] == "gif") {
+        if (content != false) {
+          content.map(function (file, index) {
+            if (index > 1) {
+              var check = file.split(".");
+
+              if (check.length == 1) {
                 files.push({
-                  type: "image",
+                  type: "folder",
                   path: _this3.state.actualPath + "/" + file,
                   name: file
                 });
               } else {
-                //PDF
-                if (check[1] == "pdf") {
+                //IMG
+                if (check[check.length - 1] == "png" || check[check.length - 1] == "jpg" || check[check.length - 1] == "jpeg" || check[check.length - 1] == "svg" || check[check.length - 1] == "gif") {
                   files.push({
-                    type: "pdf",
+                    type: "image",
                     path: _this3.state.actualPath + "/" + file,
                     name: file
                   });
                 } else {
-                  //TEXT
-                  files.push({
-                    type: "other",
-                    path: _this3.state.actualPath + "/" + file,
-                    name: file
-                  });
+                  //PDF
+                  if (check[check.length - 1] == "pdf") {
+                    files.push({
+                      type: "pdf",
+                      path: _this3.state.actualPath + "/" + file,
+                      name: file
+                    });
+                  } else {
+                    //TEXT
+                    files.push({
+                      type: "other",
+                      path: _this3.state.actualPath + "/" + file,
+                      name: file
+                    });
+                  }
                 }
               }
             }
+          });
+
+          _this3.setState({
+            loading: false,
+            files: files
+          });
+        } else {
+          _this3.setState({
+            loading: false,
+            files: []
+          });
+        }
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      var _this4 = this;
+
+      if (this.state.actualPath != prevState.actualPath || this.state.update == true) {
+        axios.post("/teams/get/files", {
+          path: this.state.actualPath,
+          team: this.team.token
+        }).then(function (response) {
+          var files = [];
+          var content = response.data.files;
+
+          if (content != false) {
+            content.map(function (file, index) {
+              if (index > 1) {
+                var check = file.split(".");
+
+                if (check.length == 1) {
+                  files.push({
+                    type: "folder",
+                    path: _this4.state.actualPath + "/" + file,
+                    name: file
+                  });
+                } else {
+                  //IMG
+                  console.log(check[check.length - 1]);
+
+                  if (check[check.length - 1] == "png" || check[check.length - 1] == "jpg" || check[check.length - 1] == "jpeg" || check[check.length - 1] == "svg" || check[check.length - 1] == "gif") {
+                    files.push({
+                      type: "image",
+                      path: _this4.state.actualPath + "/" + file,
+                      name: file
+                    });
+                  } else {
+                    //PDF
+                    if (check[check.length - 1] == "pdf") {
+                      files.push({
+                        type: "pdf",
+                        path: _this4.state.actualPath + "/" + file,
+                        name: file
+                      });
+                    } else {
+                      //TEXT
+                      files.push({
+                        type: "other",
+                        path: _this4.state.actualPath + "/" + file,
+                        name: file
+                      });
+                    }
+                  }
+                }
+              }
+            });
+
+            _this4.setState({
+              loading: false,
+              files: files,
+              update: false
+            });
+          } else {
+            _this4.setState({
+              loading: false,
+              files: [],
+              update: false
+            });
           }
         });
-
-        _this3.setState({
-          loading: false,
-          files: files
-        });
+      }
+    }
+  }, {
+    key: "changePath",
+    value: function changePath(newPath) {
+      this.setState({
+        loading: true,
+        actualPath: newPath
+      });
+    }
+  }, {
+    key: "formatPath",
+    value: function formatPath() {
+      var path = this.state.actualPath;
+      var root = this.root;
+      path = path.replace(this.root, "Recursos");
+      return path;
+    }
+  }, {
+    key: "updateMe",
+    value: function updateMe() {
+      this.setState({
+        loading: true,
+        actualPath: this.state.actualPath,
+        update: true
       });
     }
   }]);

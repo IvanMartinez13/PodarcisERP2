@@ -235,9 +235,61 @@ class TeamController extends Controller
         $path = $request->path;
         $root = storage_path('/app/public').'/teams/'.$team->customer_id;
 
-        $files  = scandir($root."/".$path);
+        if (is_dir( $root."/".$path )) { // comprobar ruta
+            $files  = scandir($root."/".$path);
 
-        return response()->json(["files" => $files]);
+            return response()->json(["files" => $files]);
+        }
+
+       return response()->json( [ "files" => false] );
+        
+    }
+
+    public function upload_file(Request $request)
+    {
+        //1) GET DATA
+        $files = $request->file; //array [0, 1, ...]
+        $path = $request->path;
+        $team_token = $request->team;
+        $team = Team::where("token", "=", $team_token)->first();
+        $root = storage_path('/app/public').'/teams/'.$team->customer_id; //BASE CLIENTE
+
+        $response = [
+            "status" => "success",
+            "message" => "Se han subido correctamente los archivos.",
+            "with_errors" => 0
+        ];
+
+        try {
+            //2) UPLOAD FILES
+            foreach($files as $file)
+            {
+                $filename = $file->getClientOriginalName();
+                $path_to_save = $root.'/'.$path.'/'.$filename; //ADD FILENAME
+
+                if (!is_file( $path_to_save )) {
+                    
+                    move_uploaded_file($file, $path_to_save);
+                }else{
+
+                    $response["with_errors"]++;
+                }
+                
+            }
+
+        } catch (\Throwable $th) {
+            $response = [
+                "status" => "error",
+                "message" => "No se han podido subir los archivos.",
+                "with_errors" => 0
+            ];
+
+            return response()->json( $response );
+        }
+
+        //3) RETURN RESPONSE
+        return response()->json( $response );
+        
         
     }
 }

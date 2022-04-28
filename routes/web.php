@@ -221,6 +221,7 @@ Route::prefix('teams')->middleware(['auth', 'can:read Teams'])->group(function()
     Route::post("/get/messages", [TeamController::class, 'get_messages'])->name("teams.get.message");
     Route::post("/create/folder", [TeamController::class, 'create_folder'])->name("teams.create.folder");
     Route::post("/get/files", [TeamController::class, 'get_files'])->name("teams.get.files");
+    Route::post("/upload/file", [TeamController::class, 'upload_file'])->name("teams.set.files");
     
 });
 
