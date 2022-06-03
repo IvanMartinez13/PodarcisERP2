@@ -27,7 +27,7 @@ class StoreObjectiveRequest extends FormRequest
     {
         return [
             "title" => ['required', 'string', 'max:255'],
-            "description" => ['required', 'string', 'max:255'],
+            "description" => ['required', 'string'],
             "indicator" => ['required', 'string', 'max:255'],
             "resources" => ['nullable', 'string'],
             "manager" => ['nullable', 'string', 'max:255'],

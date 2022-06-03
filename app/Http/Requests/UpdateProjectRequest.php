@@ -27,7 +27,7 @@ class UpdateProjectRequest extends FormRequest
     {
         return [
             "name" => ["required", "string", "max:255"],
-            "description" => ["required", "string", "max:255"],
+            "description" => ["required", "string"],
             "color" => ["required", "string", "max:255"],
             "image" => ["nullable", "image "],
             "token" => ["required", "string"],
