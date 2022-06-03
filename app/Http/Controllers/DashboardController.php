@@ -6,10 +6,12 @@ use App\Models\Blog;
 use App\Models\Branch;
 use App\Models\Customer;
 use App\Models\Module;
+use App\Models\Notification;
 use App\Models\Objective;
 use App\Models\Project;
 use App\Models\Session;
 use App\Models\Task;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -74,11 +76,23 @@ class DashboardController extends Controller
         $objectives_pending = count($all_objectives) - count($objectives);
 
         //TASKS
-        $projects = Project::where('customer_id', $customer->id)->get('id');
-        $tasks = Task::whereIn('project_id', $projects)->where('task_id', null)->get();
-        $tasks_pending = Task::whereIn('project_id', $projects)->where('task_id', null)->where('is_done', 0)->get();
+        if ($user->hasRole('customer-manager')) {
 
+            $projects = Project::where('customer_id', $customer->id)->get('id');
+            $tasks = Task::whereIn('project_id', $projects)->where('task_id', null)->get();
+            $tasks_pending = Task::whereIn('project_id', $projects)->where('task_id', null)->where('is_done', 0)->get();
+        }else{
 
+            $tasks = Task::whereHas('users', function($q) use ($user){
+
+                $q->where('user_id', $user->id);
+            })->where('task_id', null)->get();
+
+            $tasks_pending = Task::whereHas('users', function($q) use ($user){
+
+                $q->where('user_id', $user->id);
+            })->where('task_id', null)->where('is_done', 0)->get();
+        }
         //ONLINE USERS
         $users = User::where('customer_id', $customer->id)->get('id'); //all users
         $sessions = Session::whereIn('user_id', $users)->get();
@@ -141,7 +155,50 @@ class DashboardController extends Controller
             return response()->json(['tasks' => $array_tasks, 'done' => $array_done, 'undone' => $array_undone]);
         } else {
 
-            return response()->json(['respuesta' => 'no tienes derecho']);
+            //1) GET TASKS
+            $tasks = Task::whereHas('users', function($q) use ($user){
+
+                $q->where('user_id', $user->id);
+            })
+            ->where('task_id', null)
+            ->get();
+
+
+            //2) FILTER BY MONTH
+            $MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+            $array_tasks = [];
+            $array_done = [];
+            $array_undone = [];
+
+            foreach ($MONTHS as $month) {
+                $array_tasks[$month] = [];
+                foreach ($tasks as $task) {
+                    $task_month = date('m', strtotime($task->created_at));
+                    if ($task_month == $month) {
+
+                        array_push($array_tasks[$month], $task);
+                    }
+                }
+            }
+            //3) FILTER BY IS_DONE
+            foreach ($MONTHS as $month) {
+                $array_done[$month] = 0;
+                $array_undone[$month] = 0;
+                foreach ($array_tasks[$month] as $task) {
+                    if ($task->is_done == 0) {
+
+                        $array_undone[$month] += 1;
+                    } else {
+
+                        $array_done[$month] += 1;
+                    }
+                }
+            }
+
+            //4) RETURN ARRAY
+
+            return response()->json(['tasks' => $array_tasks, 'done' => $array_done, 'undone' => $array_undone]);
         }
     }
 
@@ -150,5 +207,25 @@ class DashboardController extends Controller
         session(['skin' => $skin]);
 
         return redirect()->back();
+    }
+
+    public function get_notifications(Request $request){
+
+        $user = Auth::user();
+
+        $notifications = Notification::where("user_id", $user->id)->where("seen", 0)->with('message.team')->get();
+
+        $teams = Team::whereHas('users', function($q) use($user) {
+            $q->where("user_id", $user->id);
+        })->get();
+
+        foreach ($notifications as $key => $notification) {
+            if ($notification->notified == 0) {
+                Notification::where("user_id", $user->id)->where("seen", 0)->update(["notified" => 1]); //change 0 to 1
+            }
+        }
+        
+
+        return response()->json(["notifications" => $notifications, "teams" => $teams]);
     }
 }

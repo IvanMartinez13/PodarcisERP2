@@ -217,10 +217,15 @@ Route::prefix('teams')->middleware(['auth', 'can:read Teams'])->group(function()
     Route::get("/edit/{token}", [TeamController::class, 'edit'])->name("teams.edit");
     Route::put("/update", [TeamController::class, 'update'])->name("teams.update");
     Route::get("/team/{token}", [TeamController::class, 'team'])->name("teams.team");
-    
+    Route::post("/send/message", [TeamController::class, 'send_message'])->name("teams.send.message");
+    Route::post("/get/messages", [TeamController::class, 'get_messages'])->name("teams.get.message");
+    Route::post("/create/folder", [TeamController::class, 'create_folder'])->name("teams.create.folder");
+    Route::post("/get/files", [TeamController::class, 'get_files'])->name("teams.get.files");
+    Route::post("/upload/file", [TeamController::class, 'upload_file'])->name("teams.set.files");
     
 });
 
+Route::post('/get_notifications', [DashboardController::class, "get_notifications"])->name("get_notifications"); //CHECK NOTIFICATIONS
 
 
 require __DIR__ . '/auth.php';
