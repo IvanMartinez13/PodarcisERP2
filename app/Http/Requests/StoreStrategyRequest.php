@@ -26,7 +26,7 @@ class StoreStrategyRequest extends FormRequest
     {
         return [
             "title" => ['required', 'string', 'max:255'],
-            "description"  => ['required', 'string', 'max:255'],
+            "description"  => ['required', 'string'],
             "performances"  => ['required', 'string'],
             "indicator"  => ['required', 'string', 'max:255'],
             "increase" => ['required', 'numeric'],
