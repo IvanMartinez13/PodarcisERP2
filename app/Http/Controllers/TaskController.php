@@ -334,7 +334,7 @@ class TaskController extends Controller
 
         //2) VERIFY DATA
         $rules = [
-            "comment" => ["string", "required", 'max:255'],
+            "comment" => ["string", "required"],
             "token" => ["string", "required"],
         ];
 

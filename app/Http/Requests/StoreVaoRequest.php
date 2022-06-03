@@ -26,7 +26,7 @@ class StoreVaoRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
             'starts_at' => ['required', 'date'],
             'code' => ['required', 'string', 'max:8'],
             'state' => ['required', 'string', 'max:255'],
