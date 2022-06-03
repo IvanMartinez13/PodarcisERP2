@@ -12721,7 +12721,7 @@ var Resources = /*#__PURE__*/function (_React$Component) {
                       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                         className: "card-body d-flex h-75",
                         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
-                          "class": "fas fa-file-pdf  fa-6x m-auto"
+                          className: "fas fa-file-pdf  fa-6x m-auto"
                         })
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                         className: "card-footer d-flex h-25",
@@ -12755,6 +12755,35 @@ var Resources = /*#__PURE__*/function (_React$Component) {
                         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
                           src: "/storage/teams/" + _this2.team.customer_id + "/" + file.path,
                           className: "img-fluid h-100"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                        className: "card-footer d-flex h-25",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+                          className: "my-auto",
+                          children: file.name
+                        })
+                      })]
+                    })
+                  })
+                }, file.name + index);
+              }
+
+              if (file.type == "other") {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "col-lg-3 col-md-4 mb-3",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+                    style: {
+                      color: "black"
+                    },
+                    role: "button",
+                    href: "/storage/teams/" + _this2.team.customer_id + "/" + file.path,
+                    target: "_blank",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                      className: "card h-100",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                        className: "card-body d-flex h-75",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                          className: "fas fa-file  fa-6x m-auto"
                         })
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                         className: "card-footer d-flex h-25",
@@ -12820,7 +12849,8 @@ var Resources = /*#__PURE__*/function (_React$Component) {
                       name: file
                     });
                   } else {
-                    //TEXT
+                    console.log("uaua"); //TEXT
+
                     files.push({
                       type: "other",
                       path: _this3.state.actualPath + "/" + file,
