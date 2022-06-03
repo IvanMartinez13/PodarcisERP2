@@ -11,7 +11,7 @@ class SubtaskChangeMailable extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $subject = "Ha cambaido la subtarea";
+    public $subject = "Ha cambiado la subtarea";
 
     public $user;
     public $task;
@@ -28,18 +28,17 @@ class SubtaskChangeMailable extends Mailable implements ShouldQueue
     {
         if ($open) {
 
-            $this->subject = $user->name." ha abierto una tarea";
-        }else{
-            
-            $this->subject = $user->name." ha finalizado una tarea";
+            $this->subject = $user->name . " ha abierto una tarea";
+        } else {
+
+            $this->subject = $user->name . " ha finalizado una tarea";
         }
-        
+
         $this->user = $user->name;
         $this->task = $task;
         $this->project = $project;
         $this->data = $data;
         $this->open = $open;
-        
     }
 
     /**
