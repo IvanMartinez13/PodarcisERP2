@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Mail\CommentTaskMailable;
+use App\Mail\SubtaskAddMailable;
 use App\Mail\SubtaskChangeMailable;
 use App\Models\Branch;
 use App\Models\Comment;
@@ -400,7 +401,7 @@ class TaskController extends Controller
         $departaments = $task->departaments->pluck('id');
         $users = $request->users;
 
-        $users = User::where('token', $users)->get('id');
+        $users = User::whereIn('token', $users)->get('id');
 
         //2) VALIDATE DATA
         $rules = [
@@ -437,6 +438,18 @@ class TaskController extends Controller
         } else {
             $progress = 0;
         }
+
+        $project = Project::where("id", $task->project_id)->first();
+        $users = User::whereIn("id", $users)->get();
+        $subtask = Task::where('id', $subtask->id)->first();
+
+        foreach ($users as $item) {
+
+            $mail  = new SubtaskAddMailable($task, $project, $item, $subtask);
+            Mail::to($item->email)->send($mail);
+        }
+
+
 
         //4) RETURN RESPONSE
         return response()->json(["status" => "success", "message" => "Subtarea Creada.", "progress" => $progress]);
