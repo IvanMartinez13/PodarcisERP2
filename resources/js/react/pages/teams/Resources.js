@@ -159,7 +159,7 @@ class Resources extends React.Component {
                                         >
                                             <div className="card h-100">
                                                 <div className="card-body d-flex h-75">
-                                                    <i class="fas fa-file-pdf  fa-6x m-auto"></i>
+                                                    <i className="fas fa-file-pdf  fa-6x m-auto"></i>
                                                 </div>
 
                                                 <div className="card-footer d-flex h-25">
@@ -207,6 +207,39 @@ class Resources extends React.Component {
                                                         }
                                                         className="img-fluid h-100"
                                                     ></img>
+                                                </div>
+
+                                                <div className="card-footer d-flex h-25">
+                                                    <p className="my-auto">
+                                                        {file.name}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                );
+                            }
+
+                            if (file.type == "other") {
+                                return (
+                                    <div
+                                        key={file.name + index}
+                                        className="col-lg-3 col-md-4 mb-3"
+                                    >
+                                        <a
+                                            style={{ color: "black" }}
+                                            role={"button"}
+                                            href={
+                                                "/storage/teams/" +
+                                                this.team.customer_id +
+                                                "/" +
+                                                file.path
+                                            }
+                                            target={"_blank"}
+                                        >
+                                            <div className="card h-100">
+                                                <div className="card-body d-flex h-75">
+                                                    <i className="fas fa-file  fa-6x m-auto"></i>
                                                 </div>
 
                                                 <div className="card-footer d-flex h-25">
@@ -287,6 +320,7 @@ class Resources extends React.Component {
                                             name: file,
                                         });
                                     } else {
+                                        console.log("uaua");
                                         //TEXT
                                         files.push({
                                             type: "other",
