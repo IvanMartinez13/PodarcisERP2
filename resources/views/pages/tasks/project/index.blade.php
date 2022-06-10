@@ -21,9 +21,12 @@
     <div class="ibox">
         <div class="ibox-title">
             <h5>{{ __('modules.projects') }}</h5>
-            <a href="{{ route('tasks.project.create') }}" class="btn btn-primary">
-                {{ __('forms.create') }}
-            </a>
+            @can('create Tareas')
+                <a href="{{ route('tasks.project.create') }}" class="btn btn-primary">
+                    {{ __('forms.create') }}
+                </a>
+            @endcan
+
 
             <div class="ibox-tools">
                 <a href="" class="collapse-link">
@@ -39,7 +42,7 @@
                         <tr>
                             <th style="width: 20%">{{ __('columns.name') }}</th>
                             <th style="width: 50%">{{ __('columns.description') }}</th>
-                            <th style="width: 20%">{{ __('columns.color') }}</th>
+                            {{-- <th style="width: 20%">{{ __('columns.color') }}</th> --}}
                             <th style="width: 10%">{{ __('columns.actions') }}</th>
                         </tr>
                     </thead>
@@ -53,12 +56,12 @@
                                 <td class="align-middle">
                                     {!! $project->description !!}
                                 </td>
-                                <td class="align-middle">
+                                {{-- <td class="align-middle">
                                     <div class="rounded text-center p-1"
                                         style="background-color: {{ $project->color }};">
                                         {{ $project->color }}
                                     </div>
-                                </td>
+                                </td> --}}
                                 <td class="text-center align-middle">
                                     <div class="btn-group">
 
@@ -68,7 +71,9 @@
                                                 class="btn btn-link">
                                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                                             </a>
+                                        @endcan
 
+                                        @can('read Tareas')
                                             <a href="{{ route('tasks.project.details', $project->token) }}"
                                                 class="btn btn-link">
                                                 <i class="fa-solid fa-clipboard-check"></i>

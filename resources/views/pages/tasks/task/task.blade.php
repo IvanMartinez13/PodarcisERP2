@@ -47,7 +47,9 @@
 
                         <div class="col-sm-10 text-left">
                             <dd>
-                                <span id="stateLabel" onclick="changeState()" style="cursor: pointer"
+
+                                <span id="stateLabel"
+                                    @can('update tareas') onclick="changeState()" style="cursor: pointer" @endcan
                                     class="label  @if ($task->is_done == 1) label-primary @else label-danger @endif ">
                                     @if ($task->is_done == 1)
                                         Finalizado
@@ -55,6 +57,8 @@
                                         Activo
                                     @endif
                                 </span>
+
+
                             </dd>
                         </div>
 
@@ -120,7 +124,7 @@
                                         {{-- CONTENIDO DE LOS COMENTARIOS --}}
 
                                         <div class="feed-activity-list">
-                                            @can('update Tareas')
+                                            @can('read Tareas')
                                                 <div class="feed-element">
                                                     <a href="#" class="float-left">
 
@@ -238,14 +242,12 @@
                                                     <td class="align-middle text-center">
                                                         <div class="btn-group">
 
-                                                            @can('update Tareas')
-                                                                <button class="btn btn-link" data-toggle="modal"
-                                                                    data-target="#updateFile_{{ $file->token }}">
-                                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                                                                </button>
-                                                            @endcan
 
 
+                                                            <button class="btn btn-link" data-toggle="modal"
+                                                                data-target="#updateFile_{{ $file->token }}">
+                                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                            </button>
                                                             <a class="btn btn-link" target="_BLANK"
                                                                 href="{{ url('/storage') . $file->path }}">
                                                                 <i class="fa fa-eye" aria-hidden="true"></i>
@@ -287,10 +289,10 @@
 
             {!! $project->description !!}
 
-            <small>
+            {{-- <small>
                 <i class="fa fa-circle" aria-hidden="true" style="color: {{ $project->color }}"></i>
                 {{ $project->color }}
-            </small>
+            </small> --}}
 
         </div>
     </div>
