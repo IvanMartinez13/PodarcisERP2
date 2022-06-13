@@ -13,6 +13,13 @@
                     <a href="{{ route('tasks.project.details', $project->token) }}">{{ $project->name }}</a>
                 </li>
 
+                @if ($parent != null)
+                    <li class="breadcrumb-item">
+                        <a
+                            href="{{ route('tasks.project.task_details', [$project->token, $parent->token]) }}">{{ $parent->name }}</a>
+                    </li>
+                @endif
+
                 <li class="breadcrumb-item active">
                     <strong>{{ $task->name }}</strong>
                 </li>
@@ -20,8 +27,15 @@
         </div>
 
         <div class="col-2 text-right">
-            <a href="{{ route('tasks.project.details', $project->token) }}"
-                class="btn btn-danger mt-5">{{ __('pagination.return') }}</a>
+            @if ($parent != null)
+                <a class="btn btn-danger mt-5"
+                    href="{{ route('tasks.project.task_details', [$project->token, $parent->token]) }}">
+                    {{ __('pagination.return') }}</a>
+            @else
+                <a href="{{ route('tasks.project.details', $project->token) }}"
+                    class="btn btn-danger mt-5">{{ __('pagination.return') }}</a>
+            @endif
+
         </div>
 
     </div>
@@ -108,8 +122,10 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li><a id="nav-comments" class="nav-link active" data-toggle="tab"
                                     href="#comments">{{ __('modules.comments') }}</a></li>
-                            <li><a id="nav-subtasks" class="nav-link" data-toggle="tab"
-                                    href="#sub_tasks">{{ __('modules.sub_tasks') }}</a></li>
+                            @if ($parent == null)
+                                <li><a id="nav-subtasks" class="nav-link" data-toggle="tab"
+                                        href="#sub_tasks">{{ __('modules.sub_tasks') }}</a></li>
+                            @endif
                             <li>
                                 <a id="nav-documents" class="nav-link" data-toggle="tab"
                                     href="#files">{{ __('modules.files') }}
@@ -199,14 +215,19 @@
                             </div>
 
                             {{-- TAB SUB TASKS --}}
-                            <div role="tabpanel" id="sub_tasks" class="tab-pane">
-                                <div class="panel-body">
-                                    <subtasks task={{ json_encode($task->token) }}
-                                        store="{{ auth()->user()->can('store Tareas') }}"
-                                        update="{{ auth()->user()->can('update Tareas') }}"
-                                        delete="{{ auth()->user()->can('delete Tareas') }}"></subtasks>
+                            @if ($parent == null)
+                                <div role="tabpanel" id="sub_tasks" class="tab-pane">
+                                    <div class="panel-body">
+                                        <subtasks task={{ json_encode($task->token) }}
+                                            project={{ json_encode($project->token) }}
+                                            store="{{ auth()->user()->can('store Tareas') }}"
+                                            update="{{ auth()->user()->can('update Tareas') }}"
+                                            delete="{{ auth()->user()->can('delete Tareas') }}"></subtasks>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
+
+
 
                             {{-- TAB FILES --}}
                             <div role="tabpanel" id="files" class="tab-pane">
@@ -547,29 +568,29 @@
         }
 
         //SAVE SELECTED TAB
+        /* 
+                $('#nav-comments').on('click', () => {
+                    localStorage.setItem('taskTab', 'nav-comments');
+                });
 
-        $('#nav-comments').on('click', () => {
-            localStorage.setItem('taskTab', 'nav-comments');
-        });
+                $('#nav-subtasks').on('click', () => {
+                    localStorage.setItem('taskTab', 'nav-subtasks');
+                });
 
-        $('#nav-subtasks').on('click', () => {
-            localStorage.setItem('taskTab', 'nav-subtasks');
-        });
+                $('#nav-documents').on('click', () => {
+                    localStorage.setItem('taskTab', 'nav-documents');
+                });
 
-        $('#nav-documents').on('click', () => {
-            localStorage.setItem('taskTab', 'nav-documents');
-        });
+                if (localStorage.getItem('taskTab') == "nav-comments") {
 
-        if (localStorage.getItem('taskTab') == "nav-comments") {
+                    $('#nav-comments').tab('show') // Select tab
+                } else if (localStorage.getItem('taskTab') == "nav-documents") {
 
-            $('#nav-comments').tab('show') // Select tab
-        } else if (localStorage.getItem('taskTab') == "nav-documents") {
+                    $('#nav-documents').tab('show') // Select tab
+                } else if (localStorage.getItem('taskTab') == "nav-subtasks") {
 
-            $('#nav-documents').tab('show') // Select tab
-        } else if (localStorage.getItem('taskTab') == "nav-subtasks") {
-
-            $('#nav-subtasks').tab('show') // Select tab
-        }
+                    $('#nav-subtasks').tab('show') // Select tab
+                } */
     </script>
 
     @foreach ($errors->all() as $error)

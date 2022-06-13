@@ -314,9 +314,15 @@ class TaskController extends Controller
             }
         }
 
+        $parent = null;
+        if ($task->task_id != null) {
+
+            $parent = Task::where('id', $task->task_id)->first();
+        }
+
 
         //RETURN VIEW WITH DATA
-        return view('pages.tasks.task.task', compact('project', 'task', 'sub_tasks', 'comments', 'progress', 'tasks_files'));
+        return view('pages.tasks.task.task', compact('project', 'task', 'sub_tasks', 'comments', 'progress', 'tasks_files', 'parent'));
     }
 
     public function task_comment(Request $request)

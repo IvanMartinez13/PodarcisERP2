@@ -9667,6 +9667,7 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
       save: false
     };
     _this.task = _this.props.task;
+    _this.project = _this.props.project;
     _this.subtasks = [];
     _this.users = [];
     _this.setLoading = _this.setLoading.bind(_assertThisInitialized(_this));
@@ -9707,8 +9708,8 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
         children: [this.store == 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
           className: "btn btn-link",
           onClick: function onClick() {
-            $('#modalSubtask').modal('show');
-            $('#description').summernote({
+            $("#modalSubtask").modal("show");
+            $("#description").summernote({
               placeholder: "Descripción...",
               height: 200
             });
@@ -9716,7 +9717,7 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
             className: "fa fa-plus-circle",
             "aria-hidden": "true"
-          }), " A\xF1adir subtarea"]
+          }), " ", "A\xF1adir subtarea"]
         }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
           className: "table-responsive",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("table", {
@@ -9762,8 +9763,8 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
                       children: [_this2.update == 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
                         className: "btn btn-link",
                         onClick: function onClick() {
-                          $('#editModalSubtask' + subtask.token).modal('show');
-                          $('#description' + subtask.token).summernote({
+                          $("#editModalSubtask" + subtask.token).modal("show");
+                          $("#description" + subtask.token).summernote({
                             placeholder: "Descripción...",
                             height: 200
                           });
@@ -9772,7 +9773,14 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
                           className: "fa fa-pencil",
                           "aria-hidden": "true"
                         })
-                      }) : null, _this2["delete"] == 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                      }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
+                        href: "/tasks/project/" + _this2.project + "/task/" + subtask.token,
+                        className: "btn btn-link",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                          className: "fa-solid fa-clipboard-check",
+                          "aria-hidden": "true"
+                        })
+                      }), _this2["delete"] == 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
                         className: "btn btn-link",
                         onClick: function onClick() {
                           _this2.remove(subtask.token);
@@ -9810,7 +9818,7 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/tasks/project/task/get_subtask', {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/tasks/project/task/get_subtask", {
         task: this.task
       }).then(function (response) {
         var subtasks = response.data.subtasks;
@@ -9822,16 +9830,16 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
           loading: false
         });
       }).then(function () {
-        $('.i-checks').iCheck({
-          checkboxClass: 'icheckbox_square-green',
-          radioClass: 'iradio_square-green'
+        $(".i-checks").iCheck({
+          checkboxClass: "icheckbox_square-green",
+          radioClass: "iradio_square-green"
         });
 
         var handleFinishTask = function handleFinishTask(data) {
           _this3.finishTask(data);
         };
 
-        $('.i-checks').on('ifChecked', function (event) {
+        $(".i-checks").on("ifChecked", function (event) {
           var task = event.target.value;
           var data = {
             task: task,
@@ -9839,7 +9847,7 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
           };
           handleFinishTask(data);
         });
-        $('.i-checks').on('ifUnchecked', function (event) {
+        $(".i-checks").on("ifUnchecked", function (event) {
           var task = event.target.value;
           var data = {
             task: task,
@@ -9855,7 +9863,7 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
       var _this4 = this;
 
       if (this.state.save) {
-        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/tasks/project/task/get_subtask', {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("/tasks/project/task/get_subtask", {
           task: this.task
         }).then(function (response) {
           var subtasks = response.data.subtasks;
@@ -9866,16 +9874,16 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
             save: false
           });
         }).then(function () {
-          $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green'
+          $(".i-checks").iCheck({
+            checkboxClass: "icheckbox_square-green",
+            radioClass: "iradio_square-green"
           });
 
           var handleFinishTask = function handleFinishTask(data) {
             _this4.finishTask(data);
           };
 
-          $('.i-checks').on('ifChecked', function (event) {
+          $(".i-checks").on("ifChecked", function (event) {
             var task = event.target.value;
             var data = {
               task: task,
@@ -9883,7 +9891,7 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
             };
             handleFinishTask(data);
           });
-          $('.i-checks').on('ifUnchecked', function (event) {
+          $(".i-checks").on("ifUnchecked", function (event) {
             var task = event.target.value;
             var data = {
               task: task,
@@ -9911,12 +9919,12 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "finishTask",
     value: function finishTask(data) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/tasks/project/task/subtask/changeState', data).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/tasks/project/task/subtask/changeState", data).then(function (response) {
         toastr.success(response.data.message);
-        $('#progress').css({
-          'width': response.data.progress + "%"
+        $("#progress").css({
+          width: response.data.progress + "%"
         });
-        $('#progress_text').text(response.data.progress + "%");
+        $("#progress_text").text(response.data.progress + "%");
       });
     }
   }, {
@@ -9933,7 +9941,7 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
         cancelButtonColor: "#ed5565",
         cancelButtonText: "Cancelar"
       }, function () {
-        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/tasks/projects/delete_subtask', {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("/tasks/projects/delete_subtask", {
           token: token
         }).then(function (response) {
           toastr.success(response.data.message);
@@ -9950,14 +9958,16 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Subtasks);
 
-if (document.getElementsByTagName('subtasks').length >= 1) {
-  var component = document.getElementsByTagName('subtasks')[0];
-  var task = JSON.parse(component.getAttribute('task'));
-  var store = component.getAttribute('store');
-  var update = component.getAttribute('update');
-  var del = component.getAttribute('delete');
+if (document.getElementsByTagName("subtasks").length >= 1) {
+  var component = document.getElementsByTagName("subtasks")[0];
+  var task = JSON.parse(component.getAttribute("task"));
+  var project = JSON.parse(component.getAttribute("project"));
+  var store = component.getAttribute("store");
+  var update = component.getAttribute("update");
+  var del = component.getAttribute("delete");
   react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(Subtasks, {
     task: task,
+    project: project,
     store: store,
     update: update,
     "delete": del
