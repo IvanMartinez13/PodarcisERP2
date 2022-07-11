@@ -13,6 +13,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VaoController;
 use App\Http\Controllers\VisitController;
+use App\Http\Controllers\SgaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,9 +35,6 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::post('/evolutionTasks', [DashboardController::class, 'evolutionTasks'])->middleware(['auth'])->name('dashboard.evolutionTasks');
     Route::get('/changeSkin/{skin}', [DashboardController::class, 'changeSkin'])->middleware(['auth'])->name('dashboard.changeSkin');
 });
-
-
-
 
 
 //IMPERSONATE OTHER USERS
@@ -73,7 +71,6 @@ Route::prefix('blog')->middleware(['auth', 'role:super-admin'])->group(function 
     Route::put('/update', [BlogController::class, 'update'])->name('blog.update');
     Route::put('/delete', [BlogController::class, 'delete'])->name('blog.delete');
     Route::get('/preview/{token}', [BlogController::class, 'preview'])->name('blog.preview');
-
 });
 
 
@@ -154,8 +151,6 @@ Route::prefix('ods')->middleware(['auth'])->group(function () {
     Route::post('/addFile', [OdsController::class, 'addFile'])->name('ods.addFiles');
     Route::put('/updateFile', [OdsController::class, 'updateFile'])->name('ods.updateFile');
     Route::put('/delete_file', [OdsController::class, 'deleteFile'])->name('ods.deleteFile');
-    
-    
 });
 
 //TASKS MODULE
@@ -209,7 +204,7 @@ Route::prefix('vao')->middleware(['auth', 'can:read Vigilancia Ambiental'])->gro
 });
 
 //TEAMS MODULE
-Route::prefix('teams')->middleware(['auth', 'can:read Teams'])->group(function() {
+Route::prefix('teams')->middleware(['auth', 'can:read Teams'])->group(function () {
 
     Route::get("/", [TeamController::class, 'index'])->name("teams.index");
     Route::get("/create", [TeamController::class, 'create'])->name("teams.create");
@@ -222,9 +217,25 @@ Route::prefix('teams')->middleware(['auth', 'can:read Teams'])->group(function()
     Route::post("/create/folder", [TeamController::class, 'create_folder'])->name("teams.create.folder");
     Route::post("/get/files", [TeamController::class, 'get_files'])->name("teams.get.files");
     Route::post("/upload/file", [TeamController::class, 'upload_file'])->name("teams.set.files");
-    
 });
 
+//SGA MODULE
+Route::prefix('sga')->middleware(['auth', 'can:read SGA'])->group(function () { //grupo de rutas
+    Route::get("/", [SgaController::class, 'index'])->name("sga.index"); // ruta independiente
+    Route::get("/create/activitypre", [SgaController::class, 'create_activity_pre'])->name("sga.create_activity_pre"); //ruta independiente
+    Route::put("/store/activitypre", [SgaController::class, 'store_activity_pre'])->name("sga.store_activity_pre");
+    Route::get("/edit/activitypre/{id}", [SgaController::class, 'edit_activity_pre'])->name("sga.edit_activity_pre");
+    Route::put("/update/activitypre", [SgaController::class, 'update_activity_pre'])->name("sga.update_activity_pre");
+    Route::get("/create/processpre", [SgaController::class, 'create_process_pre'])->name("sga.create_process_pre");
+    Route::put("/store/processpre", [SgaController::class, 'store_process_pre'])->name("sga.store_process_pre");
+    Route::get("/edit/processpre/{id}", [SgaController::class, 'edit_process_pre'])->name("sga.edit_process_pre");
+    Route::put("/update/processpre", [SgaController::class, 'update_process_pre'])->name("sga.update_process_pre");
+    Route::post('/delete_activitypre', [SgaController::class, 'delete_activity_pre'])->name('sga.delete_activity_pre');
+    Route::post('/delete_processpre', [SgaController::class, 'delete_process_pre'])->name('sga.delete_process_pre');
+});
+
+
+//NOTIFICATIONS
 Route::post('/get_notifications', [DashboardController::class, "get_notifications"])->name("get_notifications"); //CHECK NOTIFICATIONS
 
 

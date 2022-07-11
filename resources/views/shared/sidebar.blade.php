@@ -76,6 +76,13 @@
                     <a href="{{ route('blog.index') }}"><i class="fa-solid fa-blog"></i> <span
                             class="nav-label">{{ __('modules.blog') }}</span></a>
                 </li>
+
+                <li class="{{ request()->is('sga*') ? 'active' : '' }}">
+                    <a href="{{ route('sga.index') }}">
+                        <i class="fa-solid fa-chart-column"></i>
+                        <span class="nav-label">{{ __('modules.sga') }}</span>
+                    </a>
+                </li>
             @else
 
                 @hasrole('customer-manager')
@@ -194,6 +201,15 @@
                         <a href="{{ route('vao.index') }}">
                             <i class="fa-solid fa-helmet-safety"></i>
                             <span class="nav-label">{{ __('modules.vao') }}</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('read SGA')
+                    <li class="{{ request()->is('sga*') ? 'active' : '' }}">
+                        <a href="{{ route('sga.index') }}">
+                            <i class="fa-solid fa-chart-column"></i>
+                            <span class="nav-label">{{ __('modules.sga') }}</span>
                         </a>
                     </li>
                 @endcan
