@@ -10075,11 +10075,11 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
             children: [this.store == 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
               className: "btn btn-link",
               onClick: function onClick() {
-                $('#addTask').modal('show');
+                $("#addTask").modal("show");
               },
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
                 className: "fa-solid fa-circle-plus"
-              }), " A\xF1adir una tarea..."]
+              }), " ", "A\xF1adir una tarea..."]
             }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
               className: "table-responsive container-fluid mt-3",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("table", {
@@ -10118,7 +10118,7 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                             className: "progress-bar progress-bar-striped progress-bar-animated"
                           })
                         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("small", {
-                          children: ["Completado en un ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("strong", {
+                          children: ["Completado en un", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("strong", {
                             children: [task.progress, "%"]
                           }), "."]
                         })]
@@ -10129,7 +10129,7 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                           children: [_this2.update == 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
                             className: "btn btn-link",
                             onClick: function onClick() {
-                              $("#updateTask" + task.token).modal('show');
+                              $("#updateTask" + task.token).modal("show");
                             },
                             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
                               className: "fa fa-pencil",
@@ -10153,7 +10153,7 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                           }) : null]
                         })
                       })]
-                    }, 'row_' + task.token);
+                    }, "row_" + task.token);
                   })
                 })]
               })
@@ -10187,7 +10187,7 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
         cancelButtonColor: "#ed5565",
         cancelButtonText: "Cancelar"
       }, function () {
-        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/tasks/projects/delete_task', {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("/tasks/projects/delete_task", {
           token: token
         }).then(function (response) {
           toastr.success(response.data.message);
@@ -10204,14 +10204,14 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Tasks);
 
-if (document.getElementsByTagName('tasks').length >= 1) {
-  var component = document.getElementsByTagName('tasks')[0];
-  var tasks = JSON.parse(component.getAttribute('tasks'));
-  var project = JSON.parse(component.getAttribute('project'));
-  var departaments = JSON.parse(component.getAttribute('departaments'));
-  var store = component.getAttribute('store');
-  var update = component.getAttribute('update');
-  var del = component.getAttribute('delete');
+if (document.getElementsByTagName("tasks").length >= 1) {
+  var component = document.getElementsByTagName("tasks")[0];
+  var tasks = JSON.parse(component.getAttribute("tasks"));
+  var project = JSON.parse(component.getAttribute("project"));
+  var departaments = JSON.parse(component.getAttribute("departaments"));
+  var store = component.getAttribute("store");
+  var update = component.getAttribute("update");
+  var del = component.getAttribute("delete");
   react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(Tasks, {
     tasks: tasks,
     project: project,
