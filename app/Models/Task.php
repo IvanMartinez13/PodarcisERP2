@@ -16,6 +16,7 @@ class Task extends Model
         "name",
         "description",
         "is_done",
+        "progress",
         "token",
         "project_id",
         "task_id"

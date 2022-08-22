@@ -109,13 +109,41 @@
                         <div class="col-sm-10 text-left">
                             <dd>
                                 <div class="progress m-b-1">
-                                    <div id="progress" style="width: {{ $progress }}%;"
+                                    <div id="progress" style="width: {{ $task->progress ? $task->progress : 0 }}%;"
                                         class="progress-bar progress-bar-striped progress-bar-animated"></div>
                                 </div>
-                                <small>Completado en un <strong id="progress_text">{{ $progress }}%</strong>.</small>
+                                <small>Completado en un <strong
+                                        id="progress_text">{{ $task->progress ? $task->progress : 0 }}%</strong>.</small>
                             </dd>
                         </div>
+
+
+                        @hasrole('customer-manager')
+                            <div class="col-sm-2 text-right">
+                                <dt>{{ __('columns.progress') }}:</dt>
+                            </div>
+
+                            <div class="col-sm-10 text-left">
+                                <form action="{{ route('tasks.updateProgress', $task) }}" method="POST">
+                                    @csrf
+                                    @method('put')
+                                    <input type="number" name="progress" class="form-control d-inline w-50" min="0"
+                                        max="100" placeholder="{{ __('columns.progress') }}..."
+                                        value="{{ $task->progress }}"> %
+
+
+                                    <button class="btn btn-primary d-inline">
+                                        {{ __('Save') }}
+                                    </button>
+                                </form>
+
+
+                            </div>
+                        @endhasrole
+
+
                     </div>
+
 
                     {{-- TAB-CONTAINER --}}
                     <div class="tabs-container">
@@ -189,8 +217,8 @@
                                                                 alt="" width="38px">
                                                         @else
                                                             <img class="rounded-circle"
-                                                                src="{{ url('/img/user_placeholder.png') }}" alt=""
-                                                                width="38px">
+                                                                src="{{ url('/img/user_placeholder.png') }}"
+                                                                alt="" width="38px">
                                                         @endif
 
                                                     </a>
@@ -345,7 +373,8 @@
                             <div class="form-group">
                                 <label for="name_{{ $file->token }}">{{ __('forms.fileLabel') }}:</label>
                                 <div class="custom-file">
-                                    <input id="file{{ $file->token }}" name="file" type="file" class="custom-file-input">
+                                    <input id="file{{ $file->token }}" name="file" type="file"
+                                        class="custom-file-input">
                                     <label for="file{{ $file->token }}"
                                         class="custom-file-label">{{ __('forms.file') }}</label>
                                 </div>

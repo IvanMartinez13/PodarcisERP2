@@ -73,7 +73,6 @@ Route::prefix('blog')->middleware(['auth', 'role:super-admin'])->group(function 
     Route::put('/update', [BlogController::class, 'update'])->name('blog.update');
     Route::put('/delete', [BlogController::class, 'delete'])->name('blog.delete');
     Route::get('/preview/{token}', [BlogController::class, 'preview'])->name('blog.preview');
-
 });
 
 
@@ -154,8 +153,6 @@ Route::prefix('ods')->middleware(['auth'])->group(function () {
     Route::post('/addFile', [OdsController::class, 'addFile'])->name('ods.addFiles');
     Route::put('/updateFile', [OdsController::class, 'updateFile'])->name('ods.updateFile');
     Route::put('/delete_file', [OdsController::class, 'deleteFile'])->name('ods.deleteFile');
-    
-    
 });
 
 //TASKS MODULE
@@ -182,6 +179,7 @@ Route::prefix('tasks')->middleware(['auth'])->group(function () {
     Route::post('/project/task/changeState', [TaskController::class, 'changeState_task'])->name('tasks.project.task.changeState');
     Route::put('/project/delete', [TaskController::class, 'project_delete'])->name('tasks.project.delete');
     Route::put('/project/deleteFile', [TaskController::class, 'file_delete'])->name('tasks.project.deleteFile');
+    Route::put('/task/updateProgress/{task}', [TaskController::class, 'updateProgress'])->name('tasks.updateProgress');
 });
 
 //VAO MODULE
@@ -209,7 +207,7 @@ Route::prefix('vao')->middleware(['auth', 'can:read Vigilancia Ambiental'])->gro
 });
 
 //TEAMS MODULE
-Route::prefix('teams')->middleware(['auth', 'can:read Teams'])->group(function() {
+Route::prefix('teams')->middleware(['auth', 'can:read Teams'])->group(function () {
 
     Route::get("/", [TeamController::class, 'index'])->name("teams.index");
     Route::get("/create", [TeamController::class, 'create'])->name("teams.create");
@@ -222,7 +220,6 @@ Route::prefix('teams')->middleware(['auth', 'can:read Teams'])->group(function()
     Route::post("/create/folder", [TeamController::class, 'create_folder'])->name("teams.create.folder");
     Route::post("/get/files", [TeamController::class, 'get_files'])->name("teams.get.files");
     Route::post("/upload/file", [TeamController::class, 'upload_file'])->name("teams.set.files");
-    
 });
 
 Route::post('/get_notifications', [DashboardController::class, "get_notifications"])->name("get_notifications"); //CHECK NOTIFICATIONS
