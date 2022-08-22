@@ -170,6 +170,7 @@ Route::prefix('tasks')->middleware(['auth'])->group(function () {
     Route::post('/projects/delete_subtask', [TaskController::class, 'delete_subtask'])->name('tasks.project.delete_subtask');
     Route::get('/project/{project}/task/{task}', [TaskController::class, 'task_details'])->name('tasks.project.task_details');
     Route::put('/project/task/comment', [TaskController::class, 'task_comment'])->name('tasks.project.task_comment');
+    Route::put('/project/task/updateCommen/{comment}', [TaskController::class, 'updateComment'])->name('tasks.project.updateComment');
     Route::post('/project/task/add_subtask', [TaskController::class, 'add_subtask'])->name('tasks.project.add_subtask');
     Route::post('/project/task/get_subtask', [TaskController::class, 'get_subtask'])->name('tasks.project.task.get_subtask');
     Route::post('/project/task/subtask/changeState', [TaskController::class, 'changeState'])->name('tasks.project.subtask.changeState');

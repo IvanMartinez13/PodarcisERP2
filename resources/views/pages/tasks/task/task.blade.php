@@ -224,12 +224,64 @@
                                                     </a>
 
                                                     <div class="media-body ">
+                                                        @if ($comment->user->id == auth()->user()->id)
+                                                            <div class="float-right">
+                                                                <button class="btn btn-sm btn-link" data-toggle="modal"
+                                                                    data-target="#editComment_{{ $comment->token }}">
+                                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                                </button>
+                                                            </div>
+                                                        @endif
+
                                                         <small
                                                             class="float-right">{{ date('d/m/Y H:i', strtotime($comment->created_at)) }}</small>
                                                         <strong>{{ $comment->user->name }}</strong>:
 
                                                         <div class="well">
                                                             {!! $comment->comment !!}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal fade" id="editComment_{{ $comment->token }}"
+                                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-xl" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                                    {{ __('forms.comment') }} - {{ __('Edit') }}
+                                                                </h5>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form
+                                                                action="{{ route('tasks.project.updateComment', $comment) }}"
+                                                                method="POST">
+                                                                <div class="modal-body">
+
+                                                                    @csrf
+                                                                    @method('put')
+                                                                    <input name="token" type="hidden"
+                                                                        value="{{ $task->token }}">
+
+                                                                    <textarea name="comment" class="form-control comment_modal">
+                                                                        {{ $comment->comment }}
+                                                                    </textarea>
+
+
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">{{ __('Cancel') }}</button>
+                                                                    <button type="submit" class="btn btn-primary">
+                                                                        {{ __('forms.send') }}
+                                                                    </button>
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -411,6 +463,12 @@
     <script>
         $(document).ready(() => {
             $('#comment').summernote({
+                placeholder: "{{ __('forms.comment') }}...",
+                height: 100
+            });
+
+
+            $('.comment_modal').summernote({
                 placeholder: "{{ __('forms.comment') }}...",
                 height: 100
             });

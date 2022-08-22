@@ -390,6 +390,13 @@ class TaskController extends Controller
         return redirect()->back()->with('status', 'success')->with('message', 'Tarea comentada.');
     }
 
+    public function updateComment($id, Request $request)
+    {
+        $comment = Comment::where("id", $id)->update(["comment" => $request->comment]);
+
+        return redirect()->back();
+    }
+
     public function add_subtask(Request $request)
     {
         //1) GET DATA
