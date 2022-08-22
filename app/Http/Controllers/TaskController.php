@@ -390,6 +390,13 @@ class TaskController extends Controller
         return redirect()->back()->with('status', 'success')->with('message', 'Tarea comentada.');
     }
 
+    public function updateComment($id, Request $request)
+    {
+        $comment = Comment::where("id", $id)->update(["comment" => $request->comment]);
+
+        return redirect()->back();
+    }
+
     public function add_subtask(Request $request)
     {
         //1) GET DATA
@@ -749,11 +756,13 @@ class TaskController extends Controller
                 }
             }
 
+            $task = Task::where('token', $request->token)->update(['progress' => $progress]);
+
             $response = [
                 'status' => 'success',
                 'message' => 'Se ha finalizado una tarea.',
                 'close' => 1,
-                'progress' =>  $progress
+                'progress' =>  $task->progress
             ];
         } else {
             $task = Task::where('token', $request->token)->update(['is_done' => 0]);
@@ -779,7 +788,7 @@ class TaskController extends Controller
                     $progress = 0;
                 }
             }
-
+            $task = Task::where('token', $request->token)->update(['progress' => $progress]);
             $response = [
                 'status' => 'success',
                 'message' => 'Se ha abierto una tarea.',
@@ -799,5 +808,20 @@ class TaskController extends Controller
         $file = Task_file::where('token', $request->token)->delete();
 
         return redirect()->back()->with('status', 'success')->with('message', 'Archivo eliminado.');
+    }
+
+
+    public function updateProgress($id, Request $request)
+    {
+
+        $task = Task::where("id", $id)->update(["progress" => $request->progress]);
+
+        return redirect()->back();
+    }
+
+    public function destroyComment($id)
+    {
+        Comment::where("id", $id)->delete();
+        return redirect()->back();
     }
 }
