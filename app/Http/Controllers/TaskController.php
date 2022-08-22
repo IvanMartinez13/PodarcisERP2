@@ -169,7 +169,7 @@ class TaskController extends Controller
                 $progress = 0;
             }
 
-            $tasks[$key]['progress'] = $progress;
+            //$tasks[$key]['progress'] = $progress;
         }
 
 
