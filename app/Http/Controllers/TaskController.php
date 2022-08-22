@@ -818,4 +818,10 @@ class TaskController extends Controller
 
         return redirect()->back();
     }
+
+    public function destroyComment($id)
+    {
+        Comment::where("id", $id)->delete();
+        return redirect()->back();
+    }
 }

@@ -230,6 +230,11 @@
                                                                     data-target="#editComment_{{ $comment->token }}">
                                                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                                                 </button>
+
+                                                                <button class="btn btn-sm btn-link"
+                                                                    onclick="removeComment('{{ $comment->token }}')">
+                                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                                </button>
                                                             </div>
                                                         @endif
 
@@ -285,6 +290,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <form id="delete_comment_{{ $comment->token }}"
+                                                    action="{{ route('comment.destroy', $comment) }}" method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                </form>
                                             @endforeach
 
 
@@ -649,6 +660,27 @@
                 cancelButtonText: "Cancelar",
             }, function() {
                 $('#delete_' + token).submit();
+
+            });
+
+
+        }
+
+
+        function removeComment(token) {
+
+            swal({
+                title: "{{ __('Are you sure?') }}",
+                text: "{{ __('You will not be able to recover this comment!') }}",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#ed5565",
+                confirmButtonText: "Si, deseo eliminarla",
+                closeOnConfirm: false,
+                cancelButtonColor: "#ed5565",
+                cancelButtonText: "Cancelar",
+            }, function() {
+                $('#delete_comment_' + token).submit();
 
             });
 

@@ -181,6 +181,8 @@ Route::prefix('tasks')->middleware(['auth'])->group(function () {
     Route::put('/project/delete', [TaskController::class, 'project_delete'])->name('tasks.project.delete');
     Route::put('/project/deleteFile', [TaskController::class, 'file_delete'])->name('tasks.project.deleteFile');
     Route::put('/task/updateProgress/{task}', [TaskController::class, 'updateProgress'])->name('tasks.updateProgress');
+
+    Route::delete('/comment/{comment}', [TaskController::class, 'destroyComment'])->name("comment.destroy");
 });
 
 //VAO MODULE
