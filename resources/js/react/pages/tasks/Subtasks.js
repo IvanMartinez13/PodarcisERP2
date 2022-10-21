@@ -63,6 +63,7 @@ class Subtasks extends React.Component {
                                 <th></th>
                                 <th>Tarea</th>
                                 <th>Descripción</th>
+                                <th>Progreso</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -103,6 +104,29 @@ class Subtasks extends React.Component {
                                                 __html: subtask.description,
                                             }}
                                         ></td>
+                                        <td>
+                                            <div className="progress m-b-1">
+                                                <div
+                                                    style={{
+                                                        width:
+                                                            subtask.progress +
+                                                            "%",
+                                                    }}
+                                                    className="progress-bar progress-bar-striped progress-bar-animated"
+                                                ></div>
+
+                                            </div>
+
+                                            <small>
+                                                Completado en un{" "}
+                                                <strong>
+                                                    {subtask.progress}%
+                                                </strong>
+                                                .
+                                            </small>
+                                        </td>
+
+
                                         <td className="align-middle text-center">
                                             <div className="btn-group">
                                                 {this.update == 1 ? (
