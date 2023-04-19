@@ -13,6 +13,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VaoController;
 use App\Http\Controllers\VisitController;
+use App\Http\Controllers\SgaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,9 +35,6 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::post('/evolutionTasks', [DashboardController::class, 'evolutionTasks'])->middleware(['auth'])->name('dashboard.evolutionTasks');
     Route::get('/changeSkin/{skin}', [DashboardController::class, 'changeSkin'])->middleware(['auth'])->name('dashboard.changeSkin');
 });
-
-
-
 
 
 //IMPERSONATE OTHER USERS
@@ -225,6 +223,30 @@ Route::prefix('teams')->middleware(['auth', 'can:read Teams'])->group(function (
     Route::post("/upload/file", [TeamController::class, 'upload_file'])->name("teams.set.files");
 });
 
+//SGA MODULE
+Route::prefix('sga')->middleware(['auth', 'can:read SGA'])->group(function () { //grupo de rutas
+    Route::get("/", [SgaController::class, 'index'])->name("sga.index"); // ruta independiente
+    Route::get("/create/activitypre", [SgaController::class, 'create_activity_pre'])->name("sga.create_activity_pre"); //ruta independiente
+    Route::put("/store/activitypre", [SgaController::class, 'store_activity_pre'])->name("sga.store_activity_pre");
+    Route::get("/edit/activitypre/{id}", [SgaController::class, 'edit_activity_pre'])->name("sga.edit_activity_pre");
+    Route::put("/update/activitypre", [SgaController::class, 'update_activity_pre'])->name("sga.update_activity_pre");
+    Route::get("/create/processpre", [SgaController::class, 'create_process_pre'])->name("sga.create_process_pre");
+    Route::put("/store/processpre", [SgaController::class, 'store_process_pre'])->name("sga.store_process_pre");
+    Route::get("/edit/processpre/{id}", [SgaController::class, 'edit_process_pre'])->name("sga.edit_process_pre");
+    Route::put("/update/processpre", [SgaController::class, 'update_process_pre'])->name("sga.update_process_pre");
+    Route::post('/delete_activitypre', [SgaController::class, 'delete_activity_pre'])->name('sga.delete_activity_pre');
+    Route::post('/delete_processpre', [SgaController::class, 'delete_process_pre'])->name('sga.delete_process_pre');
+    Route::get('/create/process/{process_type_id}', [SgaController::class, 'create_process'])->name('sga.create_process');
+    Route::put("/store/process", [SgaController::class, 'store_process'])->name("sga.store_process");
+
+
+
+    //AJAX REQUETS
+    Route::post('/get_actions', [SgaController::class, 'get_actions'])->name('sga.get_actions');
+});
+
+
+//NOTIFICATIONS
 Route::post('/get_notifications', [DashboardController::class, "get_notifications"])->name("get_notifications"); //CHECK NOTIFICATIONS
 
 

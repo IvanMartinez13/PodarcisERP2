@@ -7,6 +7,7 @@ class Create_subtask extends React.Component {
 
         this.name = "";
         this.description = "";
+        this.year = "";
         this.task = this.props.task;
         this.users = this.props.users;
         this.selectedUsers = [];
@@ -56,6 +57,17 @@ class Create_subtask extends React.Component {
                                         className="form-control"
                                         name="name"
                                         placeholder="Nombre..."
+                                    ></input>
+                                </div>
+
+                                <div className="col-lg-12 my-3">
+                                    <label htmlFor="year">Nombre:</label>
+                                    <input
+                                        id="year"
+                                        type="number"
+                                        className="form-control"
+                                        name="year"
+                                        placeholder="Año..."
                                     ></input>
                                 </div>
 
@@ -131,6 +143,12 @@ class Create_subtask extends React.Component {
             handlePrepareValue("name", value);
         });
 
+        $("#year").on("input", function (e) {
+            let value = e.target.value;
+
+            handlePrepareValue("year", value);
+        });
+
         $("#users").select2({
             dropdownParent: $("#modalSubtask"), //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
             theme: "bootstrap4",
@@ -172,11 +190,16 @@ class Create_subtask extends React.Component {
         if (key == "users") {
             this.selectedUsers = value;
         }
+
+        if (key == "year") {
+            this.year = value;
+        }
     }
 
     save() {
         let data = {
             name: this.name,
+            year: this.year,
             description: $("#description").val(),
             task: this.task,
             users: this.selectedUsers,

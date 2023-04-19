@@ -9664,12 +9664,14 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       loading: true,
-      save: false
+      save: false,
+      year: 0
     };
     _this.task = _this.props.task;
     _this.project = _this.props.project;
     _this.subtasks = [];
     _this.users = [];
+    _this.years = [];
     _this.setLoading = _this.setLoading.bind(_assertThisInitialized(_this));
     _this.setSaving = _this.setSaving.bind(_assertThisInitialized(_this));
     _this.store = _this.props.store;
@@ -9703,9 +9705,32 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
         });
       }
 
+      if (this.state.year == 0) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "animated fadeIn",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("select", {
+            id: "subtask_year",
+            children: this.years.map(function (year) {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("option", {
+                value: year,
+                children: [" ", year, " "]
+              }, year + "option_especial");
+            })
+          })
+        });
+      }
+
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
         className: "animated fadeIn",
-        children: [this.store == 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("select", {
+          id: "subtask_year",
+          children: this.years.map(function (year) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("option", {
+              value: year,
+              children: [" ", year, " "]
+            }, year + "option_especial");
+          })
+        }), this.store == 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
           className: "btn btn-link",
           onClick: function onClick() {
             $("#modalSubtask").modal("show");
@@ -9835,17 +9860,46 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("/tasks/project/task/get_subtask", {
-        task: this.task
+        task: this.task,
+        year: this.state.year
       }).then(function (response) {
         var subtasks = response.data.subtasks;
         var users = response.data.users;
         _this3.subtasks = subtasks;
         _this3.users = users;
 
+        for (var index = 2021; index < 2031; index++) {
+          _this3.years.push(index);
+        }
+
         _this3.setState({
           loading: false
         });
       }).then(function () {
+        if (_this3.state.year != 0) {
+          $("#subtask_year").val(_this3.state.year);
+        } else {
+          $("#subtask_year").val(null);
+        }
+
+        $("#subtask_year").select2({
+          theme: "bootstrap4",
+          width: "100px",
+          placeholder: "Selecciona un año"
+        });
+
+        var handleSetYear = function handleSetYear(data) {
+          _this3.setState({
+            loading: true,
+            year: data,
+            save: true
+          });
+        };
+
+        $("#subtask_year").on("change", function (e) {
+          //RECARGAR EL COMPONENTE
+          handleSetYear($("#subtask_year").val());
+        });
         $(".i-checks").iCheck({
           checkboxClass: "icheckbox_square-green",
           radioClass: "iradio_square-green"
@@ -9879,8 +9933,11 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
       var _this4 = this;
 
       if (this.state.save) {
+        var year = this.state.year;
+        console.log(year);
         axios__WEBPACK_IMPORTED_MODULE_0___default().post("/tasks/project/task/get_subtask", {
-          task: this.task
+          task: this.task,
+          year: year
         }).then(function (response) {
           var subtasks = response.data.subtasks;
           _this4.subtasks = subtasks;
@@ -9890,6 +9947,30 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
             save: false
           });
         }).then(function () {
+          if (_this4.state.year != 0) {
+            $("#subtask_year").val(_this4.state.year);
+          } else {
+            $("#subtask_year").val(null);
+          }
+
+          $("#subtask_year").select2({
+            theme: "bootstrap4",
+            width: "100px",
+            placeholder: "Selecciona un año"
+          });
+
+          var handleSetYear = function handleSetYear(data) {
+            _this4.setState({
+              loading: true,
+              year: data,
+              save: true
+            });
+          };
+
+          $("#subtask_year").on("change", function (e) {
+            //RECARGAR EL COMPONENTE
+            handleSetYear($("#subtask_year").val());
+          });
           $(".i-checks").iCheck({
             checkboxClass: "icheckbox_square-green",
             radioClass: "iradio_square-green"
@@ -10295,6 +10376,7 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.name = "";
     _this.description = "";
+    _this.year = "";
     _this.task = _this.props.task;
     _this.users = _this.props.users;
     _this.selectedUsers = [];
@@ -10363,6 +10445,18 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "col-lg-12 my-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+                    htmlFor: "year",
+                    children: "Nombre:"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+                    id: "year",
+                    type: "number",
+                    className: "form-control",
+                    name: "year",
+                    placeholder: "A\xF1o..."
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: "col-lg-12 my-3",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     htmlFor: "users",
                     children: "Usuarios:"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("select", {
@@ -10426,6 +10520,10 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
         var value = e.target.value;
         handlePrepareValue("name", value);
       });
+      $("#year").on("input", function (e) {
+        var value = e.target.value;
+        handlePrepareValue("year", value);
+      });
       $("#users").select2({
         dropdownParent: $("#modalSubtask"),
         //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
@@ -10467,6 +10565,10 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
       if (key == "users") {
         this.selectedUsers = value;
       }
+
+      if (key == "year") {
+        this.year = value;
+      }
     }
   }, {
     key: "save",
@@ -10475,6 +10577,7 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
 
       var data = {
         name: this.name,
+        year: this.year,
         description: $("#description").val(),
         task: this.task,
         users: this.selectedUsers
@@ -11001,6 +11104,7 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.id = _this.props.id;
     _this.name = _this.props.subtask.name;
+    _this.year = _this.props.subtask.year;
     _this.description = _this.props.subtask.description;
     _this.task = _this.props.task;
     _this.subtask = _this.props.subtask;
@@ -11076,6 +11180,19 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "col-lg-12 my-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+                    htmlFor: "year" + this.id,
+                    children: "A\xF1o:"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+                    id: "year" + this.id,
+                    type: "number",
+                    className: "form-control",
+                    name: "year",
+                    placeholder: "A\xF1o...",
+                    defaultValue: this.subtask.year
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: "col-lg-12 my-3",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     htmlFor: "users" + this.id,
                     children: "Usuarios:"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("select", {
@@ -11141,6 +11258,10 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
         var value = e.target.value;
         handlePrepareValue("name", value);
       });
+      $("#year" + this.id).on("input", function (e) {
+        var value = e.target.value;
+        handlePrepareValue("year", value);
+      });
       $("#description" + this.id).on("summernote.change", function (e) {
         // callback as jquery custom event
         var value = e.target.value;
@@ -11191,6 +11312,10 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
       if (key == "users") {
         this.selectedUsers = value;
       }
+
+      if (key == "year") {
+        this.year = value;
+      }
     }
   }, {
     key: "save",
@@ -11199,6 +11324,7 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
 
       var data = {
         name: this.name,
+        year: this.year,
         description: $("#description" + this.id).val(),
         task: this.subtask.token,
         users: this.selectedUsers
