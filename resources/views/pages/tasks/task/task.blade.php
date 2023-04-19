@@ -109,13 +109,41 @@
                         <div class="col-sm-10 text-left">
                             <dd>
                                 <div class="progress m-b-1">
-                                    <div id="progress" style="width: {{ $progress }}%;"
+                                    <div id="progress" style="width: {{ $task->progress ? $task->progress : 0 }}%;"
                                         class="progress-bar progress-bar-striped progress-bar-animated"></div>
                                 </div>
-                                <small>Completado en un <strong id="progress_text">{{ $progress }}%</strong>.</small>
+                                <small>Completado en un <strong
+                                        id="progress_text">{{ $task->progress ? $task->progress : 0 }}%</strong>.</small>
                             </dd>
                         </div>
+
+
+                        @hasrole('customer-manager')
+                            <div class="col-sm-2 text-right">
+                                <dt>{{ __('columns.progress') }}:</dt>
+                            </div>
+
+                            <div class="col-sm-10 text-left">
+                                <form action="{{ route('tasks.updateProgress', $task) }}" method="POST">
+                                    @csrf
+                                    @method('put')
+                                    <input type="number" name="progress" class="form-control d-inline w-50" min="0"
+                                        max="100" placeholder="{{ __('columns.progress') }}..."
+                                        value="{{ $task->progress }}"> %
+
+
+                                    <button class="btn btn-primary d-inline">
+                                        {{ __('Save') }}
+                                    </button>
+                                </form>
+
+
+                            </div>
+                        @endhasrole
+
+
                     </div>
+
 
                     {{-- TAB-CONTAINER --}}
                     <div class="tabs-container">
@@ -189,13 +217,27 @@
                                                                 alt="" width="38px">
                                                         @else
                                                             <img class="rounded-circle"
-                                                                src="{{ url('/img/user_placeholder.png') }}" alt=""
-                                                                width="38px">
+                                                                src="{{ url('/img/user_placeholder.png') }}"
+                                                                alt="" width="38px">
                                                         @endif
 
                                                     </a>
 
                                                     <div class="media-body ">
+                                                        @if ($comment->user->id == auth()->user()->id)
+                                                            <div class="float-right">
+                                                                <button class="btn btn-sm btn-link" data-toggle="modal"
+                                                                    data-target="#editComment_{{ $comment->token }}">
+                                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                                </button>
+
+                                                                <button class="btn btn-sm btn-link"
+                                                                    onclick="removeComment('{{ $comment->token }}')">
+                                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                                </button>
+                                                            </div>
+                                                        @endif
+
                                                         <small
                                                             class="float-right">{{ date('d/m/Y H:i', strtotime($comment->created_at)) }}</small>
                                                         <strong>{{ $comment->user->name }}</strong>:
@@ -205,6 +247,55 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="modal fade" id="editComment_{{ $comment->token }}"
+                                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-xl" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                                    {{ __('forms.comment') }} - {{ __('Edit') }}
+                                                                </h5>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form
+                                                                action="{{ route('tasks.project.updateComment', $comment) }}"
+                                                                method="POST">
+                                                                <div class="modal-body">
+
+                                                                    @csrf
+                                                                    @method('put')
+                                                                    <input name="token" type="hidden"
+                                                                        value="{{ $task->token }}">
+
+                                                                    <textarea name="comment" class="form-control comment_modal">
+                                                                        {{ $comment->comment }}
+                                                                    </textarea>
+
+
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">{{ __('Cancel') }}</button>
+                                                                    <button type="submit" class="btn btn-primary">
+                                                                        {{ __('forms.send') }}
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <form id="delete_comment_{{ $comment->token }}"
+                                                    action="{{ route('comment.destroy', $comment) }}" method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                </form>
                                             @endforeach
 
 
@@ -345,7 +436,8 @@
                             <div class="form-group">
                                 <label for="name_{{ $file->token }}">{{ __('forms.fileLabel') }}:</label>
                                 <div class="custom-file">
-                                    <input id="file{{ $file->token }}" name="file" type="file" class="custom-file-input">
+                                    <input id="file{{ $file->token }}" name="file" type="file"
+                                        class="custom-file-input">
                                     <label for="file{{ $file->token }}"
                                         class="custom-file-label">{{ __('forms.file') }}</label>
                                 </div>
@@ -382,6 +474,12 @@
     <script>
         $(document).ready(() => {
             $('#comment').summernote({
+                placeholder: "{{ __('forms.comment') }}...",
+                height: 100
+            });
+
+
+            $('.comment_modal').summernote({
                 placeholder: "{{ __('forms.comment') }}...",
                 height: 100
             });
@@ -562,6 +660,27 @@
                 cancelButtonText: "Cancelar",
             }, function() {
                 $('#delete_' + token).submit();
+
+            });
+
+
+        }
+
+
+        function removeComment(token) {
+
+            swal({
+                title: "{{ __('Are you sure?') }}",
+                text: "{{ __('You will not be able to recover this comment!') }}",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#ed5565",
+                confirmButtonText: "Si, deseo eliminarla",
+                closeOnConfirm: false,
+                cancelButtonColor: "#ed5565",
+                cancelButtonText: "Cancelar",
+            }, function() {
+                $('#delete_comment_' + token).submit();
 
             });
 
