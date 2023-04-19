@@ -232,6 +232,13 @@ Route::prefix('sga')->middleware(['auth', 'can:read SGA'])->group(function () { 
     Route::put("/update/processpre", [SgaController::class, 'update_process_pre'])->name("sga.update_process_pre");
     Route::post('/delete_activitypre', [SgaController::class, 'delete_activity_pre'])->name('sga.delete_activity_pre');
     Route::post('/delete_processpre', [SgaController::class, 'delete_process_pre'])->name('sga.delete_process_pre');
+    Route::get('/create/process/{process_type_id}', [SgaController::class, 'create_process'])->name('sga.create_process');
+    Route::put("/store/process", [SgaController::class, 'store_process'])->name("sga.store_process");
+
+
+
+    //AJAX REQUETS
+    Route::post('/get_actions', [SgaController::class, 'get_actions'])->name('sga.get_actions');
 });
 
 

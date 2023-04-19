@@ -10,7 +10,7 @@ class ActivityPre extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = "activity_pre";
-    protected $fillable = ["name"];
+    protected $fillable = ["name", "process_type_id"];
 
     public function process_pre()
     {

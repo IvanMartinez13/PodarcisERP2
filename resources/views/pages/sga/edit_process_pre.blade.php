@@ -35,15 +35,6 @@
                 @csrf
                 @method('put')
 
-                {{-- UPDATEAR LOS 4 ULTIMOS FORM --}}
-                {{-- <input type="hidden" name="id" value="{{ $proceso->id }}">
-
-                <div class="form-group">
-                    <label for="name">Nombre:</label>
-                    <input id="name" name="name" class="form-control" placeholder="Nombre..."
-                        value="{{ $proceso->name }}" type="text">
-                </div> --}}
-
                 {{-- name --}}
                 <input type="hidden" name="id" value="{{ $proceso->id }}">
 
@@ -58,17 +49,16 @@
                     <div class="col-6">
                         {{-- responsable --}}
                         <div class="form-group">
-                            <label for="name">Responsable:</label>
-                            <input id="name" name="responsable" class="form-control" placeholder="Responsable..."
+                            <label for="responsable">Responsable:</label>
+                            <input id="responsable" name="responsable" class="form-control" placeholder="Responsable..."
                                 value="{{ $proceso->responsable }}" type="text">
                         </div>
                     </div>
                     <div class="col-6">
                         {{-- objetivo --}}
                         <div class="form-group">
-                            <label for="name">Objetivo:</label>
-                            <input id="name" name="target" class="form-control" placeholder="Objetivo..."
-                                value="{{ $proceso->target }}" type="text">
+                            <label for="target">Objetivo:</label>
+                            <textarea id="target" name="target" class="form-control" placeholder="Objetivo..." type="text">{{ $proceso->target }}</textarea>
                         </div>
                     </div>
                     <div class="col-6">
@@ -76,7 +66,8 @@
                         {{-- tipo de proceso --}}
                         <div class="form-group">
                             <label for="process_type_id">Tipo de proceso:</label>
-                            <select name="process_type_id" class="form-control" id="process_type_id">
+                            <select name="process_type_id" class="form-control" id="process_type_id"
+                                onchange="getActivities(this.value)">
 
                                 @foreach ($tiposProcesos as $tipoProceso)
                                     @if ($tipoProceso->id == $proceso->process_type_id)
@@ -93,17 +84,12 @@
                 </div>
 
 
+                <table id="tablaSeleccionarActividades" class="table table-striped table-hover table-bordered">
 
-
-
-
-
-
-                <table class="table table-striped table-hover table-bordered">
                     <thead>
                         <tr>
-                            <th>Seleccionar</th>
-                            <th>Nombre</th>
+                            <th style="width: 20%">Seleccionar</th>
+                            <th style="width: 80%">Nombre</th>
                         </tr>
                     </thead>
 
@@ -142,4 +128,53 @@
             @endif
         @endforeach
     @endforeach
+
+    <script>
+        //AJAX PETICION axios libreria de ajax
+        //LAS peticiones o promesas tienene el formato :
+        //promesa.then( () => {} )
+        function getActivities(id) {
+
+            //1) GET DATOS formato: object { indice: valor }
+            let data = {
+                process_type_id: id
+            }
+            //2) ENVIAR DATOS AL SERVIDOR
+            // axios: Crea peticiones http o https
+            // post datos no aparecen en una url
+            // formulario fake
+            //axios.post("ruta", datosFormulario).then( (respuesta) => {} )
+            axios.post("{{ route('sga.get_actions') }}", data)
+                .then((response) => {
+                    var actividades = response.data.actividades;
+                    //1) ELIMINAR FILAS DE LA TABLA
+                    $("#tablaSeleccionarActividades tbody").children().remove();
+                    //2) CREAR FILAS DE LA TABLA
+                    actividades.forEach(actividad => {
+                        $("#tablaSeleccionarActividades tbody").append(`
+                                                                    <tr>
+                                                                        <td class="text-center">
+                                                                            <input id="checkBox${actividad.id}" type="checkbox" name="activities[]"
+                                                                                value="${actividad.id}" class="js-switch">
+                                                                        </td>
+                                                                        <td>
+                                                                            ${actividad.name}
+                                                                        </td>
+                                                                    </tr>
+                                                                `);
+                    });
+
+                }).then(() => {
+                    //3) MONTAR LOS SELECTORES
+                    var switches = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+
+                    switches.forEach(function(input) {
+                        var switchery = new Switchery(input, {
+                            color: '#1ab394',
+                            jackColor: '#f3f3f4'
+                        });
+                    });
+                });
+        };
+    </script>
 @endpush

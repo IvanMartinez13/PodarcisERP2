@@ -9664,12 +9664,14 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       loading: true,
-      save: false
+      save: false,
+      year: 0
     };
     _this.task = _this.props.task;
     _this.project = _this.props.project;
     _this.subtasks = [];
     _this.users = [];
+    _this.years = [];
     _this.setLoading = _this.setLoading.bind(_assertThisInitialized(_this));
     _this.setSaving = _this.setSaving.bind(_assertThisInitialized(_this));
     _this.store = _this.props.store;
@@ -9703,9 +9705,32 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
         });
       }
 
+      if (this.state.year == 0) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "animated fadeIn",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("select", {
+            id: "subtask_year",
+            children: this.years.map(function (year) {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("option", {
+                value: year,
+                children: [" ", year, " "]
+              }, year + "option_especial");
+            })
+          })
+        });
+      }
+
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
         className: "animated fadeIn",
-        children: [this.store == 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("select", {
+          id: "subtask_year",
+          children: this.years.map(function (year) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("option", {
+              value: year,
+              children: [" ", year, " "]
+            }, year + "option_especial");
+          })
+        }), this.store == 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
           className: "btn btn-link",
           onClick: function onClick() {
             $("#modalSubtask").modal("show");
@@ -9819,17 +9844,46 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("/tasks/project/task/get_subtask", {
-        task: this.task
+        task: this.task,
+        year: this.state.year
       }).then(function (response) {
         var subtasks = response.data.subtasks;
         var users = response.data.users;
         _this3.subtasks = subtasks;
         _this3.users = users;
 
+        for (var index = 2021; index < 2031; index++) {
+          _this3.years.push(index);
+        }
+
         _this3.setState({
           loading: false
         });
       }).then(function () {
+        if (_this3.state.year != 0) {
+          $("#subtask_year").val(_this3.state.year);
+        } else {
+          $("#subtask_year").val(null);
+        }
+
+        $("#subtask_year").select2({
+          theme: "bootstrap4",
+          width: "100px",
+          placeholder: "Selecciona un año"
+        });
+
+        var handleSetYear = function handleSetYear(data) {
+          _this3.setState({
+            loading: true,
+            year: data,
+            save: true
+          });
+        };
+
+        $("#subtask_year").on("change", function (e) {
+          //RECARGAR EL COMPONENTE
+          handleSetYear($("#subtask_year").val());
+        });
         $(".i-checks").iCheck({
           checkboxClass: "icheckbox_square-green",
           radioClass: "iradio_square-green"
@@ -9863,8 +9917,11 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
       var _this4 = this;
 
       if (this.state.save) {
+        var year = this.state.year;
+        console.log(year);
         axios__WEBPACK_IMPORTED_MODULE_0___default().post("/tasks/project/task/get_subtask", {
-          task: this.task
+          task: this.task,
+          year: year
         }).then(function (response) {
           var subtasks = response.data.subtasks;
           _this4.subtasks = subtasks;
@@ -9874,6 +9931,30 @@ var Subtasks = /*#__PURE__*/function (_React$Component) {
             save: false
           });
         }).then(function () {
+          if (_this4.state.year != 0) {
+            $("#subtask_year").val(_this4.state.year);
+          } else {
+            $("#subtask_year").val(null);
+          }
+
+          $("#subtask_year").select2({
+            theme: "bootstrap4",
+            width: "100px",
+            placeholder: "Selecciona un año"
+          });
+
+          var handleSetYear = function handleSetYear(data) {
+            _this4.setState({
+              loading: true,
+              year: data,
+              save: true
+            });
+          };
+
+          $("#subtask_year").on("change", function (e) {
+            //RECARGAR EL COMPONENTE
+            handleSetYear($("#subtask_year").val());
+          });
           $(".i-checks").iCheck({
             checkboxClass: "icheckbox_square-green",
             radioClass: "iradio_square-green"
@@ -10279,6 +10360,7 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.name = "";
     _this.description = "";
+    _this.year = "";
     _this.task = _this.props.task;
     _this.users = _this.props.users;
     _this.selectedUsers = [];
@@ -10347,6 +10429,18 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "col-lg-12 my-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+                    htmlFor: "year",
+                    children: "Nombre:"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+                    id: "year",
+                    type: "number",
+                    className: "form-control",
+                    name: "year",
+                    placeholder: "A\xF1o..."
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: "col-lg-12 my-3",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     htmlFor: "users",
                     children: "Usuarios:"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("select", {
@@ -10410,6 +10504,10 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
         var value = e.target.value;
         handlePrepareValue("name", value);
       });
+      $("#year").on("input", function (e) {
+        var value = e.target.value;
+        handlePrepareValue("year", value);
+      });
       $("#users").select2({
         dropdownParent: $("#modalSubtask"),
         //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
@@ -10451,6 +10549,10 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
       if (key == "users") {
         this.selectedUsers = value;
       }
+
+      if (key == "year") {
+        this.year = value;
+      }
     }
   }, {
     key: "save",
@@ -10459,6 +10561,7 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
 
       var data = {
         name: this.name,
+        year: this.year,
         description: $("#description").val(),
         task: this.task,
         users: this.selectedUsers
@@ -10985,6 +11088,7 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.id = _this.props.id;
     _this.name = _this.props.subtask.name;
+    _this.year = _this.props.subtask.year;
     _this.description = _this.props.subtask.description;
     _this.task = _this.props.task;
     _this.subtask = _this.props.subtask;
@@ -11060,6 +11164,19 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "col-lg-12 my-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+                    htmlFor: "year" + this.id,
+                    children: "A\xF1o:"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+                    id: "year" + this.id,
+                    type: "number",
+                    className: "form-control",
+                    name: "year",
+                    placeholder: "A\xF1o...",
+                    defaultValue: this.subtask.year
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: "col-lg-12 my-3",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     htmlFor: "users" + this.id,
                     children: "Usuarios:"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("select", {
@@ -11125,6 +11242,10 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
         var value = e.target.value;
         handlePrepareValue("name", value);
       });
+      $("#year" + this.id).on("input", function (e) {
+        var value = e.target.value;
+        handlePrepareValue("year", value);
+      });
       $("#description" + this.id).on("summernote.change", function (e) {
         // callback as jquery custom event
         var value = e.target.value;
@@ -11175,6 +11296,10 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
       if (key == "users") {
         this.selectedUsers = value;
       }
+
+      if (key == "year") {
+        this.year = value;
+      }
     }
   }, {
     key: "save",
@@ -11183,6 +11308,7 @@ var Edit_subtask = /*#__PURE__*/function (_React$Component) {
 
       var data = {
         name: this.name,
+        year: this.year,
         description: $("#description" + this.id).val(),
         task: this.subtask.token,
         users: this.selectedUsers
@@ -70986,7 +71112,7 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"_args":[["axios@0.21.4","C:\\\\laragon\\\\www\\\\podarcisERP"]],"_development":true,"_from":"axios@0.21.4","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"axios@0.21.4","name":"axios","escapedName":"axios","rawSpec":"0.21.4","saveSpec":null,"fetchSpec":"0.21.4"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_spec":"0.21.4","_where":"C:\\\\laragon\\\\www\\\\podarcisERP","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
+module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"Promise based HTTP client for the browser and node.js","main":"index.js","scripts":{"test":"grunt test","start":"node ./sandbox/server.js","build":"NODE_ENV=production grunt build","preversion":"npm test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json","postversion":"git push && git push --tags","examples":"node ./examples/server.js","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","fix":"eslint --fix lib/**/*.js"},"repository":{"type":"git","url":"https://github.com/axios/axios.git"},"keywords":["xhr","http","ajax","promise","node"],"author":"Matt Zabriskie","license":"MIT","bugs":{"url":"https://github.com/axios/axios/issues"},"homepage":"https://axios-http.com","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"jsdelivr":"dist/axios.min.js","unpkg":"dist/axios.min.js","typings":"./index.d.ts","dependencies":{"follow-redirects":"^1.14.0"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}]}');
 
 /***/ })
 

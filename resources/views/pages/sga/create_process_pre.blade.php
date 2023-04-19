@@ -45,23 +45,22 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="name"><b>Responsable:</b></label>
-                            <input id="name" name="responsable" class="form-control" placeholder="Responsable..."
+                            <label for="responsable"><b>Responsable:</b></label>
+                            <input id="responsable" name="responsable" class="form-control" placeholder="Responsable..."
                                 type="text">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="name"><b>Objetivo:</b></label>
-                            <input id="name" name="target" class="form-control" placeholder="Objetivo..."
-                                type="text">
+                            <label for="target"><b>Objetivo:</b></label>
+                            <textarea id="target" name="target" class="form-control" placeholder="Objetivo..." type="text"></textarea>
                         </div>
                     </div>
                     <div class="col-6">
                         {{-- HACER DESPLEGABLE --}}
                         <div class="form-group">
-                            <label for="name"><b>Tipo de proceso:</b></label>
-                            <select id="name" name="process_type_id" class="form-control"
+                            <label for="process_type_id"><b>Tipo de proceso:</b></label>
+                            <select id="process_type_id" name="process_type_id" class="form-control"
                                 placeholder="Tipo de proceso..." type="text">
 
 

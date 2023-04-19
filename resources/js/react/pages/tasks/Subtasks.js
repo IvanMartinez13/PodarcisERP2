@@ -8,12 +8,13 @@ class Subtasks extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { loading: true, save: false };
+        this.state = { loading: true, save: false, year: 0 };
 
         this.task = this.props.task;
         this.project = this.props.project;
         this.subtasks = [];
         this.users = [];
+        this.years = [];
 
         this.setLoading = this.setLoading.bind(this);
         this.setSaving = this.setSaving.bind(this);
@@ -38,8 +39,40 @@ class Subtasks extends React.Component {
                 </div>
             );
         }
+
+        if (this.state.year == 0) {
+            return (
+                <div className="animated fadeIn">
+                    <select id="subtask_year">
+                        {this.years.map((year) => {
+                            return (
+                                <option
+                                    key={year + "option_especial"}
+                                    value={year}
+                                >
+                                    {" "}
+                                    {year}{" "}
+                                </option>
+                            );
+                        })}
+                    </select>
+                </div>
+            );
+        }
+
         return (
             <div className="animated fadeIn">
+                <select id="subtask_year">
+                    {this.years.map((year) => {
+                        return (
+                            <option key={year + "option_especial"} value={year}>
+                                {" "}
+                                {year}{" "}
+                            </option>
+                        );
+                    })}
+                </select>
+
                 {this.store == 1 ? (
                     <button
                         className="btn btn-link"
@@ -195,16 +228,44 @@ class Subtasks extends React.Component {
 
     componentDidMount() {
         axios
-            .post("/tasks/project/task/get_subtask", { task: this.task })
+            .post("/tasks/project/task/get_subtask", {
+                task: this.task,
+                year: this.state.year,
+            })
             .then((response) => {
                 let subtasks = response.data.subtasks;
                 let users = response.data.users;
                 this.subtasks = subtasks;
                 this.users = users;
 
+                for (let index = 2021; index < 2031; index++) {
+                    this.years.push(index);
+                }
+
                 this.setState({ loading: false });
             })
             .then(() => {
+                if (this.state.year != 0) {
+                    $("#subtask_year").val(this.state.year);
+                } else {
+                    $("#subtask_year").val(null);
+                }
+
+                $("#subtask_year").select2({
+                    theme: "bootstrap4",
+                    width: "100px",
+                    placeholder: "Selecciona un año",
+                });
+
+                const handleSetYear = (data) => {
+                    this.setState({ loading: true, year: data, save: true });
+                };
+
+                $("#subtask_year").on("change", function (e) {
+                    //RECARGAR EL COMPONENTE
+                    handleSetYear($("#subtask_year").val());
+                });
+
                 $(".i-checks").iCheck({
                     checkboxClass: "icheckbox_square-green",
                     radioClass: "iradio_square-green",
@@ -239,8 +300,14 @@ class Subtasks extends React.Component {
 
     componentDidUpdate() {
         if (this.state.save) {
+            let year = this.state.year;
+            console.log(year);
+
             axios
-                .post("/tasks/project/task/get_subtask", { task: this.task })
+                .post("/tasks/project/task/get_subtask", {
+                    task: this.task,
+                    year: year,
+                })
                 .then((response) => {
                     let subtasks = response.data.subtasks;
                     this.subtasks = subtasks;
@@ -248,6 +315,29 @@ class Subtasks extends React.Component {
                     this.setState({ loading: false, save: false });
                 })
                 .then(() => {
+                    if (this.state.year != 0) {
+                        $("#subtask_year").val(this.state.year);
+                    } else {
+                        $("#subtask_year").val(null);
+                    }
+
+                    $("#subtask_year").select2({
+                        theme: "bootstrap4",
+                        width: "100px",
+                        placeholder: "Selecciona un año",
+                    });
+                    const handleSetYear = (data) => {
+                        this.setState({
+                            loading: true,
+                            year: data,
+                            save: true,
+                        });
+                    };
+
+                    $("#subtask_year").on("change", function (e) {
+                        //RECARGAR EL COMPONENTE
+                        handleSetYear($("#subtask_year").val());
+                    });
                     $(".i-checks").iCheck({
                         checkboxClass: "icheckbox_square-green",
                         radioClass: "iradio_square-green",

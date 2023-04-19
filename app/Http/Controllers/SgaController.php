@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use Illuminate\Http\Request;
 use App\Models\ActivityPre;
+use App\Models\Customer;
 use App\Models\ProcessPre;
 use App\Models\ProcessType;
+use App\Models\Process;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class SgaController extends Controller
 {
@@ -17,13 +23,39 @@ class SgaController extends Controller
      */
     public function index()
     {
-        /* 1) recoger informacion de las actividades y los procesos
-           2) enviar informacion a la vista de sga index
-         */
-        $actividades = ActivityPre::get(); //select masivo Modelo::get(); fetch_all(); FORMATO: [obj, obj, ...]
-        $procesos = ProcessPre::with('process_type')->get();
+        $user = Auth::user();
+        //@ts-ignore
+        if ($user->hasRole("super-admin")) {
+            /* 1) recoger informacion de las actividades y los procesos
+                2) enviar informacion a la vista de sga index
+            */
+            $actividades = ActivityPre::get(); //select masivo Modelo::get(); fetch_all(); FORMATO: [obj, obj, ...]
+            $procesos = ProcessPre::with('process_type')->get();
 
-        return view("pages.sga.index", compact("actividades", "procesos")); //[alias => $valor]
+            return view("pages.sga.index", compact("actividades", "procesos")); //[alias => $valor]
+        }
+
+        $soporte = ProcessType::SOPORTE;  //id 1
+        $operativos = ProcessType::OPERATIVOS; //id 2
+        $estrategicos = ProcessType::ESTRATEGICOS; //id 3
+        $manager = $user->customer->manager;
+
+        //SELECCIONAR PROCESOS DE SOPORTE
+        $soporteProcesos = Process::where("type_process_id", $soporte)->get();
+        //SELECCIONAR PROCESOS OPERATIVOS
+        $operativosProcesos = Process::where("type_process_id", $operativos)->get();
+        //SELECCIONAR PROCESOS ESTRATEGICOS
+        $estrategicosProcesos = Process::where("type_process_id", $estrategicos)->get();
+
+        return view("pages.sga.customer.index", compact(
+            "estrategicos",
+            "operativos",
+            "soporte",
+            "manager",
+            "soporteProcesos",
+            "operativosProcesos",
+            "estrategicosProcesos"
+        )); //[alias => $valor]
     }
 
     /**
@@ -33,8 +65,8 @@ class SgaController extends Controller
      */
     public function create_activity_pre() //Llama a a la pagina
     {
-
-        return view("pages.sga.create_activity_pre");
+        $tiposProcesos = ProcessType::get();
+        return view("pages.sga.create_activity_pre", compact("tiposProcesos"));
     }
 
     /**
@@ -47,13 +79,14 @@ class SgaController extends Controller
     {
         //1) GET DATA
         $name = $request->name;
+        $type = $request->process_type_id;
         //2) VERIFY DATA
         if ($name != null) {
 
             //3) SAVE DATA
             try {
                 DB::beginTransaction();
-                ActivityPre::create(["name" => $name]); //crea la actividad
+                ActivityPre::create(["name" => $name, "process_type_id" => $type]); //crea la actividad
                 DB::commit();
 
                 //4) RETURN REDIRECT
@@ -79,8 +112,11 @@ class SgaController extends Controller
            2) hacer select para mostrar los datos (ok)
            3) enviar datos al formulario
         */
+
+
         $actividad = ActivityPre::where("id", $id)->first(); //select individual Modelo::where("id", $valor)->first(); fetch(); FORMATO: obj
-        return view("pages.sga.edit_activity_pre", compact("actividad"));
+        $tiposProcesos = ProcessType::get();
+        return view("pages.sga.edit_activity_pre", compact("tiposProcesos", "actividad")); // DEVUELVE LA VISTA con los datos necesarios compact("variable", "variable", ...)
     }
 
     /**
@@ -94,13 +130,14 @@ class SgaController extends Controller
         //1) GET DATA
         $name = $request->name;
         $id = $request->id;
+        $process_type_id = $request->process_type_id;
         //2) VERIFY DATA
         if ($name != null) {
 
             //3) SAVE DATA
             try {
                 DB::beginTransaction();
-                ActivityPre::where("id", $id)->update(["name" => $name]); //crea la actividad
+                ActivityPre::where("id", $id)->update(["name" => $name, "process_type_id" =>  $process_type_id]); //crea la actividad
                 DB::commit();
 
                 //4) RETURN REDIRECT
@@ -177,8 +214,8 @@ class SgaController extends Controller
            3) enviar datos al formulario
         */
         $tiposProcesos = ProcessType::get(); //select masivo Modelo::get(); fetch_all(); FORMATO: [obj, obj, ...]
-        $activities = ActivityPre::get();
         $proceso = ProcessPre::where("id", $id)->with('process_type')->with('activities_pre')->first(); //select individual Modelo::where("id", $valor)->first(); fetch(); FORMATO: obj
+        $activities = ActivityPre::where("process_type_id", $proceso->process_type_id)->get();
         return view("pages.sga.edit_process_pre", compact("proceso", "tiposProcesos", "activities"));
     }
 
@@ -275,5 +312,93 @@ class SgaController extends Controller
         }
 
         abort(500);
+    }
+
+    /**
+     * @method get_actions
+     * @param request with id processType
+     * @return response JSON object with actionsPre
+     */
+    public function get_actions(Request $request)
+    {
+        $process_type_id =  $request->process_type_id;
+        $actividades = ActivityPre::where("process_type_id", "=", $process_type_id)->get(); //get() == fetchAll()
+        $response = ["actividades" => $actividades];
+        return response()->json($response); // { indice: valor }
+    }
+
+    public function create_process($process_type_id)
+    {
+        $processType = ProcessType::where("id", "=", $process_type_id)->first();
+        $actividadesPredefinidas = ActivityPre::where("process_type_id", "=", $process_type_id)->get(); //get() == fetchAll()
+        return view("pages.sga.customer.create_process", compact("processType", "actividadesPredefinidas")); //[alias => $valor]
+
+    }
+
+    /**
+     * @method store_process
+     * todo: save form data on db
+     * @param request objeto con los datos del formulario
+     * @return redirection to index page
+     */
+    public function store_process(Request $request) //guarda los datos
+    {
+        //1) GET DATA
+        $datos = [
+            "name" => $request->name,
+            "responsable" => $request->responsable,
+            "target" => $request->target,
+            "customer_id" => Auth::user()->customer_id,
+            "type_process_id" => $request->type_process_id,
+        ];
+        $actividadesPredefinidas = ActivityPre::whereIn("id", $request->activitiesPre)->get();
+        $actividades = $request->activities;
+        //2) VERIFICAR DATOS
+        //rules -> array de reglas a seguir
+        $rules = [
+            "name" => "required|string",
+            "responsable" => "required|string",
+            "target" => "required|string",
+            "customer_id" => "required|integer",
+            "type_process_id" => "required|integer",
+        ];
+
+        $validator = Validator::make($datos, $rules);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        //CREAR PROCESO
+        try {
+            DB::beginTransaction();
+            $process = new Process($datos); //crea el process
+            $process->save(); //create insert
+            if ($actividades != null) {
+                foreach ($actividades as $actividad) {
+                    if ($actividad != null) {
+                        Activity::create(["name" => $actividad, "process_id" => $process->id]);
+                    }
+                }
+            }
+            if ($actividadesPredefinidas != null) {
+                foreach ($actividadesPredefinidas as $actividad) {
+                    if ($actividad->name != null) {
+                        Activity::create(["name" => $actividad->name, "process_id" => $process->id]);
+                    }
+                }
+            }
+
+
+            DB::commit();
+
+            //4) RETURN REDIRECT
+            return redirect(route("sga.index"))->with("status", "success")->with("message", "El proceso se ha creado.");
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+
+            return redirect(route("sga.index"))->with("status", "error")->with("message", "Fatal: el proceso no se ha podido crear.");
+        }
     }
 }

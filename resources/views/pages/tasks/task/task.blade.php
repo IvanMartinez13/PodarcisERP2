@@ -126,11 +126,15 @@
                                 <li><a id="nav-subtasks" class="nav-link" data-toggle="tab"
                                         href="#sub_tasks">{{ __('modules.sub_tasks') }}</a></li>
                             @endif
-                            <li>
-                                <a id="nav-documents" class="nav-link" data-toggle="tab"
-                                    href="#files">{{ __('modules.files') }}
-                                </a>
-                            </li>
+
+                            @if ($parent)
+                                <li>
+                                    <a id="nav-documents" class="nav-link" data-toggle="tab"
+                                        href="#files">{{ __('modules.files') }}
+                                    </a>
+                                </li>
+                            @endif
+
                         </ul>
                         <div class="tab-content">
                             {{-- TAB COMMENTS --}}
@@ -345,7 +349,8 @@
                             <div class="form-group">
                                 <label for="name_{{ $file->token }}">{{ __('forms.fileLabel') }}:</label>
                                 <div class="custom-file">
-                                    <input id="file{{ $file->token }}" name="file" type="file" class="custom-file-input">
+                                    <input id="file{{ $file->token }}" name="file" type="file"
+                                        class="custom-file-input">
                                     <label for="file{{ $file->token }}"
                                         class="custom-file-label">{{ __('forms.file') }}</label>
                                 </div>

@@ -30,6 +30,6 @@ return [
     'vao' => 'Vigilancia ambiental',
     'blog' => 'Blog',
     'teams' => 'Equipos de trabajo',
-    'sga' => 'SGA'
+    'sga' => 'Sistemas de gestión'
 
 ];

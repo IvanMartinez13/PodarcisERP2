@@ -1,11 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="row mb-2">
+        <div class="col-10 my-auto">
+            <h2>{{ __('modules.sga') }}</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ route('dashboard') }}">Dashboard</a>
+                </li>
+
+                <li class="breadcrumb-item active">
+                    <strong>{{ __('modules.sga') }}</strong>
+                </li>
+            </ol>
+        </div>
+
+        <div class="col-2 text-right">
+            <a href="{{ route('dashboard') }}" class="btn btn-danger mt-5">{{ __('pagination.return') }}</a>
+        </div>
+
+    </div>
     <div class="tabs-container">
         <ul class="nav nav-tabs" role="tablist">
             <li><a id="nav-actividades" class="nav-link active bg-transparent" data-toggle="tab"
                     href="#tab-actividades">Actividades</a></li>
-            <li><a id="nav-procesos" class="nav-link bg-transparent" data-toggle="tab" href="#tab-procesos">Procesos</a></li>
+            <li><a id="nav-procesos" class="nav-link bg-transparent" data-toggle="tab" href="#tab-procesos">Procesos</a>
+            </li>
         </ul>
         <div class="tab-content">
             <div role="tabpanel" id="tab-actividades" class="tab-pane active">

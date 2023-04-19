@@ -35,19 +35,33 @@
                     @csrf
                     @method('put')
                     <div class="row">
-                        <div class="col-12 my-auto">
-                            <label for="name">Nombre:</label>
-                        </div>
+
+
+
                         <div class="form-group col-6">
+                            <label for="name">Nombre:</label>
                             <input id="name" name="name" class="form-control" placeholder="Nombre..."
                                 type="text">
                         </div>
-                        <div class="col-5">
+
+                        <div class="form-group col-6">
+                            <label for="name">Tipo de proceso:</label>
+                            <select name="process_type_id" class="form-control" id="process_type_id">
+
+                                @foreach ($tiposProcesos as $tipoProceso)
+                                    <option value="{{ $tipoProceso->id }}">
+                                        {{ $tipoProceso->name }}
+                                    </option>
+                                @endforeach
+
+                            </select>
+                        </div>
+                        <div class="col-12 text-right">
                             <button class="btn btn-primary mt-auto">Guardar</button>
                         </div>
 
-
                     </div>
+
 
 
 
