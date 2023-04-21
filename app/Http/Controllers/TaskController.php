@@ -367,13 +367,15 @@ class TaskController extends Controller
         $departaments = Departament::whereIn('id', $departamentsId)->with('users')->get();
         $emails =  [];
 
-        $users = $task->users;
+        foreach ($departaments as $departament) {
+            $users = $departament->users;
 
-        $users = $users->pluck('email');
-        foreach ($users as $user_email) {
-            if (!array_search($user_email, $emails)) {
+            $users = $users->pluck('email');
+            foreach ($users as $user_email) {
+                if (!array_search($user_email, $emails)) {
 
-                array_push($emails, $user_email);
+                    array_push($emails, $user_email);
+                }
             }
         }
 
@@ -521,13 +523,15 @@ class TaskController extends Controller
             $departaments = Departament::whereIn('id', $departamentsId)->with('users')->get();
             $emails =  [];
 
-            $users = $task->users;
+            foreach ($departaments as $departament) {
+                $users = $departament->users;
 
-            $users = $users->pluck('email');
-            foreach ($users as $user_email) {
-                if (!array_search($user_email, $emails)) {
+                $users = $users->pluck('email');
+                foreach ($users as $user_email) {
+                    if (!array_search($user_email, $emails)) {
 
-                    array_push($emails, $user_email);
+                        array_push($emails, $user_email);
+                    }
                 }
             }
 
@@ -571,13 +575,15 @@ class TaskController extends Controller
             $departaments = Departament::whereIn('id', $departamentsId)->with('users')->get();
             $emails =  [];
 
-            $users = $task->users;
+            foreach ($departaments as $departament) {
+                $users = $departament->users;
 
-            $users = $users->pluck('email');
-            foreach ($users as $user_email) {
-                if (!array_search($user_email, $emails)) {
+                $users = $users->pluck('email');
+                foreach ($users as $user_email) {
+                    if (!array_search($user_email, $emails)) {
 
-                    array_push($emails, $user_email);
+                        array_push($emails, $user_email);
+                    }
                 }
             }
 
