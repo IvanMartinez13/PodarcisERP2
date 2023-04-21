@@ -402,6 +402,7 @@ class TaskController extends Controller
 
         $data = [
             'name' => $request->name,
+            'year' => $request->year,
             'description' => $request->description,
             'is_done' => 0,
             'token' => md5($request->name . '+' . date('d/m/Y H:i:s')),
@@ -472,9 +473,9 @@ class TaskController extends Controller
         $users = $task->users;
         $user = Auth::user();
         if ($user->hasRole('customer-manager')) {
-            $subtasks = Task::where('task_id', $task->id)->with('users')->get();
+            $subtasks = Task::where('task_id', $task->id)->where('year', $request->year)->with('users')->get();
         } else {
-            $subtasks = Task::where('task_id', $task->id)->whereHas('users', function ($q) use ($user) {
+            $subtasks = Task::where('task_id', $task->id)->where('year', $request->year)->whereHas('users', function ($q) use ($user) {
                 $q->where('user_id', $user->id);
             })->with('users')->get();
         }
@@ -597,6 +598,7 @@ class TaskController extends Controller
 
         $data = [
             'name' => $request->name,
+            'year' => $request->year,
             'description' => $request->description,
         ];
 

@@ -154,11 +154,15 @@
                                 <li><a id="nav-subtasks" class="nav-link" data-toggle="tab"
                                         href="#sub_tasks">{{ __('modules.sub_tasks') }}</a></li>
                             @endif
-                            <li>
-                                <a id="nav-documents" class="nav-link" data-toggle="tab"
-                                    href="#files">{{ __('modules.files') }}
-                                </a>
-                            </li>
+
+                            @if ($parent)
+                                <li>
+                                    <a id="nav-documents" class="nav-link" data-toggle="tab"
+                                        href="#files">{{ __('modules.files') }}
+                                    </a>
+                                </li>
+                            @endif
+
                         </ul>
                         <div class="tab-content">
                             {{-- TAB COMMENTS --}}

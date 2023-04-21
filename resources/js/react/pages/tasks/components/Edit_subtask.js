@@ -7,6 +7,7 @@ class Edit_subtask extends React.Component {
 
         this.id = this.props.id;
         this.name = this.props.subtask.name;
+        this.year = this.props.subtask.year;
         this.description = this.props.subtask.description;
         this.task = this.props.task;
         this.subtask = this.props.subtask;
@@ -70,6 +71,20 @@ class Edit_subtask extends React.Component {
                                         name="name"
                                         placeholder="Nombre..."
                                         defaultValue={this.subtask.name}
+                                    ></input>
+                                </div>
+
+                                <div className="col-lg-12 my-3">
+                                    <label htmlFor={"year" + this.id}>
+                                        Año:
+                                    </label>
+                                    <input
+                                        id={"year" + this.id}
+                                        type="number"
+                                        className="form-control"
+                                        name="year"
+                                        placeholder="Año..."
+                                        defaultValue={this.subtask.year}
                                     ></input>
                                 </div>
 
@@ -155,6 +170,12 @@ class Edit_subtask extends React.Component {
             handlePrepareValue("name", value);
         });
 
+        $("#year" + this.id).on("input", function (e) {
+            let value = e.target.value;
+
+            handlePrepareValue("year", value);
+        });
+
         $("#description" + this.id).on("summernote.change", function (e) {
             // callback as jquery custom event
             let value = e.target.value;
@@ -207,11 +228,16 @@ class Edit_subtask extends React.Component {
         if (key == "users") {
             this.selectedUsers = value;
         }
+
+        if (key == "year") {
+            this.year = value;
+        }
     }
 
     save() {
         let data = {
             name: this.name,
+            year: this.year,
             description: $("#description" + this.id).val(),
             task: this.subtask.token,
             users: this.selectedUsers,

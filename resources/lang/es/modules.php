@@ -29,6 +29,7 @@ return [
     'files' => 'Documentos',
     'vao' => 'Vigilancia ambiental',
     'blog' => 'Blog',
-    'teams' => 'Equipos de trabajo'
+    'teams' => 'Equipos de trabajo',
+    'sga' => 'Sistemas de gestión'
 
 ];

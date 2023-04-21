@@ -6,9 +6,9 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         @if (auth()->user()->profile_photo)
                             <img src="{{ url('/storage') . auth()->user()->profile_photo }}" alt=""
-                                style="width: 80px" class="rounded-circle bg-white">
+                                style="width: 80px" class="rounded bg-white">
                         @else
-                            <img class="rounded-circle bg-white" src="{{ url('/img/user_placeholder.png') }}" alt=""
+                            <img class="rounded bg-white" src="{{ url('/img/user_placeholder.png') }}" alt=""
                                 width="80px">
                         @endif
 
@@ -25,14 +25,11 @@
                         </li>
 
                         @impersonating
-
-
-                        <li>
-                            <a class="dropdown-item" type="button" href="{{ route('impersonate.leave') }}">
-                                Salir del modo fantasma
-                            </a>
-                        </li>
-
+                            <li>
+                                <a class="dropdown-item" type="button" href="{{ route('impersonate.leave') }}">
+                                    Salir del modo fantasma
+                                </a>
+                            </li>
                         @endImpersonating
 
                         @if (!session('impersonated_by'))
@@ -45,10 +42,10 @@
                 <div class="logo-element">
 
                     @if (auth()->user()->profile_photo)
-                        <img src="{{ url('/storage') . auth()->user()->profile_photo }}" alt="" style="width: 80%"
-                            class="rounded-circle bg-white">
+                        <img src="{{ url('/storage') . auth()->user()->profile_photo }}" alt=""
+                            style="width: 80%" class="rounded bg-white">
                     @else
-                        <img class="rounded-circle bg-white" src="{{ url('/img/user_placeholder.png') }}" alt=""
+                        <img class="rounded bg-white" src="{{ url('/img/user_placeholder.png') }}" alt=""
                             style="width: 80%">
                     @endif
 
@@ -76,8 +73,14 @@
                     <a href="{{ route('blog.index') }}"><i class="fa-solid fa-blog"></i> <span
                             class="nav-label">{{ __('modules.blog') }}</span></a>
                 </li>
-            @else
 
+                <li class="{{ request()->is('sga*') ? 'active' : '' }}">
+                    <a href="{{ route('sga.index') }}">
+                        <i class="fa fa-cubes" aria-hidden="true"></i>
+                        <span class="nav-label">{{ __('modules.sga') }}</span>
+                    </a>
+                </li>
+            @else
                 @hasrole('customer-manager')
 
                     @if (request()->is('branches*') || request()->is('departaments*') || request()->is('users*'))
@@ -159,14 +162,13 @@
             @endhasrole
 
             @unlessrole('super-admin')
-
-                
                 @can('read Teams')
                     <li class="{{ request()->is('teams*') ? 'active' : '' }}">
                         <a href="{{ route('teams.index') }}">
                             <i class="fas fa-user-friends    "></i>
                             <span class="nav-label">{{ __('modules.teams') }}</span>
-                            <span id="notifications_teams" class="animated fadeIn label bg-primary float-right d-none">  </span>
+                            <span id="notifications_teams" class="animated fadeIn label bg-primary float-right d-none">
+                            </span>
                         </a>
                     </li>
                 @endcan
@@ -194,6 +196,15 @@
                         <a href="{{ route('vao.index') }}">
                             <i class="fa-solid fa-helmet-safety"></i>
                             <span class="nav-label">{{ __('modules.vao') }}</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('read SGA')
+                    <li class="{{ request()->is('sga*') ? 'active' : '' }}">
+                        <a href="{{ route('sga.index') }}">
+                            <i class="fa fa-cubes" aria-hidden="true"></i>
+                            <span class="nav-label">{{ __('modules.sga') }}</span>
                         </a>
                     </li>
                 @endcan
