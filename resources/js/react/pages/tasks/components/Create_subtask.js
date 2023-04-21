@@ -205,6 +205,7 @@ class Create_subtask extends React.Component {
             users: this.selectedUsers,
         };
 
+        console.log(data)
         //VALIDATE DATA
         let has_errors = false;
 
