@@ -43,7 +43,8 @@ class TaskController extends Controller
         $data = [
             "name" => $request->name,
             "description" => $request->description,
-            "color" => $request->color,
+            /* "color" => $request->color, */
+            "priority" => $request->priority,
             "token" => md5($request->name . '+' . date('d/m/Y H:i:s')),
             "customer_id" => $customer_id,
         ];
@@ -85,7 +86,8 @@ class TaskController extends Controller
         $data = [
             "name" => $request->name,
             "description" => $request->description,
-            "color" => $request->color,
+            /* "color" => $request->color, */
+            "priority" => $request->priority,
         ];
 
         //2) UPDATE DATA
