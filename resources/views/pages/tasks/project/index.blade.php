@@ -41,8 +41,8 @@
                 <thead>
                     <tr>
                         <th style="width: 20%">{{ __('columns.name') }}</th>
-                        <th style="width: 50%">{{ __('columns.description') }}</th>
-                        <th style="width: 20%">{{ __('columns.priority') }}</th>
+                        <th style="width: 60%">{{ __('columns.description') }}</th>
+                        <th style="width: 10%">{{ __('columns.priority') }}</th>
                         <th style="width: 10%">{{ __('columns.actions') }}</th>
                     </tr>
                 </thead>
@@ -59,7 +59,8 @@
                         </td>
 
                         <td class="align-middle">
-                            {!! $project->priority !!}
+                            {{-- {!! $project->priority !!} --}}
+                            baja/media/alta
                         </td>
 
                         <td class="text-center align-middle">
