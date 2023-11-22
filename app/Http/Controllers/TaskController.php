@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
+use function GuzzleHttp\Promise\task;
+
 class TaskController extends Controller
 {
     /*===========  PROJECTS  ==========*/
@@ -369,15 +371,12 @@ class TaskController extends Controller
         $departaments = Departament::whereIn('id', $departamentsId)->with('users')->get();
         $emails =  [];
 
-        foreach ($departaments as $departament) {
-            $users = $departament->users;
+        $users = $task->users;
+        $users = $users->pluck('email');
+        foreach ($users as $user_email) {
+            if (!array_search($user_email, $emails)) {
 
-            $users = $users->pluck('email');
-            foreach ($users as $user_email) {
-                if (!array_search($user_email, $emails)) {
-
-                    array_push($emails, $user_email);
-                }
+                array_push($emails, $user_email);
             }
         }
 
@@ -459,6 +458,8 @@ class TaskController extends Controller
         $users = User::whereIn("id", $users)->get();
         $subtask = Task::where('id', $subtask->id)->first();
 
+        
+
         foreach ($users as $item) {
 
             $mail  = new SubtaskAddMailable($task, $project, $item, $subtask);
@@ -525,15 +526,12 @@ class TaskController extends Controller
             $departaments = Departament::whereIn('id', $departamentsId)->with('users')->get();
             $emails =  [];
 
-            foreach ($departaments as $departament) {
-                $users = $departament->users;
-
-                $users = $users->pluck('email');
-                foreach ($users as $user_email) {
-                    if (!array_search($user_email, $emails)) {
-
-                        array_push($emails, $user_email);
-                    }
+            $users = $task->users;
+            $users = $users->pluck('email');
+            foreach ($users as $user_email) {
+                if (!array_search($user_email, $emails)) {
+    
+                    array_push($emails, $user_email);
                 }
             }
 
@@ -577,15 +575,12 @@ class TaskController extends Controller
             $departaments = Departament::whereIn('id', $departamentsId)->with('users')->get();
             $emails =  [];
 
-            foreach ($departaments as $departament) {
-                $users = $departament->users;
+            $users = $task->users;
+            $users = $users->pluck('email');
+            foreach ($users as $user_email) {
+                if (!array_search($user_email, $emails)) {
 
-                $users = $users->pluck('email');
-                foreach ($users as $user_email) {
-                    if (!array_search($user_email, $emails)) {
-
-                        array_push($emails, $user_email);
-                    }
+                    array_push($emails, $user_email);
                 }
             }
 
