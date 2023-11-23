@@ -93,6 +93,7 @@ class TaskController extends Controller
         ];
 
         //2) UPDATE DATA
+
         if ($request->file('image')) {
 
             $folder = storage_path('/app/public/projects') . "/" . $customer_id;
@@ -458,7 +459,7 @@ class TaskController extends Controller
         $users = User::whereIn("id", $users)->get();
         $subtask = Task::where('id', $subtask->id)->first();
 
-        
+
 
         foreach ($users as $item) {
 
@@ -530,7 +531,7 @@ class TaskController extends Controller
             $users = $users->pluck('email');
             foreach ($users as $user_email) {
                 if (!array_search($user_email, $emails)) {
-    
+
                     array_push($emails, $user_email);
                 }
             }

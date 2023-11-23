@@ -59,8 +59,16 @@
                         </td>
 
                         <td class="align-middle">
-                            {{-- {!! $project->priority !!} --}}
-                            baja/media/alta
+                            <form action={{ route('tasks.project.update', $project->priority) }} method="post">
+                                @csrf
+
+                                <select name="priority" id="priority">
+                                    <option value="baja">Baja</option>
+                                    <option value="media">Media</option>
+                                    <option value="alta">Alta</option>
+                                </select>
+                            </form>
+
                         </td>
 
                         <td class="text-center align-middle">
