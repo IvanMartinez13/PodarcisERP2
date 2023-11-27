@@ -62,10 +62,10 @@
                             <form action={{ route('tasks.project.update', $project->priority) }} method="post">
                                 @csrf
 
-                                <select name="priority" id="priority">
-                                    <option value="baja">Baja</option>
-                                    <option value="media">Media</option>
-                                    <option value="alta">Alta</option>
+                                <select class="col-lg-8 mb-3" name="priority" id="priority">
+                                    <option value="1">Alta</option>
+                                    <option value="2">Media</option>
+                                    <option value="3">Baja</option>
                                 </select>
                             </form>
 
