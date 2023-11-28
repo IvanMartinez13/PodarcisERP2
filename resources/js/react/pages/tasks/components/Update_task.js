@@ -160,7 +160,7 @@ class Update_task extends React.Component {
                                     </select>
                                 </div>
 
-                                <div className="col-lg-12 mb-3">
+                                <div className="col-lg-6 mb-3">
                                     <label htmlFor="users">Usuarios:</label>
                                     <select
                                         defaultValue={this.selectedUsers}
@@ -180,6 +180,21 @@ class Update_task extends React.Component {
                                                 </option>
                                             );
                                         })}
+                                    </select>
+                                </div>
+
+                                <div className="col-lg-6 mb-3">
+                                    <label htmlFor="priority">Prioridad</label>
+                                    <select
+                                        defaultValue={this.task.priority_id}
+                                        className="form-control"
+                                        style={{ width: "100%" }}
+                                        name="priority"
+                                        id={"priority" + this.task.token}
+                                    >
+                                        <option value={1}>Alta</option>
+                                        <option value={2}>Media</option>
+                                        <option value={3}>Baja</option>
                                     </select>
                                 </div>
 
@@ -253,6 +268,13 @@ class Update_task extends React.Component {
 
                 $("#users" + this.task.token).val(this.selectedUsers);
                 $("#users" + this.task.token).trigger("change");
+
+                $("#priority" + this.task.token).select2({
+                    dropdownParent: $("#updateTask" + this.task.token), //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
+                    theme: "bootstrap4",
+                    placeholder: "Selecciona un Prioridad...",
+                    width: "100%", // need to override the changed default
+                });
 
                 $("#departaments" + this.task.token).select2({
                     dropdownParent: $("#updateTask" + this.task.token), //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
@@ -393,6 +415,7 @@ class Update_task extends React.Component {
             departaments: this.selectedDepartaments,
             users: this.selectedUsers,
             project: this.project.id,
+            priority: $("#priority" + this.task.token).val(),
             token: this.task.token,
         };
 

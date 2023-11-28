@@ -10190,6 +10190,8 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                       children: "Progreso"
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+                      children: "Prioridad"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                       children: "Acciones"
                     })]
                   })
@@ -10219,6 +10221,27 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                             children: [task.progress, "%"]
                           }), "."]
                         })]
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("td", {
+                        className: "text-center",
+                        children: [task.priority.name == "media" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                          className: "p-2 badge bg-warning",
+                          style: {
+                            width: "45px"
+                          },
+                          children: "Media"
+                        }) : "", task.priority.name == "alta" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                          className: "p-2 badge bg-danger",
+                          style: {
+                            width: "45px"
+                          },
+                          children: "Alta"
+                        }) : "", task.priority.name == "baja" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                          className: "p-2 badge bg-primary",
+                          style: {
+                            width: "45px"
+                          },
+                          children: "Baja"
+                        }) : ""]
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
                         className: "align-middle text-center",
                         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
@@ -10847,6 +10870,30 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
                     multiple: "multiple"
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: "col-lg-6 mb-3",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+                    htmlFor: "priority",
+                    children: "Prioridad"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("select", {
+                    defaultValue: this.task.priority_id,
+                    className: "form-control",
+                    style: {
+                      width: "100%"
+                    },
+                    name: "priority",
+                    id: "priority" + this.task.token,
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+                      value: 1,
+                      children: "Alta"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+                      value: 2,
+                      children: "Media"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+                      value: 3,
+                      children: "Baja"
+                    })]
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "col-lg-12 mb-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     htmlFor: "description",
@@ -10908,6 +10955,15 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
           //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
           theme: "bootstrap4",
           placeholder: "Selecciona un usuario...",
+          width: "100%",
+          // need to override the changed default
+          allowClear: true
+        });
+        $("#priority").select2({
+          dropdownParent: $("#addTask"),
+          //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
+          theme: "bootstrap4",
+          placeholder: "Selecciona un Prioridad...",
           width: "100%",
           // need to override the changed default
           allowClear: true
@@ -10998,6 +11054,7 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
         description: $("#description").val(),
         departaments: this.selectedDepartaments,
         users: this.selectedUsers,
+        priority: $("#priority" + this.task.token).val(),
         project: this.project.id
       }; //VALIDATE DATA
 
@@ -11577,7 +11634,7 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
                     })
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-                  className: "col-lg-12 mb-3",
+                  className: "col-lg-6 mb-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
                     htmlFor: "users",
                     children: "Usuarios:"
@@ -11596,6 +11653,30 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
                         children: user.name
                       }, user.token + index);
                     })
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+                  className: "col-lg-6 mb-3",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+                    htmlFor: "priority",
+                    children: "Prioridad"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("select", {
+                    defaultValue: this.task.priority_id,
+                    className: "form-control",
+                    style: {
+                      width: "100%"
+                    },
+                    name: "priority",
+                    id: "priority" + this.task.token,
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
+                      value: 1,
+                      children: "Alta"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
+                      value: 2,
+                      children: "Media"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
+                      value: 3,
+                      children: "Baja"
+                    })]
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
                   className: "col-lg-12 mb-3",
@@ -11660,6 +11741,14 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
 
         $("#users" + _this3.task.token).val(_this3.selectedUsers);
         $("#users" + _this3.task.token).trigger("change");
+        $("#priority" + _this3.task.token).select2({
+          dropdownParent: $("#updateTask" + _this3.task.token),
+          //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
+          theme: "bootstrap4",
+          placeholder: "Selecciona un Prioridad...",
+          width: "100%" // need to override the changed default
+
+        });
         $("#departaments" + _this3.task.token).select2({
           dropdownParent: $("#updateTask" + _this3.task.token),
           //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
@@ -11788,6 +11877,7 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
         departaments: this.selectedDepartaments,
         users: this.selectedUsers,
         project: this.project.id,
+        priority: $("#priority" + this.task.token).val(),
         token: this.task.token
       }; //VALIDATE DATA
 

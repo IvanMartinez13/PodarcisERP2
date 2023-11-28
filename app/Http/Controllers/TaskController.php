@@ -144,11 +144,13 @@ class TaskController extends Controller
                 ->where('task_id', null)
                 ->with('users')
                 ->with('departaments')
+                ->with('priority')
                 ->get();
         } else {
             $tasks = Task::where('project_id', $project->id)
                 ->where('task_id', null)
                 ->with('departaments')
+                ->with('priority')
                 ->whereHas('users', function ($q) use ($user) {
                     $q->where('user_id', $user->id);
                 })
@@ -255,6 +257,7 @@ class TaskController extends Controller
         $data = [
             "name" => $request->name,
             "description" => $request->description,
+            "priority_id" => $request->priority,
         ];
 
         $departaments = $request->departaments;

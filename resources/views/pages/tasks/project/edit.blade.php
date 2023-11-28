@@ -52,16 +52,10 @@
                         name="description">{{ $project->description }}</textarea>
                 </div>
 
-                <div class="col-lg-6 mb-3 @error('priority') has-error @enderror">
-                    <form>
-                        @csrf
-                        <label for="priority">{{ __('forms.priority') }}:</label>
-                        <select class="col-lg-2 mb-3" name="priority" id="priority">
-                            <option value="1">Alta</option>
-                            <option value="2">Media</option>
-                            <option value="3">Baja</option>
-                        </select>
-                    </form>
+                <div class="col-lg-6 mb-3 @error('color') has-error @enderror">
+                    <label for="color">{{ __('forms.color') }}:</label>
+                    <input type="text" id="color" name="color" class="form-control"
+                        placeholder="{{ __('forms.color') }}..." value="{{ old('color', $project->color) }}">
 
                 </div>
 

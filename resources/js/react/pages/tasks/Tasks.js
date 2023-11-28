@@ -56,6 +56,7 @@ class Tasks extends React.Component {
                                         <th>Tarea</th>
                                         <th>Descripción</th>
                                         <th>Progreso</th>
+                                        <th>Prioridad</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -91,6 +92,50 @@ class Tasks extends React.Component {
                                                         </strong>
                                                         .
                                                     </small>
+                                                </td>
+
+                                                <td className="text-center">
+                                                    {task.priority.name ==
+                                                    "media" ? (
+                                                        <span
+                                                            className="p-2 badge bg-warning"
+                                                            style={{
+                                                                width: "45px",
+                                                            }}
+                                                        >
+                                                            Media
+                                                        </span>
+                                                    ) : (
+                                                        ""
+                                                    )}
+
+                                                    {task.priority.name ==
+                                                    "alta" ? (
+                                                        <span
+                                                            className="p-2 badge bg-danger"
+                                                            style={{
+                                                                width: "45px",
+                                                            }}
+                                                        >
+                                                            Alta
+                                                        </span>
+                                                    ) : (
+                                                        ""
+                                                    )}
+
+                                                    {task.priority.name ==
+                                                    "baja" ? (
+                                                        <span
+                                                            className="p-2 badge bg-primary"
+                                                            style={{
+                                                                width: "45px",
+                                                            }}
+                                                        >
+                                                            Baja
+                                                        </span>
+                                                    ) : (
+                                                        ""
+                                                    )}
                                                 </td>
                                                 <td className="align-middle text-center">
                                                     <div className="btn-group">

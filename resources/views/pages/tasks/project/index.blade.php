@@ -21,11 +21,9 @@
 <div class="ibox">
     <div class="ibox-title">
         <h5>{{ __('modules.projects') }}</h5>
-        @can('create Tareas')
         <a href="{{ route('tasks.project.create') }}" class="btn btn-primary">
             {{ __('forms.create') }}
         </a>
-        @endcan
 
 
         <div class="ibox-tools">
@@ -58,16 +56,14 @@
                             {!! $project->description !!}
                         </td>
 
-                        <td class="align-middle">
-                            <form action={{ route('tasks.project.update', $project->priority) }} method="post">
-                                @csrf
+                        <td class="align-middle text-center">
 
-                                <select class="col-lg-8 mb-3" name="priority" id="priority">
-                                    <option value="1">Alta</option>
-                                    <option value="2">Media</option>
-                                    <option value="3">Baja</option>
-                                </select>
-                            </form>
+                            <span style="padding: 1mm; padding-left: 1.5mm; padding-right: 1.5mm;"
+                                class="rounded bg-danger">{{ $project->countAltas() }}</span>
+                            <span style="padding: 1mm; padding-left: 1.5mm; padding-right: 1.5mm;"
+                                class="rounded bg-warning">{{ $project->countMedias() }}</span>
+                            <span style="padding: 1mm; padding-left: 1.5mm; padding-right: 1.5mm;"
+                                class="rounded bg-primary">{{ $project->countBajas() }}</span>
 
                         </td>
 
