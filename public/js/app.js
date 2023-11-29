@@ -10875,13 +10875,12 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
                     htmlFor: "priority",
                     children: "Prioridad"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("select", {
-                    defaultValue: this.task.priority_id,
                     className: "form-control",
                     style: {
                       width: "100%"
                     },
                     name: "priority",
-                    id: "priority" + this.task.token,
+                    id: "priority",
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
                       value: 1,
                       children: "Alta"
@@ -10936,6 +10935,7 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("/tasks/project/get_departaments").then(function (response) {
         _this3.departaments = response.data.departaments;
         _this3.users = response.data.users;
+        _this3.priorities = response.data.priorities;
 
         _this3.setState({
           loading: false
@@ -10987,6 +10987,10 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
           handlePrepareValue("departaments", value);
           handleSetUsers(value);
         });
+        $("#priorities").on("input", function (e) {
+          var value = e.target.value;
+          handlePrepareValue("priorities", value);
+        });
         $("#users").on("change", function (e) {
           var value = e.target.value;
 
@@ -11028,6 +11032,10 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
 
       if (key == "users") {
         this.selectedUsers = value;
+      }
+
+      if (key == "priorities") {
+        this.priority_id = value;
       }
     }
   }, {
