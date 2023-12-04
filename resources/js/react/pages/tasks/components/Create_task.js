@@ -141,7 +141,7 @@ class Create_task extends React.Component {
                                     </select>
                                 </div>
 
-                                <div className="col-lg-12 mb-3">
+                                <div className="col-lg-6 mb-3">
                                     <label htmlFor="users">Usuarios:</label>
                                     <select
                                         className="form-control"
@@ -336,7 +336,7 @@ class Create_task extends React.Component {
             description: $("#description").val(),
             departaments: this.selectedDepartaments,
             users: this.selectedUsers,
-            priority: $("#priority" + this.task.token).val(),
+            priority: $("#priority").val(),
             project: this.project.id,
         };
 

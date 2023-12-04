@@ -10184,14 +10184,29 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("thead", {
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tr", {
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+                      style: {
+                        width: "20%"
+                      },
                       children: "Tarea"
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+                      style: {
+                        width: "45%"
+                      },
                       children: "Descripci\xF3n"
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+                      style: {
+                        width: "20%"
+                      },
                       children: "Progreso"
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+                      style: {
+                        width: "10%"
+                      },
                       children: "Prioridad"
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+                      style: {
+                        width: "5%"
+                      },
                       children: "Acciones"
                     })]
                   })
@@ -10222,7 +10237,7 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                           }), "."]
                         })]
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("td", {
-                        className: "text-center",
+                        className: "text-center align-middle",
                         children: [task.priority.name == "media" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
                           className: "p-2 badge bg-warning",
                           style: {
@@ -10856,7 +10871,7 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
                     })
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                  className: "col-lg-12 mb-3",
+                  className: "col-lg-6 mb-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     htmlFor: "users",
                     children: "Usuarios:"
@@ -11062,7 +11077,7 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
         description: $("#description").val(),
         departaments: this.selectedDepartaments,
         users: this.selectedUsers,
-        priority: $("#priority" + this.task.token).val(),
+        priority: $("#priority").val(),
         project: this.project.id
       }; //VALIDATE DATA
 

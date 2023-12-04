@@ -53,11 +53,19 @@ class Tasks extends React.Component {
                             <table className="table table-hover table-striped table-bordered js_datatable ">
                                 <thead>
                                     <tr>
-                                        <th>Tarea</th>
-                                        <th>Descripción</th>
-                                        <th>Progreso</th>
-                                        <th>Prioridad</th>
-                                        <th>Acciones</th>
+                                        <th style={{ width: "20%" }}>Tarea</th>
+                                        <th style={{ width: "45%" }}>
+                                            Descripción
+                                        </th>
+                                        <th style={{ width: "20%" }}>
+                                            Progreso
+                                        </th>
+                                        <th style={{ width: "10%" }}>
+                                            Prioridad
+                                        </th>
+                                        <th style={{ width: "5%" }}>
+                                            Acciones
+                                        </th>
                                     </tr>
                                 </thead>
 
@@ -94,7 +102,7 @@ class Tasks extends React.Component {
                                                     </small>
                                                 </td>
 
-                                                <td className="text-center">
+                                                <td className="text-center align-middle">
                                                     {task.priority.name ==
                                                     "media" ? (
                                                         <span

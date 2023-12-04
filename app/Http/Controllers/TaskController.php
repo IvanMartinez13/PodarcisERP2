@@ -212,6 +212,7 @@ class TaskController extends Controller
             "is_done" => 0,
             "token" => md5($request->name . '+' . date('d/m/Y H:i:s')),
             "project_id" => $request->project,
+            "priority_id" => $request->priority,
             "task_id" => null,
         ];
 
