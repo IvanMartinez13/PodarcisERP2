@@ -21,11 +21,9 @@
 <div class="ibox">
     <div class="ibox-title">
         <h5>{{ __('modules.projects') }}</h5>
-        @can('create Tareas')
         <a href="{{ route('tasks.project.create') }}" class="btn btn-primary">
             {{ __('forms.create') }}
         </a>
-        @endcan
 
 
         <div class="ibox-tools">
@@ -41,8 +39,8 @@
                 <thead>
                     <tr>
                         <th style="width: 20%">{{ __('columns.name') }}</th>
-                        <th style="width: 50%">{{ __('columns.description') }}</th>
-                        <th style="width: 20%">{{ __('columns.priority') }}</th>
+                        <th style="width: 60%">{{ __('columns.description') }}</th>
+                        <th style="width: 10%">{{ __('columns.priority') }}</th>
                         <th style="width: 10%">{{ __('columns.actions') }}</th>
                     </tr>
                 </thead>
@@ -58,8 +56,15 @@
                             {!! $project->description !!}
                         </td>
 
-                        <td class="align-middle">
-                            {!! $project->priority !!}
+                        <td class="align-middle text-center">
+
+                            <span style="padding: 1mm; padding-left: 1.5mm; padding-right: 1.5mm;"
+                                class="rounded bg-danger">{{ $project->countAltas() }}</span>
+                            <span style="padding: 1mm; padding-left: 1.5mm; padding-right: 1.5mm;"
+                                class="rounded bg-warning">{{ $project->countMedias() }}</span>
+                            <span style="padding: 1mm; padding-left: 1.5mm; padding-right: 1.5mm;"
+                                class="rounded bg-primary">{{ $project->countBajas() }}</span>
+
                         </td>
 
                         <td class="text-center align-middle">

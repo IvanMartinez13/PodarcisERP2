@@ -26,4 +26,34 @@ class Project extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    public function countAltas()
+    {
+        $count = Task::where('project_id', $this->id)->whereHas('priority', function ($q) {
+
+            $q->where('id', 1); // id ALta
+        })->get();
+
+        return count($count); //cuenta el número de resulrados
+    }
+
+    public function countMedias()
+    {
+        $count = Task::where('project_id', $this->id)->whereHas('priority', function ($q) {
+
+            $q->where('id', 2); // id Medias
+        })->get();
+
+        return count($count); //cuenta el número de resulrados
+    }
+
+    public function countBajas()
+    {
+        $count = Task::where('project_id', $this->id)->whereHas('priority', function ($q) {
+
+            $q->where('id', 3); // id Bajas
+        })->get();
+
+        return count($count); //cuenta el número de resulrados
+    }
 }

@@ -58,5 +58,6 @@ return [
     'delete' => 'Eliminar',
     'read' => 'Leer',
     'content' => 'Contenido',
+    'priority' => 'Prioridad'
 
 ];
