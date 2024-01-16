@@ -54,15 +54,19 @@ class Tasks extends React.Component {
                                 <thead>
                                     <tr>
                                         <th style={{ width: "20%" }}>Tarea</th>
+
                                         <th style={{ width: "45%" }}>
                                             Descripción
                                         </th>
+
                                         <th style={{ width: "20%" }}>
                                             Progreso
                                         </th>
+
                                         <th style={{ width: "10%" }}>
                                             Prioridad
                                         </th>
+
                                         <th style={{ width: "5%" }}>
                                             Acciones
                                         </th>
