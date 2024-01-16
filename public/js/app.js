@@ -10200,6 +10200,11 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                       children: "Progreso"
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                       style: {
+                        width: "20%"
+                      },
+                      children: "Usuarios Asignados"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+                      style: {
                         width: "10%"
                       },
                       children: "Prioridad"
@@ -10236,6 +10241,13 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                             children: [task.progress, "%"]
                           }), "."]
                         })]
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                        className: "align-middle",
+                        children: task.users.map(function (user) {
+                          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                            children: [" ", user.name, " "]
+                          });
+                        })
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("td", {
                         className: "text-center align-middle",
                         children: [task.priority.name == "media" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {

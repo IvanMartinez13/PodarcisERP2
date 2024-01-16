@@ -63,6 +63,10 @@ class Tasks extends React.Component {
                                             Progreso
                                         </th>
 
+                                        <th style={{ width: "20%" }}>
+                                            Usuarios Asignados
+                                        </th>
+
                                         <th style={{ width: "10%" }}>
                                             Prioridad
                                         </th>
@@ -104,6 +108,17 @@ class Tasks extends React.Component {
                                                         </strong>
                                                         .
                                                     </small>
+                                                </td>
+
+                                                <td className="align-middle">
+                                                    {task.users.map((user) => {
+                                                        return (
+                                                            <div>
+                                                                {" "}
+                                                                {user.name}{" "}
+                                                            </div>
+                                                        );
+                                                    })}
                                                 </td>
 
                                                 <td className="text-center align-middle">
