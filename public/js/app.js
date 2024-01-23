@@ -11070,13 +11070,22 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
     value: function setUsers(token) {
       $("#users").text("").trigger("change"); //CLEAR SELECT
 
+      var departments = $("#departaments").val();
+      var users = [];
       this.users.map(function (user, index) {
         user.departaments.map(function (departament) {
-          if (departament.token == token) {
-            var op = "<option value=\"".concat(user.token, "\">").concat(user.name, "</option>");
-            $("#users").append(op).trigger("change");
-          }
+          departments.map(function (department) {
+            if (departament.token == department) {
+              if (!users.includes(user)) {
+                users.push(user);
+              }
+            }
+          });
         });
+      });
+      users.map(function (user) {
+        var op = "<option value=\"".concat(user.token, "\">").concat(user.name, "</option>");
+        $("#users").append(op).trigger("change");
       });
     }
   }, {
@@ -11881,23 +11890,23 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
     value: function setUsers(token) {
       var _this4 = this;
 
-      var options = this.options;
-      $("#users" + this.task.token).text("").trigger("change");
+      $("#users" + this.task.token).text("").trigger("change"); //CLEAR SELECT
+
+      var departments = $("#departaments" + this.task.token).val();
+      var users = [];
       this.users.map(function (user, index) {
         user.departaments.map(function (departament) {
-          if (departament.token == token) {
-            if (options.includes(user)) {
-              var idx = options.indexOf(user);
-              options.splice(idx, 0);
-            } else {
-              options.push(user);
+          departments.map(function (department) {
+            if (departament.token == department) {
+              if (!users.includes(user)) {
+                users.push(user);
+              }
             }
-          }
+          });
         });
       });
-      this.options = options;
-      this.options.map(function (val) {
-        var op = "<option value=\"".concat(val.token, "\">").concat(val.name, "</option>");
+      users.map(function (user) {
+        var op = "<option value=\"".concat(user.token, "\">").concat(user.name, "</option>");
         $("#users" + _this4.task.token).append(op).trigger("change");
       });
     }
