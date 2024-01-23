@@ -1,482 +1,475 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row mb-2">
-        <div class="col-10 my-auto">
-            <h2>{{ $task->name }}</h2>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{{ route('tasks.index') }}">{{ __('modules.projects') }}</a>
-                </li>
+<div class="row mb-2">
+    <div class="col-10 my-auto">
+        <h2>{{ $task->name }}</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ route('tasks.index') }}">{{ __('modules.projects') }}</a>
+            </li>
 
-                <li class="breadcrumb-item">
-                    <a href="{{ route('tasks.project.details', $project->token) }}">{{ $project->name }}</a>
-                </li>
+            <li class="breadcrumb-item">
+                <a href="{{ route('tasks.project.details', $project->token) }}">{{ $project->name }}</a>
+            </li>
 
-                @if ($parent != null)
-                    <li class="breadcrumb-item">
-                        <a
-                            href="{{ route('tasks.project.task_details', [$project->token, $parent->token]) }}">{{ $parent->name }}</a>
-                    </li>
-                @endif
-
-                <li class="breadcrumb-item active">
-                    <strong>{{ $task->name }}</strong>
-                </li>
-            </ol>
-        </div>
-
-        <div class="col-2 text-right">
             @if ($parent != null)
-                <a class="btn btn-danger mt-5"
-                    href="{{ route('tasks.project.task_details', [$project->token, $parent->token]) }}">
-                    {{ __('pagination.return') }}</a>
-            @else
-                <a href="{{ route('tasks.project.details', $project->token) }}"
-                    class="btn btn-danger mt-5">{{ __('pagination.return') }}</a>
+            <li class="breadcrumb-item">
+                <a href="{{ route('tasks.project.task_details', [$project->token, $parent->token]) }}">{{ $parent->name
+                    }}</a>
+            </li>
             @endif
 
-        </div>
+            <li class="breadcrumb-item active">
+                <strong>{{ $task->name }}</strong>
+            </li>
+        </ol>
+    </div>
+
+    <div class="col-2 text-right">
+        @if ($parent != null)
+        <a class="btn btn-danger mt-5"
+            href="{{ route('tasks.project.task_details', [$project->token, $parent->token]) }}">
+            {{ __('pagination.return') }}</a>
+        @else
+        <a href="{{ route('tasks.project.details', $project->token) }}" class="btn btn-danger mt-5">{{
+            __('pagination.return') }}</a>
+        @endif
 
     </div>
 
-    <div class="row">
-        <div class="col-lg-9">
-            <div class="ibox">
-                <div class="ibox-title">
-                    <h5>{{ $task->name }}</h5>
+</div>
 
-                    <div class="ibox-tools">
-                        <a role="button" class="collapse-link">
-                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                        </a>
+<div class="row">
+    <div class="col-lg-9">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>{{ $task->name }}</h5>
+
+                <div class="ibox-tools">
+                    <a role="button" class="collapse-link">
+                        <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="ibox-content">
+                <div class="row mb-3">
+                    <div class="col-sm-2 text-right">
+                        <dt>{{ __('columns.status') }}:</dt>
                     </div>
+
+                    <div class="col-sm-10 text-left">
+                        <dd>
+
+                            <span id="stateLabel" @can('update Tareas') onclick="changeState()" style="cursor: pointer"
+                                @endcan
+                                class="label  @if ($task->is_done == 1) label-primary @else label-danger @endif ">
+                                @if ($task->is_done == 1)
+                                Finalizado
+                                @else
+                                Activo
+                                @endif
+                            </span>
+
+
+                        </dd>
+                    </div>
+
+                    <div class="col-sm-2 text-right">
+                        <dt>{{ __('columns.departaments') }}:</dt>
+                    </div>
+
+                    <div class="col-sm-10 text-left">
+                        <dd>
+                            @foreach ($task->departaments as $key => $departament)
+                            @if ($key + 1 == count($task->departaments))
+                            {{ $departament->name }}
+                            @else
+                            {{ $departament->name }},
+                            @endif
+                            @endforeach
+                        </dd>
+                    </div>
+
+                    <div class="col-sm-2 text-right">
+                        <dt>{{ __('columns.description') }}:</dt>
+                    </div>
+
+                    <div class="col-sm-10 text-left">
+                        <dd>
+                            {!! $task->description !!}
+                        </dd>
+                    </div>
+
+                    <div class="col-sm-2 text-right">
+                        <dt>{{ __('columns.progress') }}:</dt>
+                    </div>
+
+                    <div class="col-sm-10 text-left">
+                        <dd>
+                            <div class="progress m-b-1">
+                                <div id="progress" style="width: {{ $task->progress ? $task->progress : 0 }}%;"
+                                    class="progress-bar progress-bar-striped progress-bar-animated"></div>
+                            </div>
+                            <small>Completado en un <strong id="progress_text">{{ $task->progress ? $task->progress : 0
+                                    }}%</strong>.</small>
+                        </dd>
+                    </div>
+
+
+                    @hasrole('customer-manager')
+                    <div class="col-sm-2 text-right">
+                        <dt>{{ __('columns.progress') }}:</dt>
+                    </div>
+
+                    <div class="col-sm-10 text-left">
+                        <form action="{{ route('tasks.updateProgress', $task) }}" method="POST">
+                            @csrf
+                            @method('put')
+                            <input type="number" name="progress" class="form-control d-inline w-50" min="0" max="100"
+                                placeholder="{{ __('columns.progress') }}..." step="any" value="{{ $task->progress }}">
+                            %
+
+
+                            <button class="btn btn-primary d-inline">
+                                {{ __('Save') }}
+                            </button>
+                        </form>
+
+
+                    </div>
+                    @endhasrole
+
+
                 </div>
 
-                <div class="ibox-content">
-                    <div class="row mb-3">
-                        <div class="col-sm-2 text-right">
-                            <dt>{{ __('columns.status') }}:</dt>
-                        </div>
 
-                        <div class="col-sm-10 text-left">
-                            <dd>
+                {{-- TAB-CONTAINER --}}
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li><a id="nav-comments" class="nav-link active" data-toggle="tab" href="#comments">{{
+                                __('modules.comments') }}</a></li>
+                        @if ($parent == null)
+                        <li><a id="nav-subtasks" class="nav-link" data-toggle="tab" href="#sub_tasks">{{
+                                __('modules.sub_tasks') }}</a></li>
+                        @endif
 
-                                <span id="stateLabel"
-                                    @can('update tareas') onclick="changeState()" style="cursor: pointer" @endcan
-                                    class="label  @if ($task->is_done == 1) label-primary @else label-danger @endif ">
-                                    @if ($task->is_done == 1)
-                                        Finalizado
-                                    @else
-                                        Activo
-                                    @endif
-                                </span>
+                        @if ($parent)
+                        <li>
+                            <a id="nav-documents" class="nav-link" data-toggle="tab" href="#files">{{
+                                __('modules.files') }}
+                            </a>
+                        </li>
+                        @endif
 
+                    </ul>
+                    <div class="tab-content">
+                        {{-- TAB COMMENTS --}}
+                        <div role="tabpanel" id="comments" class="tab-pane active">
+                            <div class="panel-body">
+                                <div class="animated fadeIn">
+                                    {{-- CONTENIDO DE LOS COMENTARIOS --}}
 
-                            </dd>
-                        </div>
+                                    <div class="feed-activity-list">
+                                        @can('read Tareas')
+                                        <div class="feed-element">
+                                            <a href="#" class="float-left">
 
-                        <div class="col-sm-2 text-right">
-                            <dt>{{ __('columns.departaments') }}:</dt>
-                        </div>
+                                                @if (auth()->user()->profile_photo)
+                                                <img class="rounded-circle"
+                                                    src="{{ url('/storage') . auth()->user()->profile_photo }}" alt=""
+                                                    width="38px">
+                                                @else
+                                                <img class="rounded-circle" src="{{ url('/img/user_placeholder.png') }}"
+                                                    alt="" width="38px">
+                                                @endif
 
-                        <div class="col-sm-10 text-left">
-                            <dd>
-                                @foreach ($task->departaments as $key => $departament)
-                                    @if ($key + 1 == count($task->departaments))
-                                        {{ $departament->name }}
-                                    @else
-                                        {{ $departament->name }},
-                                    @endif
-                                @endforeach
-                            </dd>
-                        </div>
+                                            </a>
 
-                        <div class="col-sm-2 text-right">
-                            <dt>{{ __('columns.description') }}:</dt>
-                        </div>
+                                            <div class="media-body ">
+                                                <small class="float-right">{{ date('d/m/Y H:i') }}</small>
+                                                <strong>{{ auth()->user()->name }}</strong>:
+                                                <form action="{{ route('tasks.project.task_comment') }}" method="POST">
+                                                    @csrf
+                                                    @method('put')
+                                                    <input name="token" type="hidden" value="{{ $task->token }}">
 
-                        <div class="col-sm-10 text-left">
-                            <dd>
-                                {!! $task->description !!}
-                            </dd>
-                        </div>
+                                                    <textarea id="comment" name="comment"
+                                                        class="form-control"></textarea>
 
-                        <div class="col-sm-2 text-right">
-                            <dt>{{ __('columns.progress') }}:</dt>
-                        </div>
+                                                    <div class="text-right mt-3">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            {{ __('forms.send') }}
+                                                        </button>
+                                                    </div>
 
-                        <div class="col-sm-10 text-left">
-                            <dd>
-                                <div class="progress m-b-1">
-                                    <div id="progress" style="width: {{ $task->progress ? $task->progress : 0 }}%;"
-                                        class="progress-bar progress-bar-striped progress-bar-animated"></div>
-                                </div>
-                                <small>Completado en un <strong
-                                        id="progress_text">{{ $task->progress ? $task->progress : 0 }}%</strong>.</small>
-                            </dd>
-                        </div>
+                                                </form>
 
+                                            </div>
+                                        </div>
+                                        @endcan
+                                        {{-- COMMENT LIST --}}
 
-                        @hasrole('customer-manager')
-                            <div class="col-sm-2 text-right">
-                                <dt>{{ __('columns.progress') }}:</dt>
-                            </div>
+                                        @foreach ($comments as $comment)
+                                        <div class="feed-element">
+                                            <a href="#" class="float-left">
+                                                @if ($comment->user->profile_photo)
+                                                <img class="rounded-circle"
+                                                    src="{{ url('/storage') . $comment->user->profile_photo }}" alt=""
+                                                    width="38px">
+                                                @else
+                                                <img class="rounded-circle" src="{{ url('/img/user_placeholder.png') }}"
+                                                    alt="" width="38px">
+                                                @endif
 
-                            <div class="col-sm-10 text-left">
-                                <form action="{{ route('tasks.updateProgress', $task) }}" method="POST">
-                                    @csrf
-                                    @method('put')
-                                    <input type="number" name="progress" class="form-control d-inline w-50" min="0"
-                                        max="100" placeholder="{{ __('columns.progress') }}..."
-                                        value="{{ $task->progress }}"> %
+                                            </a>
 
+                                            <div class="media-body ">
+                                                @if ($comment->user->id == auth()->user()->id)
+                                                <div class="float-right">
+                                                    <button class="btn btn-sm btn-link" data-toggle="modal"
+                                                        data-target="#editComment_{{ $comment->token }}">
+                                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                    </button>
 
-                                    <button class="btn btn-primary d-inline">
-                                        {{ __('Save') }}
-                                    </button>
-                                </form>
+                                                    <button class="btn btn-sm btn-link"
+                                                        onclick="removeComment('{{ $comment->token }}')">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                                @endif
 
+                                                <small class="float-right">{{ date('d/m/Y H:i',
+                                                    strtotime($comment->created_at)) }}</small>
+                                                <strong>{{ $comment->user->name }}</strong>:
 
-                            </div>
-                        @endhasrole
+                                                <div class="well">
+                                                    {!! $comment->comment !!}
+                                                </div>
+                                            </div>
+                                        </div>
 
+                                        <div class="modal fade" id="editComment_{{ $comment->token }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-xl" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                            {{ __('forms.comment') }} - {{ __('Edit') }}
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <form action="{{ route('tasks.project.updateComment', $comment) }}"
+                                                        method="POST">
+                                                        <div class="modal-body">
 
-                    </div>
-
-
-                    {{-- TAB-CONTAINER --}}
-                    <div class="tabs-container">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li><a id="nav-comments" class="nav-link active" data-toggle="tab"
-                                    href="#comments">{{ __('modules.comments') }}</a></li>
-                            @if ($parent == null)
-                                <li><a id="nav-subtasks" class="nav-link" data-toggle="tab"
-                                        href="#sub_tasks">{{ __('modules.sub_tasks') }}</a></li>
-                            @endif
-
-                            @if ($parent)
-                                <li>
-                                    <a id="nav-documents" class="nav-link" data-toggle="tab"
-                                        href="#files">{{ __('modules.files') }}
-                                    </a>
-                                </li>
-                            @endif
-
-                        </ul>
-                        <div class="tab-content">
-                            {{-- TAB COMMENTS --}}
-                            <div role="tabpanel" id="comments" class="tab-pane active">
-                                <div class="panel-body">
-                                    <div class="animated fadeIn">
-                                        {{-- CONTENIDO DE LOS COMENTARIOS --}}
-
-                                        <div class="feed-activity-list">
-                                            @can('read Tareas')
-                                                <div class="feed-element">
-                                                    <a href="#" class="float-left">
-
-                                                        @if (auth()->user()->profile_photo)
-                                                            <img class="rounded-circle"
-                                                                src="{{ url('/storage') . auth()->user()->profile_photo }}"
-                                                                alt="" width="38px">
-                                                        @else
-                                                            <img class="rounded-circle"
-                                                                src="{{ url('/img/user_placeholder.png') }}" alt=""
-                                                                width="38px">
-                                                        @endif
-
-                                                    </a>
-
-                                                    <div class="media-body ">
-                                                        <small class="float-right">{{ date('d/m/Y H:i') }}</small>
-                                                        <strong>{{ auth()->user()->name }}</strong>:
-                                                        <form action="{{ route('tasks.project.task_comment') }}"
-                                                            method="POST">
                                                             @csrf
                                                             @method('put')
-                                                            <input name="token" type="hidden" value="{{ $task->token }}">
+                                                            <input name="token" type="hidden"
+                                                                value="{{ $task->token }}">
 
-                                                            <textarea id="comment" name="comment" class="form-control"></textarea>
-
-                                                            <div class="text-right mt-3">
-                                                                <button type="submit" class="btn btn-primary">
-                                                                    {{ __('forms.send') }}
-                                                                </button>
-                                                            </div>
-
-                                                        </form>
-
-                                                    </div>
-                                                </div>
-                                            @endcan
-                                            {{-- COMMENT LIST --}}
-
-                                            @foreach ($comments as $comment)
-                                                <div class="feed-element">
-                                                    <a href="#" class="float-left">
-                                                        @if ($comment->user->profile_photo)
-                                                            <img class="rounded-circle"
-                                                                src="{{ url('/storage') . $comment->user->profile_photo }}"
-                                                                alt="" width="38px">
-                                                        @else
-                                                            <img class="rounded-circle"
-                                                                src="{{ url('/img/user_placeholder.png') }}"
-                                                                alt="" width="38px">
-                                                        @endif
-
-                                                    </a>
-
-                                                    <div class="media-body ">
-                                                        @if ($comment->user->id == auth()->user()->id)
-                                                            <div class="float-right">
-                                                                <button class="btn btn-sm btn-link" data-toggle="modal"
-                                                                    data-target="#editComment_{{ $comment->token }}">
-                                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                                                                </button>
-
-                                                                <button class="btn btn-sm btn-link"
-                                                                    onclick="removeComment('{{ $comment->token }}')">
-                                                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                                                </button>
-                                                            </div>
-                                                        @endif
-
-                                                        <small
-                                                            class="float-right">{{ date('d/m/Y H:i', strtotime($comment->created_at)) }}</small>
-                                                        <strong>{{ $comment->user->name }}</strong>:
-
-                                                        <div class="well">
-                                                            {!! $comment->comment !!}
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="modal fade" id="editComment_{{ $comment->token }}"
-                                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                    aria-hidden="true">
-                                                    <div class="modal-dialog modal-xl" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">
-                                                                    {{ __('forms.comment') }} - {{ __('Edit') }}
-                                                                </h5>
-                                                                <button type="button" class="close"
-                                                                    data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <form
-                                                                action="{{ route('tasks.project.updateComment', $comment) }}"
-                                                                method="POST">
-                                                                <div class="modal-body">
-
-                                                                    @csrf
-                                                                    @method('put')
-                                                                    <input name="token" type="hidden"
-                                                                        value="{{ $task->token }}">
-
-                                                                    <textarea name="comment" class="form-control comment_modal">
+                                                            <textarea name="comment" class="form-control comment_modal">
                                                                         {{ $comment->comment }}
                                                                     </textarea>
 
 
 
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-dismiss="modal">{{ __('Cancel') }}</button>
-                                                                    <button type="submit" class="btn btn-primary">
-                                                                        {{ __('forms.send') }}
-                                                                    </button>
-                                                                </div>
-                                                            </form>
                                                         </div>
-                                                    </div>
-                                                </div>
-
-                                                <form id="delete_comment_{{ $comment->token }}"
-                                                    action="{{ route('comment.destroy', $comment) }}" method="POST">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                </form>
-                                            @endforeach
-
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            {{-- TAB SUB TASKS --}}
-                            @if ($parent == null)
-                                <div role="tabpanel" id="sub_tasks" class="tab-pane">
-                                    <div class="panel-body">
-                                        <subtasks task={{ json_encode($task->token) }}
-                                            project={{ json_encode($project->token) }}
-                                            store="{{ auth()->user()->can('store Tareas') }}"
-                                            update="{{ auth()->user()->can('update Tareas') }}"
-                                            delete="{{ auth()->user()->can('delete Tareas') }}"></subtasks>
-                                    </div>
-                                </div>
-                            @endif
-
-
-
-                            {{-- TAB FILES --}}
-                            <div role="tabpanel" id="files" class="tab-pane">
-                                <div class="panel-body">
-                                    <form action="{{ route('tasks.project.addFiles') }}" method="POST"
-                                        class="dropzone  mb-5" id="add-files">
-                                        @csrf
-
-                                        <input name="token" type="hidden" value="{{ $task->token }}">
-
-                                        <div class="dz-message" style="height:200px;">
-                                            {{ __('forms.files') }}
-                                        </div>
-
-                                        <div class="dropzone-previews"></div>
-
-                                    </form>
-
-                                    <table class="table table-striped table-hover table-bordered js_datatable">
-                                        <thead>
-                                            <tr>
-                                                <th>{{ __('columns.name') }}</th>
-                                                <th>{{ __('columns.actions') }}</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody id="files_list">
-                                            @foreach ($tasks_files as $file)
-                                                <tr>
-                                                    <td class="align-middle">
-                                                        {{ $file->name }}
-                                                    </td>
-                                                    <td class="align-middle text-center">
-                                                        <div class="btn-group">
-
-
-
-                                                            <button class="btn btn-link" data-toggle="modal"
-                                                                data-target="#updateFile_{{ $file->token }}">
-                                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">{{ __('Cancel') }}</button>
+                                                            <button type="submit" class="btn btn-primary">
+                                                                {{ __('forms.send') }}
                                                             </button>
-                                                            <a class="btn btn-link" target="_BLANK"
-                                                                href="{{ url('/storage') . $file->path }}">
-                                                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                                            </a>
-
-                                                            @can('delete Tareas')
-                                                                <button onclick="remove('{{ $file->token }}')"
-                                                                    class="btn btn-link">
-                                                                    <i class="fa fa-trash-alt" aria-hidden="true"></i>
-                                                                </button>
-                                                            @endcan
-
-
                                                         </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <form id="delete_comment_{{ $comment->token }}"
+                                            action="{{ route('comment.destroy', $comment) }}" method="POST">
+                                            @method('DELETE')
+                                            @csrf
+                                        </form>
+                                        @endforeach
+
+
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
 
+                        {{-- TAB SUB TASKS --}}
+                        @if ($parent == null)
+                        <div role="tabpanel" id="sub_tasks" class="tab-pane">
+                            <div class="panel-body">
+                                <subtasks task={{ json_encode($task->token) }}
+                                    project={{ json_encode($project->token) }}
+                                    store="{{ auth()->user()->can('store Tareas') }}"
+                                    update="{{ auth()->user()->can('update Tareas') }}"
+                                    delete="{{ auth()->user()->can('delete Tareas') }}"></subtasks>
+                            </div>
+                        </div>
+                        @endif
 
+
+
+                        {{-- TAB FILES --}}
+                        <div role="tabpanel" id="files" class="tab-pane">
+                            <div class="panel-body">
+                                <form action="{{ route('tasks.project.addFiles') }}" method="POST"
+                                    class="dropzone  mb-5" id="add-files">
+                                    @csrf
+
+                                    <input name="token" type="hidden" value="{{ $task->token }}">
+
+                                    <div class="dz-message" style="height:200px;">
+                                        {{ __('forms.files') }}
+                                    </div>
+
+                                    <div class="dropzone-previews"></div>
+
+                                </form>
+
+                                <table class="table table-striped table-hover table-bordered js_datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>{{ __('columns.name') }}</th>
+                                            <th>{{ __('columns.actions') }}</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="files_list">
+                                        @foreach ($tasks_files as $file)
+                                        <tr>
+                                            <td class="align-middle">
+                                                {{ $file->name }}
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <div class="btn-group">
+
+
+
+                                                    <button class="btn btn-link" data-toggle="modal"
+                                                        data-target="#updateFile_{{ $file->token }}">
+                                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                    </button>
+                                                    <a class="btn btn-link" target="_BLANK"
+                                                        href="{{ url('/storage') . $file->path }}">
+                                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                                    </a>
+
+                                                    @can('delete Tareas')
+                                                    <button onclick="remove('{{ $file->token }}')" class="btn btn-link">
+                                                        <i class="fa fa-trash-alt" aria-hidden="true"></i>
+                                                    </button>
+                                                    @endcan
+
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="ibox-footer">
-                    Podarcis SL. &copy; {{ date('Y') }}
+
+
                 </div>
             </div>
-        </div>
-
-        <div class="col-lg-3">
-            <h4>{{ $project->name }}</h4>
-
-            @if ($project->image)
-                <img src="{{ url('/storage') . $project->image }}" alt="{{ $project->name }}" class="img-fluid mb-3">
-            @endif
-
-            {!! $project->description !!}
-
-            {{-- <small>
-                <i class="fa fa-circle" aria-hidden="true" style="color: {{ $project->color }}"></i>
-                {{ $project->color }}
-            </small> --}}
-
+            <div class="ibox-footer">
+                Podarcis SL. &copy; {{ date('Y') }}
+            </div>
         </div>
     </div>
 
-    @foreach ($tasks_files as $file)
-        <div class="modal fade" id="updateFile_{{ $file->token }}" tabindex="-1"
-            aria-labelledby="updateFile_{{ $file->token }}Label" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content bg-primary">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="updateFile_{{ $file->token }}Label">{{ __('forms.update') }}
-                            {{ __('modules.files') }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    <div class="col-lg-3">
+        <h4>{{ $project->name }}</h4>
+
+        @if ($project->image)
+        <img src="{{ url('/storage') . $project->image }}" alt="{{ $project->name }}" class="img-fluid mb-3">
+        @endif
+
+        {!! $project->description !!}
+
+        {{-- <small>
+            <i class="fa fa-circle" aria-hidden="true" style="color: {{ $project->color }}"></i>
+            {{ $project->color }}
+        </small> --}}
+
+    </div>
+</div>
+
+@foreach ($tasks_files as $file)
+<div class="modal fade" id="updateFile_{{ $file->token }}" tabindex="-1"
+    aria-labelledby="updateFile_{{ $file->token }}Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-primary">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateFile_{{ $file->token }}Label">{{ __('forms.update') }}
+                    {{ __('modules.files') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('tasks.file.update') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('put')
+
+                <input name="token" type="hidden" value="{{ $file->token }}">
+                <div class="modal-body bg-white text-dark">
+                    <div class="form-group">
+                        <label for="name_{{ $file->token }}">{{ __('forms.name') }}:</label>
+                        <input type="text" name="name" id="name_{{ $file->token }}" class="form-control"
+                            placeholder="{{ __('forms.name') }}..." value="{{ $file->name }}">
                     </div>
-                    <form action="{{ route('tasks.file.update') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('put')
 
-                        <input name="token" type="hidden" value="{{ $file->token }}">
-                        <div class="modal-body bg-white text-dark">
-                            <div class="form-group">
-                                <label for="name_{{ $file->token }}">{{ __('forms.name') }}:</label>
-                                <input type="text" name="name" id="name_{{ $file->token }}" class="form-control"
-                                    placeholder="{{ __('forms.name') }}..." value="{{ $file->name }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="name_{{ $file->token }}">{{ __('forms.fileLabel') }}:</label>
-                                <div class="custom-file">
-                                    <input id="file{{ $file->token }}" name="file" type="file"
-                                        class="custom-file-input">
-                                    <label for="file{{ $file->token }}"
-                                        class="custom-file-label">{{ __('forms.file') }}</label>
-                                </div>
-                            </div>
-
+                    <div class="form-group">
+                        <label for="name_{{ $file->token }}">{{ __('forms.fileLabel') }}:</label>
+                        <div class="custom-file">
+                            <input id="file{{ $file->token }}" name="file" type="file" class="custom-file-input">
+                            <label for="file{{ $file->token }}" class="custom-file-label">{{ __('forms.file') }}</label>
                         </div>
-
-                        <div class="modal-footer bg-white text-dark">
-
-                            <button type="submit" class="btn btn-primary">{{ __('forms.update') }}</button>
-                            <button type="button" class="btn btn-secondary"
-                                data-dismiss="modal">{{ __('forms.close') }}</button>
-                        </div>
-                    </form>
-
+                    </div>
 
                 </div>
-            </div>
-        </div>
 
-        <form id="delete_{{ $file->token }}" action="{{ route('tasks.project.deleteFile') }}" method="post">
-            @csrf
-            @method('put')
-            <input name="token" type="hidden" value="{{ $file->token }}" />
-        </form>
-    @endforeach
+                <div class="modal-footer bg-white text-dark">
+
+                    <button type="submit" class="btn btn-primary">{{ __('forms.update') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('forms.close')
+                        }}</button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+<form id="delete_{{ $file->token }}" action="{{ route('tasks.project.deleteFile') }}" method="post">
+    @csrf
+    @method('put')
+    <input name="token" type="hidden" value="{{ $file->token }}" />
+</form>
+@endforeach
 @endsection
 
 @push('scripts')
-    <script src="{{ url('/') }}/js/tables.js"></script>
+<script src="{{ url('/') }}/js/tables.js"></script>
 
 
 
-    <script>
-        $(document).ready(() => {
+<script>
+    $(document).ready(() => {
             $('#comment').summernote({
                 placeholder: "{{ __('forms.comment') }}...",
                 height: 100
@@ -714,29 +707,29 @@
 
                     $('#nav-subtasks').tab('show') // Select tab
                 } */
-    </script>
+</script>
 
-    @foreach ($errors->all() as $error)
-        <script>
-            $(document).ready(() => {
+@foreach ($errors->all() as $error)
+<script>
+    $(document).ready(() => {
                 toastr.error("{{ $error }}")
             })
-        </script>
-    @endforeach
+</script>
+@endforeach
 
-    @if (session('status') == 'error')
-        <script>
-            $(document).ready(() => {
+@if (session('status') == 'error')
+<script>
+    $(document).ready(() => {
                 toastr.error("{{ session('message') }}")
             })
-        </script>
-    @endif
+</script>
+@endif
 
-    @if (session('status') == 'success')
-        <script>
-            $(document).ready(() => {
+@if (session('status') == 'success')
+<script>
+    $(document).ready(() => {
                 toastr.success("{{ session('message') }}")
             })
-        </script>
-    @endif
+</script>
+@endif
 @endpush

@@ -10496,7 +10496,7 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
                   className: "col-lg-12 my-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     htmlFor: "year",
-                    children: "Nombre:"
+                    children: "A\xF1o:"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
                     id: "year",
                     type: "number",
@@ -10627,7 +10627,7 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
 
       var data = {
         name: this.name,
-        year: this.year,
+        year: Number(this.year),
         description: $("#description").val(),
         task: this.task,
         users: this.selectedUsers
