@@ -22,7 +22,7 @@
 
 </div>
 
-<div class="row">
+<div class="row mb-5">
     @foreach ($projects as $key => $project)
     <div class="col-md-3 mt-4">
         <div class="ibox h-100">
@@ -35,22 +35,64 @@
                     {!! $project ->description !!}
                 </div>
 
+                <h5>Tareas: </h5>
+                <span class="label label-danger mx-1">
+                    {{ $project->countAltas() }}
+                </span>
+
+                <span class="label label-warning mx-1">
+                    {{ $project->countMedias() }}
+                </span>
+
+                <span class="label label-primary mx-1">
+                    {{ $project->countBajas() }}
+                </span>
+
+                <div class="mt-3">
+                    @php
+                    $totalTareas = count($project->tareas);
+                    $progreso = 0;
+
+                    foreach ($project->tareas as $key => $tarea) {
+                    $progreso += $tarea->progress;
+                    }
+
+                    if($totalTareas > 0){
+                    $progreso = $progreso/$totalTareas;
+                    }
+                    @endphp
+                    <h5>Progreso: </h5>
+                    <div class="progress m-b-1">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                            style="width: {{ round($progreso, 2) }}%;"></div>
+                    </div>
+                    <small>Completado en un <strong>{{ number_format($progreso, 2, ',', '.') }}%</strong>.</small>
+                </div>
+
+
             </div>
 
             <div class="ibox-footer h-25 my-auto">
                 <div class="text-center">
                     <div class="btn-group">
+
+                        @can('update Tareas')
                         <a href="{{ route('tasks.project.edit', $project->token) }}" class="btn btn-primary">
                             Editar
                         </a>
+                        @endcan
 
                         <a href="{{ route('tasks.project.details', $project->token) }}" class="btn btn-success">
                             Ver
                         </a>
 
+                        @can('delete Tareas')
+
                         <button class="btn btn-danger" onclick="remove('{{ $project->token }}')">
                             Borrar
                         </button>
+                        @endcan
+
                     </div>
                 </div>
             </div>
