@@ -10,6 +10,10 @@
                 <strong>{{ __('modules.projects') }}</strong>
             </li>
         </ol>
+
+        <a href="{{ route('tasks.project.create') }}" class="btn btn-primary">
+            {{ __('forms.create') }}
+        </a>
     </div>
 
     <div class="col-2 text-right">
@@ -18,90 +22,85 @@
 
 </div>
 
-<div class="ibox">
-    <div class="ibox-title">
-        <h5>{{ __('modules.projects') }}</h5>
-        <a href="{{ route('tasks.project.create') }}" class="btn btn-primary">
-            {{ __('forms.create') }}
-        </a>
+<div class="row mb-5">
+    @foreach ($projects as $key => $project)
+    <div class="col-md-3 mt-4">
+        <div class="ibox h-100">
+            <div class="ibox-content h-75">
+                <h3 class="text-center">
+                    {{ $project->name }}
+                </h3>
+
+                <div class="text-justify">
+                    {!! $project ->description !!}
+                </div>
+
+                <h5>Tareas: </h5>
+                <span class="label label-danger mx-1">
+                    {{ $project->countAltas() }}
+                </span>
+
+                <span class="label label-warning mx-1">
+                    {{ $project->countMedias() }}
+                </span>
+
+                <span class="label label-primary mx-1">
+                    {{ $project->countBajas() }}
+                </span>
+
+                <div class="mt-3">
+                    @php
+                    $totalTareas = count($project->tareas);
+                    $progreso = 0;
+
+                    foreach ($project->tareas as $key => $tarea) {
+                    $progreso += $tarea->progress;
+                    }
+
+                    if($totalTareas > 0){
+                    $progreso = $progreso/$totalTareas;
+                    }
+                    @endphp
+                    <h5>Progreso: </h5>
+                    <div class="progress m-b-1">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                            style="width: {{ round($progreso, 2) }}%;"></div>
+                    </div>
+                    <small>Completado en un <strong>{{ number_format($progreso, 2, ',', '.') }}%</strong>.</small>
+                </div>
 
 
-        <div class="ibox-tools">
-            <a href="" class="collapse-link">
-                <i class="fa fa-chevron-up" aria-hidden="true"></i>
-            </a>
+            </div>
+
+            <div class="ibox-footer h-25 my-auto">
+                <div class="text-center">
+                    <div class="btn-group">
+
+                        @can('update Tareas')
+                        <a href="{{ route('tasks.project.edit', $project->token) }}" class="btn btn-primary">
+                            Editar
+                        </a>
+                        @endcan
+
+                        <a href="{{ route('tasks.project.details', $project->token) }}" class="btn btn-success">
+                            Ver
+                        </a>
+
+                        @can('delete Tareas')
+
+                        <button class="btn btn-danger" onclick="remove('{{ $project->token }}')">
+                            Borrar
+                        </button>
+                        @endcan
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="ibox-content">
-        <div class="container-fluid table-responsive">
-            <table class="table table-striped table-hover table-bordered js_datatable">
-                <thead>
-                    <tr>
-                        <th style="width: 20%">{{ __('columns.name') }}</th>
-                        <th style="width: 60%">{{ __('columns.description') }}</th>
-                        <th style="width: 10%">{{ __('columns.priority') }}</th>
-                        <th style="width: 10%">{{ __('columns.actions') }}</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach ($projects as $key => $project)
-                    <tr>
-                        <td class="align-middle">
-                            {{ $project->name }}
-                        </td>
-
-                        <td class="align-middle">
-                            {!! $project->description !!}
-                        </td>
-
-                        <td class="align-middle text-center">
-
-                            <span style="padding: 1mm; padding-left: 1.5mm; padding-right: 1.5mm;"
-                                class="rounded bg-danger">{{ $project->countAltas() }}</span>
-                            <span style="padding: 1mm; padding-left: 1.5mm; padding-right: 1.5mm;"
-                                class="rounded bg-warning">{{ $project->countMedias() }}</span>
-                            <span style="padding: 1mm; padding-left: 1.5mm; padding-right: 1.5mm;"
-                                class="rounded bg-primary">{{ $project->countBajas() }}</span>
-
-                        </td>
-
-                        <td class="text-center align-middle">
-                            <div class="btn-group">
-
-
-                                @can('update Tareas')
-                                <a href="{{ route('tasks.project.edit', $project->token) }}" class="btn btn-link">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                                </a>
-                                @endcan
-
-                                @can('read Tareas')
-                                <a href="{{ route('tasks.project.details', $project->token) }}" class="btn btn-link">
-                                    <i class="fa-solid fa-clipboard-check"></i>
-                                </a>
-                                @endcan
-
-                                @can('delete Tareas')
-                                <button onclick="remove('{{ $project->token }}')" class="btn btn-link">
-                                    <i class="fa fa-trash-alt" aria-hidden="true"></i>
-                                </button>
-                                @endcan
-
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="ibox-footer">
-        Podarcis SL. &copy; {{ date('Y') }}
-    </div>
+    @endforeach
 </div>
+
 
 @foreach ($projects as $project)
 <form action="{{ route('tasks.project.delete') }}" id="delete_{{ $project->token }}" method="POST">

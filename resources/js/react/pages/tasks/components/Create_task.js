@@ -319,14 +319,23 @@ class Create_task extends React.Component {
 
     setUsers(token) {
         $("#users").text("").trigger("change"); //CLEAR SELECT
-
+        var departments = $("#departaments").val();
+        var users = [];
         this.users.map((user, index) => {
             user.departaments.map((departament) => {
-                if (departament.token == token) {
-                    let op = `<option value="${user.token}">${user.name}</option>`;
-                    $("#users").append(op).trigger("change");
-                }
+                departments.map((department) => {
+                    if (departament.token == department) {
+                        if (!users.includes(user)) {
+                            users.push(user);
+                        }
+                    }
+                });
             });
+        });
+
+        users.map((user) => {
+            let op = `<option value="${user.token}">${user.name}</option>`;
+            $("#users").append(op).trigger("change");
         });
     }
 

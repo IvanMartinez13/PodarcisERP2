@@ -766,7 +766,7 @@ class TaskController extends Controller
                 'status' => 'success',
                 'message' => 'Se ha finalizado una tarea.',
                 'close' => 1,
-                'progress' =>  $task->progress
+                'progress' =>  $progress
             ];
         } else {
             $task = Task::where('token', $request->token)->update(['is_done' => 0]);

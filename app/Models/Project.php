@@ -32,7 +32,7 @@ class Project extends Model
         $count = Task::where('project_id', $this->id)->whereHas('priority', function ($q) {
 
             $q->where('id', 1); // id ALta
-        })->get();
+        })->where('task_id', null)->get();
 
         return count($count); //cuenta el número de resulrados
     }
@@ -42,7 +42,7 @@ class Project extends Model
         $count = Task::where('project_id', $this->id)->whereHas('priority', function ($q) {
 
             $q->where('id', 2); // id Medias
-        })->get();
+        })->where('task_id', null)->get();
 
         return count($count); //cuenta el número de resulrados
     }
@@ -52,8 +52,13 @@ class Project extends Model
         $count = Task::where('project_id', $this->id)->whereHas('priority', function ($q) {
 
             $q->where('id', 3); // id Bajas
-        })->get();
+        })->where('task_id', null)->get();
 
         return count($count); //cuenta el número de resulrados
+    }
+
+    public function tareas()
+    {
+        return $this->hasMany(Task::class, 'project_id', 'id');
     }
 }

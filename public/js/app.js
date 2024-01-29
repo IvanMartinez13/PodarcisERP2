@@ -10200,6 +10200,11 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                       children: "Progreso"
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                       style: {
+                        width: "20%"
+                      },
+                      children: "Usuarios Asignados"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+                      style: {
                         width: "10%"
                       },
                       children: "Prioridad"
@@ -10236,6 +10241,13 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                             children: [task.progress, "%"]
                           }), "."]
                         })]
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                        className: "align-middle",
+                        children: task.users.map(function (user) {
+                          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                            children: [" ", user.name, " "]
+                          });
+                        })
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("td", {
                         className: "text-center align-middle",
                         children: [task.priority.name == "media" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
@@ -10484,7 +10496,7 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
                   className: "col-lg-12 my-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     htmlFor: "year",
-                    children: "Nombre:"
+                    children: "A\xF1o:"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
                     id: "year",
                     type: "number",
@@ -10615,7 +10627,7 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
 
       var data = {
         name: this.name,
-        year: this.year,
+        year: Number(this.year),
         description: $("#description").val(),
         task: this.task,
         users: this.selectedUsers
@@ -11058,13 +11070,22 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
     value: function setUsers(token) {
       $("#users").text("").trigger("change"); //CLEAR SELECT
 
+      var departments = $("#departaments").val();
+      var users = [];
       this.users.map(function (user, index) {
         user.departaments.map(function (departament) {
-          if (departament.token == token) {
-            var op = "<option value=\"".concat(user.token, "\">").concat(user.name, "</option>");
-            $("#users").append(op).trigger("change");
-          }
+          departments.map(function (department) {
+            if (departament.token == department) {
+              if (!users.includes(user)) {
+                users.push(user);
+              }
+            }
+          });
         });
+      });
+      users.map(function (user) {
+        var op = "<option value=\"".concat(user.token, "\">").concat(user.name, "</option>");
+        $("#users").append(op).trigger("change");
       });
     }
   }, {
@@ -11869,23 +11890,23 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
     value: function setUsers(token) {
       var _this4 = this;
 
-      var options = this.options;
-      $("#users" + this.task.token).text("").trigger("change");
+      $("#users" + this.task.token).text("").trigger("change"); //CLEAR SELECT
+
+      var departments = $("#departaments" + this.task.token).val();
+      var users = [];
       this.users.map(function (user, index) {
         user.departaments.map(function (departament) {
-          if (departament.token == token) {
-            if (options.includes(user)) {
-              var idx = options.indexOf(user);
-              options.splice(idx, 0);
-            } else {
-              options.push(user);
+          departments.map(function (department) {
+            if (departament.token == department) {
+              if (!users.includes(user)) {
+                users.push(user);
+              }
             }
-          }
+          });
         });
       });
-      this.options = options;
-      this.options.map(function (val) {
-        var op = "<option value=\"".concat(val.token, "\">").concat(val.name, "</option>");
+      users.map(function (user) {
+        var op = "<option value=\"".concat(user.token, "\">").concat(user.name, "</option>");
         $("#users" + _this4.task.token).append(op).trigger("change");
       });
     }

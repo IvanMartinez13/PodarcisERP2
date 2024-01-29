@@ -380,28 +380,25 @@ class Update_task extends React.Component {
     }
 
     setUsers(token) {
-        let options = this.options;
         $("#users" + this.task.token)
             .text("")
-            .trigger("change");
-
+            .trigger("change"); //CLEAR SELECT
+        var departments = $("#departaments" + this.task.token).val();
+        var users = [];
         this.users.map((user, index) => {
             user.departaments.map((departament) => {
-                if (departament.token == token) {
-                    if (options.includes(user)) {
-                        let idx = options.indexOf(user);
-                        options.splice(idx, 0);
-                    } else {
-                        options.push(user);
+                departments.map((department) => {
+                    if (departament.token == department) {
+                        if (!users.includes(user)) {
+                            users.push(user);
+                        }
                     }
-                }
+                });
             });
         });
 
-        this.options = options;
-
-        this.options.map((val) => {
-            let op = `<option value="${val.token}">${val.name}</option>`;
+        users.map((user) => {
+            let op = `<option value="${user.token}">${user.name}</option>`;
             $("#users" + this.task.token)
                 .append(op)
                 .trigger("change");
