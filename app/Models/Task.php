@@ -46,7 +46,7 @@ class Task extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, "tasks_users");
+        return $this->belongsToMany(User::class, "tasks_users", "task_id", "user_id");
     }
 
     public function strategy()

@@ -151,6 +151,7 @@ class TaskController extends Controller
                 ->where('task_id', null)
                 ->with('departaments')
                 ->with('priority')
+                ->with('users')
                 ->whereHas('users', function ($q) use ($user) {
                     $q->where('user_id', $user->id);
                 })

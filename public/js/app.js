@@ -10243,11 +10243,11 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                         })]
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
                         className: "align-middle",
-                        children: task.users.map(function (user) {
+                        children: task.users ? task.users.map(function (user) {
                           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                             children: [" ", user.name, " "]
                           });
-                        })
+                        }) : ""
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("td", {
                         className: "text-center align-middle",
                         children: [task.priority.name == "media" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
@@ -11771,9 +11771,11 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
           _this3.selectedDepartaments.push(departament.token);
         });
 
-        _this3.task.users.map(function (user) {
-          _this3.selectedUsers.push(user.token);
-        });
+        if (_this3.task.users) {
+          _this3.task.users.map(function (user) {
+            _this3.selectedUsers.push(user.token);
+          });
+        }
 
         _this3.setState({
           loading: false
