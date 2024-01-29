@@ -40,7 +40,8 @@ return [
     'deleted_at' => 'Fecha de eliminación',
     'deleted_at_time' => 'Hora de eliminación',
     'image' => 'Imagen',
-    'is_active' => 'Activo'
+    'is_active' => 'Activo',
+    "priority" => "Prioridad"
 
 
 ];

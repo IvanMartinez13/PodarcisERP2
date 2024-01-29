@@ -14,12 +14,14 @@ class Task extends Model
 
     protected $fillable = [
         "name",
+        "year",
         "description",
         "is_done",
         "progress",
         "token",
         "project_id",
-        "task_id"
+        "task_id",
+        "priority_id"
     ];
 
     public function project()
@@ -30,6 +32,11 @@ class Task extends Model
     public function task()
     {
         return $this->belongsTo(Task::class);
+    }
+
+    public function priority()
+    {
+        return $this->belongsTo(Priority::class);
     }
 
     public function departaments()

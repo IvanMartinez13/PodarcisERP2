@@ -160,7 +160,7 @@ class Update_task extends React.Component {
                                     </select>
                                 </div>
 
-                                <div className="col-lg-12 mb-3">
+                                <div className="col-lg-6 mb-3">
                                     <label htmlFor="users">Usuarios:</label>
                                     <select
                                         defaultValue={this.selectedUsers}
@@ -180,6 +180,21 @@ class Update_task extends React.Component {
                                                 </option>
                                             );
                                         })}
+                                    </select>
+                                </div>
+
+                                <div className="col-lg-6 mb-3">
+                                    <label htmlFor="priority">Prioridad</label>
+                                    <select
+                                        defaultValue={this.task.priority_id}
+                                        className="form-control"
+                                        style={{ width: "100%" }}
+                                        name="priority"
+                                        id={"priority" + this.task.token}
+                                    >
+                                        <option value={1}>Alta</option>
+                                        <option value={2}>Media</option>
+                                        <option value={3}>Baja</option>
                                     </select>
                                 </div>
 
@@ -253,6 +268,13 @@ class Update_task extends React.Component {
 
                 $("#users" + this.task.token).val(this.selectedUsers);
                 $("#users" + this.task.token).trigger("change");
+
+                $("#priority" + this.task.token).select2({
+                    dropdownParent: $("#updateTask" + this.task.token), //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
+                    theme: "bootstrap4",
+                    placeholder: "Selecciona un Prioridad...",
+                    width: "100%", // need to override the changed default
+                });
 
                 $("#departaments" + this.task.token).select2({
                     dropdownParent: $("#updateTask" + this.task.token), //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
@@ -358,28 +380,25 @@ class Update_task extends React.Component {
     }
 
     setUsers(token) {
-        let options = this.options;
         $("#users" + this.task.token)
             .text("")
-            .trigger("change");
-
+            .trigger("change"); //CLEAR SELECT
+        var departments = $("#departaments" + this.task.token).val();
+        var users = [];
         this.users.map((user, index) => {
             user.departaments.map((departament) => {
-                if (departament.token == token) {
-                    if (options.includes(user)) {
-                        let idx = options.indexOf(user);
-                        options.splice(idx, 0);
-                    } else {
-                        options.push(user);
+                departments.map((department) => {
+                    if (departament.token == department) {
+                        if (!users.includes(user)) {
+                            users.push(user);
+                        }
                     }
-                }
+                });
             });
         });
 
-        this.options = options;
-
-        this.options.map((val) => {
-            let op = `<option value="${val.token}">${val.name}</option>`;
+        users.map((user) => {
+            let op = `<option value="${user.token}">${user.name}</option>`;
             $("#users" + this.task.token)
                 .append(op)
                 .trigger("change");
@@ -393,6 +412,7 @@ class Update_task extends React.Component {
             departaments: this.selectedDepartaments,
             users: this.selectedUsers,
             project: this.project.id,
+            priority: $("#priority" + this.task.token).val(),
             token: this.task.token,
         };
 

@@ -53,10 +53,27 @@ class Tasks extends React.Component {
                             <table className="table table-hover table-striped table-bordered js_datatable ">
                                 <thead>
                                     <tr>
-                                        <th>Tarea</th>
-                                        <th>Descripción</th>
-                                        <th>Progreso</th>
-                                        <th>Acciones</th>
+                                        <th style={{ width: "20%" }}>Tarea</th>
+
+                                        <th style={{ width: "45%" }}>
+                                            Descripción
+                                        </th>
+
+                                        <th style={{ width: "20%" }}>
+                                            Progreso
+                                        </th>
+
+                                        <th style={{ width: "20%" }}>
+                                            Usuarios Asignados
+                                        </th>
+
+                                        <th style={{ width: "10%" }}>
+                                            Prioridad
+                                        </th>
+
+                                        <th style={{ width: "5%" }}>
+                                            Acciones
+                                        </th>
                                     </tr>
                                 </thead>
 
@@ -91,6 +108,61 @@ class Tasks extends React.Component {
                                                         </strong>
                                                         .
                                                     </small>
+                                                </td>
+
+                                                <td className="align-middle">
+                                                    {task.users.map((user) => {
+                                                        return (
+                                                            <div>
+                                                                {" "}
+                                                                {user.name}{" "}
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </td>
+
+                                                <td className="text-center align-middle">
+                                                    {task.priority.name ==
+                                                    "media" ? (
+                                                        <span
+                                                            className="p-2 badge bg-warning"
+                                                            style={{
+                                                                width: "45px",
+                                                            }}
+                                                        >
+                                                            Media
+                                                        </span>
+                                                    ) : (
+                                                        ""
+                                                    )}
+
+                                                    {task.priority.name ==
+                                                    "alta" ? (
+                                                        <span
+                                                            className="p-2 badge bg-danger"
+                                                            style={{
+                                                                width: "45px",
+                                                            }}
+                                                        >
+                                                            Alta
+                                                        </span>
+                                                    ) : (
+                                                        ""
+                                                    )}
+
+                                                    {task.priority.name ==
+                                                    "baja" ? (
+                                                        <span
+                                                            className="p-2 badge bg-primary"
+                                                            style={{
+                                                                width: "45px",
+                                                            }}
+                                                        >
+                                                            Baja
+                                                        </span>
+                                                    ) : (
+                                                        ""
+                                                    )}
                                                 </td>
                                                 <td className="align-middle text-center">
                                                     <div className="btn-group">

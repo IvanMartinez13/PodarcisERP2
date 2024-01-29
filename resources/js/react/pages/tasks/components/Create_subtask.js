@@ -61,7 +61,7 @@ class Create_subtask extends React.Component {
                                 </div>
 
                                 <div className="col-lg-12 my-3">
-                                    <label htmlFor="year">Nombre:</label>
+                                    <label htmlFor="year">Año:</label>
                                     <input
                                         id="year"
                                         type="number"
@@ -199,13 +199,13 @@ class Create_subtask extends React.Component {
     save() {
         let data = {
             name: this.name,
-            year: this.year,
+            year: Number(this.year),
             description: $("#description").val(),
             task: this.task,
             users: this.selectedUsers,
         };
 
-        console.log(data)
+        console.log(data);
         //VALIDATE DATA
         let has_errors = false;
 
