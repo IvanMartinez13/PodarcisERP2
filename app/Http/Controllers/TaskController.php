@@ -45,7 +45,8 @@ class TaskController extends Controller
         $data = [
             "name" => $request->name,
             "description" => $request->description,
-            "color" => $request->color,
+            /* "color" => $request->color, */
+            "priority" => $request->priority,
             "token" => md5($request->name . '+' . date('d/m/Y H:i:s')),
             "customer_id" => $customer_id,
         ];
@@ -87,10 +88,12 @@ class TaskController extends Controller
         $data = [
             "name" => $request->name,
             "description" => $request->description,
-            "color" => $request->color,
+            /* "color" => $request->color, */
+            "priority" => $request->priority,
         ];
 
         //2) UPDATE DATA
+
         if ($request->file('image')) {
 
             $folder = storage_path('/app/public/projects') . "/" . $customer_id;
@@ -141,11 +144,13 @@ class TaskController extends Controller
                 ->where('task_id', null)
                 ->with('users')
                 ->with('departaments')
+                ->with('priority')
                 ->get();
         } else {
             $tasks = Task::where('project_id', $project->id)
                 ->where('task_id', null)
                 ->with('departaments')
+                ->with('priority')
                 ->whereHas('users', function ($q) use ($user) {
                     $q->where('user_id', $user->id);
                 })
@@ -207,6 +212,7 @@ class TaskController extends Controller
             "is_done" => 0,
             "token" => md5($request->name . '+' . date('d/m/Y H:i:s')),
             "project_id" => $request->project,
+            "priority_id" => $request->priority,
             "task_id" => null,
         ];
 
@@ -252,6 +258,7 @@ class TaskController extends Controller
         $data = [
             "name" => $request->name,
             "description" => $request->description,
+            "priority_id" => $request->priority,
         ];
 
         $departaments = $request->departaments;
@@ -456,7 +463,7 @@ class TaskController extends Controller
         $users = User::whereIn("id", $users)->get();
         $subtask = Task::where('id', $subtask->id)->first();
 
-        
+
 
         foreach ($users as $item) {
 
@@ -528,7 +535,7 @@ class TaskController extends Controller
             $users = $users->pluck('email');
             foreach ($users as $user_email) {
                 if (!array_search($user_email, $emails)) {
-    
+
                     array_push($emails, $user_email);
                 }
             }

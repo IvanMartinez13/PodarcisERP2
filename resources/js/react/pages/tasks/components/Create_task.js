@@ -141,7 +141,7 @@ class Create_task extends React.Component {
                                     </select>
                                 </div>
 
-                                <div className="col-lg-12 mb-3">
+                                <div className="col-lg-6 mb-3">
                                     <label htmlFor="users">Usuarios:</label>
                                     <select
                                         className="form-control"
@@ -150,6 +150,20 @@ class Create_task extends React.Component {
                                         id="users"
                                         multiple="multiple"
                                     ></select>
+                                </div>
+
+                                <div className="col-lg-6 mb-3">
+                                    <label htmlFor="priority">Prioridad</label>
+                                    <select
+                                        className="form-control"
+                                        style={{ width: "100%" }}
+                                        name="priority"
+                                        id={"priority"}
+                                    >
+                                        <option value={1}>Alta</option>
+                                        <option value={2}>Media</option>
+                                        <option value={3}>Baja</option>
+                                    </select>
                                 </div>
 
                                 <div className="col-lg-12 mb-3">
@@ -198,6 +212,7 @@ class Create_task extends React.Component {
             .then((response) => {
                 this.departaments = response.data.departaments;
                 this.users = response.data.users;
+                this.priorities = response.data.priorities;
                 this.setState({ loading: false });
             })
             .then(() => {
@@ -213,6 +228,14 @@ class Create_task extends React.Component {
                     dropdownParent: $("#addTask"), //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
                     theme: "bootstrap4",
                     placeholder: "Selecciona un usuario...",
+                    width: "100%", // need to override the changed default
+                    allowClear: true,
+                });
+
+                $("#priority").select2({
+                    dropdownParent: $("#addTask"), //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
+                    theme: "bootstrap4",
+                    placeholder: "Selecciona un Prioridad...",
                     width: "100%", // need to override the changed default
                     allowClear: true,
                 });
@@ -234,6 +257,12 @@ class Create_task extends React.Component {
                     handlePrepareValue("departaments", value);
 
                     handleSetUsers(value);
+                });
+
+                $("#priorities").on("input", (e) => {
+                    let value = e.target.value;
+
+                    handlePrepareValue("priorities", value);
                 });
 
                 $("#users").on("change", (e) => {
@@ -282,6 +311,10 @@ class Create_task extends React.Component {
         if (key == "users") {
             this.selectedUsers = value;
         }
+
+        if (key == "priorities") {
+            this.priority_id = value;
+        }
     }
 
     setUsers(token) {
@@ -303,6 +336,7 @@ class Create_task extends React.Component {
             description: $("#description").val(),
             departaments: this.selectedDepartaments,
             users: this.selectedUsers,
+            priority: $("#priority").val(),
             project: this.project.id,
         };
 
