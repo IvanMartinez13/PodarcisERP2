@@ -10184,14 +10184,6 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("thead", {
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tr", {
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
-<<<<<<< HEAD
-                      children: "Tarea"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
-                      children: "Descripci\xF3n"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
-                      children: "Progreso"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
-=======
                       style: {
                         width: "20%"
                       },
@@ -10220,7 +10212,6 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                       style: {
                         width: "5%"
                       },
->>>>>>> origin/master
                       children: "Acciones"
                     })]
                   })
@@ -10251,14 +10242,12 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                           }), "."]
                         })]
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
-<<<<<<< HEAD
-=======
                         className: "align-middle",
-                        children: task.users.map(function (user) {
+                        children: task.users ? task.users.map(function (user) {
                           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                             children: [" ", user.name, " "]
                           });
-                        })
+                        }) : ""
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("td", {
                         className: "text-center align-middle",
                         children: [task.priority.name == "media" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
@@ -10281,7 +10270,6 @@ var Tasks = /*#__PURE__*/function (_React$Component) {
                           children: "Baja"
                         }) : ""]
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
->>>>>>> origin/master
                         className: "align-middle text-center",
                         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                           className: "btn-group",
@@ -10508,11 +10496,7 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
                   className: "col-lg-12 my-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     htmlFor: "year",
-<<<<<<< HEAD
-                    children: "Nombre:"
-=======
                     children: "A\xF1o:"
->>>>>>> origin/master
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
                     id: "year",
                     type: "number",
@@ -10643,11 +10627,7 @@ var Create_subtask = /*#__PURE__*/function (_React$Component) {
 
       var data = {
         name: this.name,
-<<<<<<< HEAD
-        year: this.year,
-=======
         year: Number(this.year),
->>>>>>> origin/master
         description: $("#description").val(),
         task: this.task,
         users: this.selectedUsers
@@ -10903,11 +10883,7 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
                     })
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-<<<<<<< HEAD
-                  className: "col-lg-12 mb-3",
-=======
                   className: "col-lg-6 mb-3",
->>>>>>> origin/master
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     htmlFor: "users",
                     children: "Usuarios:"
@@ -10921,8 +10897,6 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
                     multiple: "multiple"
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-<<<<<<< HEAD
-=======
                   className: "col-lg-6 mb-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     htmlFor: "priority",
@@ -10946,7 +10920,6 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
                     })]
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
->>>>>>> origin/master
                   className: "col-lg-12 mb-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     htmlFor: "description",
@@ -10989,10 +10962,7 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("/tasks/project/get_departaments").then(function (response) {
         _this3.departaments = response.data.departaments;
         _this3.users = response.data.users;
-<<<<<<< HEAD
-=======
         _this3.priorities = response.data.priorities;
->>>>>>> origin/master
 
         _this3.setState({
           loading: false
@@ -11016,8 +10986,6 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
           // need to override the changed default
           allowClear: true
         });
-<<<<<<< HEAD
-=======
         $("#priority").select2({
           dropdownParent: $("#addTask"),
           //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
@@ -11027,7 +10995,6 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
           // need to override the changed default
           allowClear: true
         });
->>>>>>> origin/master
 
         var handlePrepareValue = function handlePrepareValue(key, value) {
           _this3.prepareValue(key, value);
@@ -11047,13 +11014,10 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
           handlePrepareValue("departaments", value);
           handleSetUsers(value);
         });
-<<<<<<< HEAD
-=======
         $("#priorities").on("input", function (e) {
           var value = e.target.value;
           handlePrepareValue("priorities", value);
         });
->>>>>>> origin/master
         $("#users").on("change", function (e) {
           var value = e.target.value;
 
@@ -11096,29 +11060,16 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
       if (key == "users") {
         this.selectedUsers = value;
       }
-<<<<<<< HEAD
-=======
 
       if (key == "priorities") {
         this.priority_id = value;
       }
->>>>>>> origin/master
     }
   }, {
     key: "setUsers",
     value: function setUsers(token) {
       $("#users").text("").trigger("change"); //CLEAR SELECT
 
-<<<<<<< HEAD
-      this.users.map(function (user, index) {
-        user.departaments.map(function (departament) {
-          if (departament.token == token) {
-            var op = "<option value=\"".concat(user.token, "\">").concat(user.name, "</option>");
-            $("#users").append(op).trigger("change");
-          }
-        });
-      });
-=======
       var departments = $("#departaments").val();
       var users = [];
       this.users.map(function (user, index) {
@@ -11136,7 +11087,6 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
         var op = "<option value=\"".concat(user.token, "\">").concat(user.name, "</option>");
         $("#users").append(op).trigger("change");
       });
->>>>>>> origin/master
     }
   }, {
     key: "save",
@@ -11148,10 +11098,7 @@ var Create_task = /*#__PURE__*/function (_React$Component) {
         description: $("#description").val(),
         departaments: this.selectedDepartaments,
         users: this.selectedUsers,
-<<<<<<< HEAD
-=======
         priority: $("#priority").val(),
->>>>>>> origin/master
         project: this.project.id
       }; //VALIDATE DATA
 
@@ -11731,11 +11678,7 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
                     })
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-<<<<<<< HEAD
-                  className: "col-lg-12 mb-3",
-=======
                   className: "col-lg-6 mb-3",
->>>>>>> origin/master
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
                     htmlFor: "users",
                     children: "Usuarios:"
@@ -11756,8 +11699,6 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
                     })
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-<<<<<<< HEAD
-=======
                   className: "col-lg-6 mb-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
                     htmlFor: "priority",
@@ -11782,7 +11723,6 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
                     })]
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
->>>>>>> origin/master
                   className: "col-lg-12 mb-3",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
                     htmlFor: "description" + this.task.token,
@@ -11831,9 +11771,11 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
           _this3.selectedDepartaments.push(departament.token);
         });
 
-        _this3.task.users.map(function (user) {
-          _this3.selectedUsers.push(user.token);
-        });
+        if (_this3.task.users) {
+          _this3.task.users.map(function (user) {
+            _this3.selectedUsers.push(user.token);
+          });
+        }
 
         _this3.setState({
           loading: false
@@ -11845,8 +11787,6 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
 
         $("#users" + _this3.task.token).val(_this3.selectedUsers);
         $("#users" + _this3.task.token).trigger("change");
-<<<<<<< HEAD
-=======
         $("#priority" + _this3.task.token).select2({
           dropdownParent: $("#updateTask" + _this3.task.token),
           //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
@@ -11855,7 +11795,6 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
           width: "100%" // need to override the changed default
 
         });
->>>>>>> origin/master
         $("#departaments" + _this3.task.token).select2({
           dropdownParent: $("#updateTask" + _this3.task.token),
           //FIXED COMMON PROBLEMS WHEN USES BOOTSTRAP MODAL
@@ -11953,25 +11892,6 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
     value: function setUsers(token) {
       var _this4 = this;
 
-<<<<<<< HEAD
-      var options = this.options;
-      $("#users" + this.task.token).text("").trigger("change");
-      this.users.map(function (user, index) {
-        user.departaments.map(function (departament) {
-          if (departament.token == token) {
-            if (options.includes(user)) {
-              var idx = options.indexOf(user);
-              options.splice(idx, 0);
-            } else {
-              options.push(user);
-            }
-          }
-        });
-      });
-      this.options = options;
-      this.options.map(function (val) {
-        var op = "<option value=\"".concat(val.token, "\">").concat(val.name, "</option>");
-=======
       $("#users" + this.task.token).text("").trigger("change"); //CLEAR SELECT
 
       var departments = $("#departaments" + this.task.token).val();
@@ -11989,7 +11909,6 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
       });
       users.map(function (user) {
         var op = "<option value=\"".concat(user.token, "\">").concat(user.name, "</option>");
->>>>>>> origin/master
         $("#users" + _this4.task.token).append(op).trigger("change");
       });
     }
@@ -12004,10 +11923,7 @@ var Update_task = /*#__PURE__*/function (_React$Component) {
         departaments: this.selectedDepartaments,
         users: this.selectedUsers,
         project: this.project.id,
-<<<<<<< HEAD
-=======
         priority: $("#priority" + this.task.token).val(),
->>>>>>> origin/master
         token: this.task.token
       }; //VALIDATE DATA
 
@@ -71349,11 +71265,7 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /***/ ((module) => {
 
 "use strict";
-<<<<<<< HEAD
 module.exports = JSON.parse('{"_args":[["axios@0.21.4","C:\\\\laragon\\\\www\\\\podarcisERP"]],"_development":true,"_from":"axios@0.21.4","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"axios@0.21.4","name":"axios","escapedName":"axios","rawSpec":"0.21.4","saveSpec":null,"fetchSpec":"0.21.4"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_spec":"0.21.4","_where":"C:\\\\laragon\\\\www\\\\podarcisERP","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
-=======
-module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"Promise based HTTP client for the browser and node.js","main":"index.js","scripts":{"test":"grunt test","start":"node ./sandbox/server.js","build":"NODE_ENV=production grunt build","preversion":"npm test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json","postversion":"git push && git push --tags","examples":"node ./examples/server.js","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","fix":"eslint --fix lib/**/*.js"},"repository":{"type":"git","url":"https://github.com/axios/axios.git"},"keywords":["xhr","http","ajax","promise","node"],"author":"Matt Zabriskie","license":"MIT","bugs":{"url":"https://github.com/axios/axios/issues"},"homepage":"https://axios-http.com","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"jsdelivr":"dist/axios.min.js","unpkg":"dist/axios.min.js","typings":"./index.d.ts","dependencies":{"follow-redirects":"^1.14.0"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}]}');
->>>>>>> origin/master
 
 /***/ })
 

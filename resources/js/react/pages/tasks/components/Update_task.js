@@ -255,9 +255,12 @@ class Update_task extends React.Component {
                     this.selectedDepartaments.push(departament.token);
                 });
 
-                this.task.users.map((user) => {
-                    this.selectedUsers.push(user.token);
-                });
+                if (this.task.users) {
+                    this.task.users.map((user) => {
+                        this.selectedUsers.push(user.token);
+                    });
+                }
+              
 
                 this.setState({ loading: false });
             })

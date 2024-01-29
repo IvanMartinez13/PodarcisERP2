@@ -111,14 +111,14 @@ class Tasks extends React.Component {
                                                 </td>
 
                                                 <td className="align-middle">
-                                                    {task.users.map((user) => {
+                                                    {task.users ? task.users.map((user) => {
                                                         return (
                                                             <div>
                                                                 {" "}
                                                                 {user.name}{" "}
                                                             </div>
                                                         );
-                                                    })}
+                                                    }): "" }
                                                 </td>
 
                                                 <td className="text-center align-middle">
